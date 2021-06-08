@@ -12,7 +12,7 @@ void bubble_0(int *arr, char * mark, int size);
 void bubble_1(int *arr, char * mark, int size);
 void bubble_2(int *arr, char * mark, int size);
 void Print(int *arr, int size);
-
+void shell(int arr[], char makr[], int size);
 
 class StopWatch
 {
