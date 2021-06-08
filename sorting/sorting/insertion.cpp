@@ -1,33 +1,53 @@
 #include "main.h"
 
 //case2
-void insertion(int *arr, char *mark, int size, int *cnt, int *cnt_swap)
+void insertion(int *arr, char *mark, int size)
 {
-	int i, j;
-	int count_swap = 0;
-	int count = 0;
-	int ck = 0;
+	int i, j, k;
+	int count = 0; int count_swap = 0;
 	for (i = 0; i < size; i++)
 	{
-		
-		for (j = 0; j < i+1; j++)
+
+		for (j = 0; j < i + 1; j++)
 		{
-			for (int m = 0; m < size; m++) mark[m] = ' ';
-			
+			for (k = 0; k < size; k++) mark[k] = ' ';
+
 			if (j != size - 1)mark[j + 1] = '+'; mark[i] = '*';
 			if (arr[j] > arr[i])
 			{
-				//swap(&arr[i], &arr[j]); count_swap++;
-				
+				swap(int,arr[i], arr[j]); count_swap++;
 			}
 			else { break; }
 		}
-		for (int m = 0; m < size; m++) cout << mark[m] << " "; cout << endl;
+		for (k = 0; k < size; k++) cout << mark[k] << " "; cout << endl;
 		Print(arr, size);
 		count++;
 	}
-
-	*cnt_swap = count_swap;
-	*cnt = count;
+	cout << "-----------" << endl;
+	Print(arr, size);
+	cout << "비교를 " << count << "회 수행했습니다." << endl;
+	cout << "교환을 " << count_swap << "회 수행했습니다." << endl;
 }
 
+void insertion_1(int *arr, char * mark, int size)
+{
+	int i, j, k;
+	int count = 0; int count_swap = 0;
+	for (i = 1; i < size; i++)
+	{
+		int tmp = arr[i];
+		for (j = i; j > 0 && arr[j - 1] > tmp; j--)
+		{
+			arr[j] = arr[j - 1];
+			count_swap++;
+		}
+		arr[j] = tmp;
+		count++;
+		cout << endl;
+		Print(arr, size);
+	}
+	cout << "-----------" << endl;
+	Print(arr, size);
+	cout << "비교를 " << count << "회 수행했습니다." << endl;
+	cout << "교환을 " << count_swap << "회 수행했습니다." << endl;
+}

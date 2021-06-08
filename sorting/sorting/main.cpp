@@ -34,6 +34,7 @@ int main()
 	int cnt=0;
 	int cnt_swap=0;
 	cout << "< shell sorting >" << endl;
+	//shell(arr, mark, size);
 	shell(arr, mark,size);
 	return 0;
 		//bubble sorting
@@ -68,7 +69,7 @@ int main()
 	//insertionsorting
 	cout << "< insertion sorting >" << endl;
 	i_timer.start();
-	insertion(arr, mark, size, &cnt, &cnt_swap);
+//	insertion(arr, mark, size, &cnt, &cnt_swap);
 	i_timer.stop();
 	cout << "걸린시간: " << i_timer.getElapsedTime() << "ms" << endl;
 
