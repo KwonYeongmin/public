@@ -85,7 +85,7 @@ template <class Type>
 void Worker<Type> ::Data() const 
 {
 	cout << "사원 이름: " << fullname << endl;
-	cout << "사원 번호: " << id << endl;
+	cout << "사원 번호: " << id ;
 }
 
 template <class Type>
