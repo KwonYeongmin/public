@@ -18,5 +18,13 @@
     <ClCompile Include="hongGong.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="study.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="file.txt">
+      <Filter>소스 파일</Filter>
+    </Text>
   </ItemGroup>
 </Project>
