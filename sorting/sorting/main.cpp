@@ -4,6 +4,8 @@ int main()
 	StopWatch b_timer;
 	StopWatch i_timer;
 	StopWatch s_timer;
+	StopWatch shell_timer;
+	StopWatch q_timer;
 
 	//변수 선언
 	int i;
@@ -11,9 +13,12 @@ int main()
 	cout << "배열의 크기 입력: ";
 	cin >> size;
 	int *arr = new int[size];
+	init(arr);
+
+	/*
 	//cout << "배열 입력: ";
 	//for (i = 0; i < size; i++) cin >> arr[i];
-	/*
+	
 	arr[0] = 6; 
 	arr[1] = 4; 
 	arr[2] = 3; 
@@ -21,21 +26,26 @@ int main()
 	arr[4] = 1; 
 	arr[5] = 9; 
 	arr[6] = 8;*/
-	arr[0] = 8;
-	arr[1] = 1;
-	arr[2] = 4;
-	arr[3] = 2;
-	arr[4] = 7;
-	arr[5] = 6;
-	arr[6] = 3;
-	arr[7] = 5;
+
 	char *mark = new char[size];
 	for (i = 0; i < size; i++) mark[i] = ' ';
 	int cnt=0;
 	int cnt_swap=0;
-	cout << "< shell sorting >" << endl;
-	//shell(arr, mark, size);
-	shell(arr, mark,size);
+	cout << "< quick sort >" << endl;
+	q_timer.start();
+	
+	q_timer.stop();
+	cout << "걸린시간: " << shell_timer.getElapsedTime() << "ms" << endl;
+	delete[] arr;
+	delete[] mark;
+	return 0;
+
+	cout << "< shell sort >" << endl;
+	shell_timer.start();
+	shell_1(arr, mark,size);
+	//insertion(arr, mark, size);
+	shell_timer.stop();
+	cout << "걸린시간: " << shell_timer.getElapsedTime() << "ms" << endl;
 	return 0;
 		//bubble sorting
 	/*
@@ -84,4 +94,15 @@ void Print(int *arr, int size)
 {
 	for (int k = 0; k < size; k++) cout << arr[k] << " ";
 	cout << endl;
+}
+void init(int arr[]) 
+{
+	arr[0] = 8;
+	arr[1] = 1;
+	arr[2] = 4;
+	arr[3] = 2;
+	arr[4] = 7;
+	arr[5] = 6;
+	arr[6] = 3;
+	arr[7] = 5;
 }

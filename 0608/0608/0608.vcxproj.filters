@@ -23,5 +23,11 @@
     <ClInclude Include="stacktp.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="QueueTp.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
