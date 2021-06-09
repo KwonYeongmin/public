@@ -1,4 +1,4 @@
-/*
+
 #include <iostream>
 #include "tv.h"
 
@@ -24,4 +24,4 @@ int main()
 	grey.Print();
 
 	return 0;
-}*/
+}

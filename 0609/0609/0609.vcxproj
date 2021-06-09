@@ -123,7 +123,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="0609.cpp" />
     <ClCompile Include="error.cpp" />
     <ClCompile Include="queuetp.h" />
     <ClCompile Include="rtti1.cpp" />
