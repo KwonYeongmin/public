@@ -33,11 +33,14 @@ int main()
 	int cnt_swap=0;
 	cout << "< quick sort >" << endl;
 	q_timer.start();
-	
+	quick(arr, mark, size);
 	q_timer.stop();
-	cout << "걸린시간: " << shell_timer.getElapsedTime() << "ms" << endl;
+	cout << "걸린시간: " << q_timer.getElapsedTime() << "ms" << endl;
 	delete[] arr;
 	delete[] mark;
+
+
+
 	return 0;
 
 	cout << "< shell sort >" << endl;
@@ -97,12 +100,22 @@ void Print(int *arr, int size)
 }
 void init(int arr[]) 
 {
-	arr[0] = 8;
-	arr[1] = 1;
-	arr[2] = 4;
-	arr[3] = 2;
-	arr[4] = 7;
-	arr[5] = 6;
+	/*
+	arr[0] = 5;
+	arr[1] = 7;
+	arr[2] = 1;
+	arr[3] = 4;
+	arr[4] = 6;
+	arr[5] = 2;
 	arr[6] = 3;
-	arr[7] = 5;
+	arr[7] = 9;
+	arr[8] = 8;*/
+	arr[0] = 12;
+	arr[1] = 10;
+	arr[2] = 13;
+	arr[3] = 9;
+	arr[4] = 8;
+	arr[5] = 3;
+	arr[6] = 5;
+	arr[7] = 7;
 }

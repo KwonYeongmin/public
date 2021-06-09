@@ -129,6 +129,7 @@
     <ClCompile Include="bubble.cpp" />
     <ClCompile Include="insertion.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="quick.cpp" />
     <ClCompile Include="selection.cpp" />
     <ClCompile Include="shell.cpp" />
   </ItemGroup>
