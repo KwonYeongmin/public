@@ -62,10 +62,11 @@ void ouput(const std::string &s) { std::cout << s << " "; }
 int main() 
 {
 	using namespace std;
-
+	string strrr = "hello world";
+	vector<string> h;
 
 	return 0;
-
+	/*
 	string s1[4] = { "fine","fish","fashion","fate" };
 	string s2[2] = { "busy","bats" };
 	string s3[2] = { "silly","singers" };
@@ -104,7 +105,7 @@ int main()
 		{
 			ShowReview(*pr);
 		}*/
-
+	/*
 		sort(books.begin(), books.end(), worseThan);
 		cout << "책 등급을 기준으로 정렬: \n" << "등급\t제목\n";
 		for_each(books.begin(), books.end(), ShowReview);
@@ -114,7 +115,7 @@ int main()
 		for_each(books.begin(), books.end(), ShowReview);
 	}
 	else cout << "프로그램을 종료합니다.";
-	
+	*/
 	return 0;
 
 	vector<int> number(NUM);
