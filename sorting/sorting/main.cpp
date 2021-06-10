@@ -37,18 +37,18 @@ int main()
 	
 	char *mark = new char[size];
 	for (i = 0; i < size; i++) mark[i] = ' ';
-
+	/*
 	cout << "< merge sort >" << endl;
 	m_timer.start();
 	//merge_0(arr2, arr1, 4, 6, mark);
-	merge_1(arr_, mark,10);
+	//merge_1(arr_, mark,10);
 	m_timer.stop();
 	cout << "걸린시간: " << m_timer.getElapsedTime() << "ms" << endl;
 	//cout << "비교를 " << cnt << "회 수행했습니다." << endl;
 	delete[] arr;
 	delete[] mark;
 
-	return 0;
+	return 0;*/
 
 	int cnt=0;
 	int cnt_swap=0;

@@ -119,9 +119,9 @@ void merge_1(int arr[], char mark[], int size,int left,int right)
 	*/
 	
 	int i, j, k;
-	int px = (right + left) / 2;
+	int x = (right + left) / 2;
 
-	for (i = 0; i < size - 1; i++) 
+	for (i = 0; i < x; i++) 
 	{
 	
 	}
