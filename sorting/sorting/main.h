@@ -15,7 +15,7 @@ void bubble_2(int *arr, char * mark, int size);
 void shell(int arr[], char mark[], int size);
 void shell_1(int arr[], char mark[], int size);
 
-void quick(int arr[], char mark[], int size,int *count);
+void quick(int arr[], char mark[], int size,int pl,int pr);
 
 void Print(int *arr, int size);
 void init(int arr[]);

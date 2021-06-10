@@ -7,6 +7,8 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <list>
+#include <set>
 using std::string;
 const int NUM = 5;
 const string wordlist[NUM] = { "apiary" ,"beetle","cereal"};
@@ -58,14 +60,110 @@ void ShowReview(const Review &rr)
 
 void ouput(const std::string &s) { std::cout << s << " "; }
 
-
+void outin(int n) { std::cout << n << " "; }
 int main() 
 {
 	using namespace std;
+
+	const int N = 6;
+	string s1[N] = { "button","thinkers","for","heavy","can","for" };
+	string s2[N] = {"metal","any","food","elegant","deliver","for" };
+	set<string> A(s1, s1 + N);
+	set<string> B(s2, s2 + N);
+
+	ostream_iterator<string, char> out(cout, " ");
+
+	cout << "집합 A: ";
+	copy(A.begin(), A.end(), out);
+	cout << endl;
+	
+	cout << "집합 B: ";
+	copy(B.begin(), B.end(), out);
+	cout << endl;
+
+	cout << "A와 B의 합집합 : \n";
+	set_union(A.begin(),A.end(),B.begin(), B.end(), out);
+	cout << endl;
+
+	cout << "A와 B의 교집합 : \n";
+	set_intersection(A.begin(), A.end(), B.begin(), B.end(), out);
+	cout << endl;
+
+	cout << "A와 B의 차집합 : \n";
+	set_difference(A.begin(), A.end(), B.begin(), B.end(), out);
+	cout << endl;
+	
+	set<string> C;
+	cout << "집합 C : \n";
+	set_union(A.begin(), A.end(), B.begin(), B.end(),insert_iterator<set<string>>(C,C.begin()));
+	copy(C.begin(), C.end(),out);
+	cout << endl;
+
+	string s3("grunpy");
+	C.insert(s3);
+	cout << "삽입한 후의 집합 C : \n";
+	copy(C.begin(), C.end(), out);
+	cout << endl;
+	/*
+	삽입한 후의 집합 C :
+	any button can deliver elegant food for // grunpy heavy metal //thinkers
+	*/
+	cout << "특정한 범위 표시 : \n";
+	copy(C.lower_bound("ghost"),C.upper_bound("spook"), out);
+	cout << endl;
+
+	return 0;
+	/*
+	list<int> one(5, 2); //2가 5개 들어가있음
+
+	int stuff[5] = { 1,2,4,8,6 };
+	list<int> two;
+	two.insert(two.begin(), stuff, stuff + 5); //stuff[0]부터 stuff[4]까지 
+	
+	int more[6] = { 6,4,2,4,6,5 };
+	list<int> three(two); //two가 들어가있음
+	three.insert(three.end(), more, more + 6); //three맨 뒤에 more[0]부터 more[5]까지
+	
+	cout << "리스트 one: ";
+	for_each(one.begin(), one.end(), outin);
+	cout << endl << "리스트 two: ";
+	for_each(two.begin(), two.end(), outin);
+	cout << endl << "리스트 three: ";
+	for_each(three.begin(), three.end(), outin);
+	
+	three.remove(2);
+	cout<<endl << "리스트 three 에서 2들을 삭제: ";
+	for_each(three.begin(), three.end(), outin);
+
+	three.splice(three.begin(), one); //three맨 앞에 리스트 one 넣기
+	cout << endl << "접목 후의 리스트 three: ";
+	for_each(three.begin(), three.end(), outin);
+
+	cout << endl << "리스트 one:";
+	for_each(one.begin(), one.end(), outin);
+
+	three.unique();//중복 삭제 붙어있을 때
+	cout << endl << "단일화 후의 three :";
+	for_each(three.begin(), three.end(), outin); 
+	
+	three.sort();
+	three.unique();
+	cout << endl << "정렬과 단일화 후의 three :";
+	for_each(three.begin(), three.end(), outin);
+
+	two.sort();
+	cout << endl << "정렬된 리스트 two :";
+	for_each(two.begin(), two.end(), outin);
+
+	three.merge(two);
+	cout << endl << "정렬된 리스트 two를 리스트 three에 합병 :";
+	for_each(three.begin(), three.end(), outin);
+	return 0;
+	
 	string strrr = "hello world";
 	vector<string> h;
 
-	return 0;
+	return 0;*/
 	/*
 	string s1[4] = { "fine","fish","fashion","fate" };
 	string s2[2] = { "busy","bats" };

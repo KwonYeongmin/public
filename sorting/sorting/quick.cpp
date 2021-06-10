@@ -1,16 +1,25 @@
 #include "main.h"
 //재귀함수
-void quick(int arr[], char mark[], int size,int *count)
+void quick(int arr[], char mark[], int size,int l,int r)
 {
 	int i, j, k;
 	//int count = 0; int count_swap=0;
 	//초기 피벗 설정
 	int px = size / 2;
-	int pl = 0, pr = size - 1;
+	int pl = l, pr = r;
 
 		for (i = 0; i < size; i++)
 		{
-			mark[pl] = ' '; mark[pr] = ' '; mark[px] = '*';
+			//mark[pl] = ' '; mark[pr] = ' '; mark[px] = '*';
+			
+			if (arr[pl] < arr[px]) pl++;
+			if (arr[pr] > arr[px]) pr--;
+			swap(int, arr[pl], arr[pr]);
+
+			if (pl < l) quick(arr, mark, i,pl,r);
+			if (pr > r) quick(arr, mark, i, l, pr);
+			Print(arr, size);
+			/*
 			if (px < i) 
 			{
 				if (arr[pl] >= arr[px]) { mark[pl] = '-'; }
@@ -30,19 +39,18 @@ void quick(int arr[], char mark[], int size,int *count)
 				else { pr--; mark[pr] = '+'; }
 
 				quick(arr, mark, i, count);
-			}
+			}*/
 			
 
-			swap(int, arr[pl], arr[pr]);
+			
 			//count_swap++;
 			//출력
-			for (k = 0; k < size; k++) cout << mark[k] << " ";
-			cout << endl;
-			Print(arr, size);
+			//for (k = 0; k < size; k++) cout << mark[k] << " ";
+			//cout << endl;
+			
 		}
 		
 	//	cout << "px: " << px << endl;
-	*count++;
 	//	cout << "-----------------------" << endl;
 	Print(arr, size);
 	//cout << "비교를 " << *count << "회 수행했습니다." << endl;
