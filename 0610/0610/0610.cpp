@@ -9,6 +9,7 @@
 #include <iterator>
 #include <list>
 #include <set>
+#include <map>
 using std::string;
 const int NUM = 5;
 const string wordlist[NUM] = { "apiary" ,"beetle","cereal"};
@@ -61,9 +62,40 @@ void ShowReview(const Review &rr)
 void ouput(const std::string &s) { std::cout << s << " "; }
 
 void outin(int n) { std::cout << n << " "; }
+
+
+typedef int keyType;
+typedef std::pair<const keyType, std::string> Pair;
+typedef std::multimap<const keyType,std::string> MapCode;
+
+
 int main() 
 {
 	using namespace std;
+	MapCode codes;
+
+	codes.insert(Pair(415, "샌프란시스코"));
+	codes.insert(Pair(510, "오클랜드"));
+	codes.insert(Pair(718, "브루클린"));
+	codes.insert(Pair(718, "스태튼 섬"));
+	codes.insert(Pair(415, "샌라파엘"));
+	codes.insert(Pair(510, "버클리"));
+
+	cout << "지역 코드가 415인 도시 수: " << codes.count(415) << endl;
+	cout << "지역 코드가 718인 도시 수: " << codes.count(718) << endl;
+	cout << "지역 코드가 510인 도시 수: " << codes.count(510) << endl << endl;
+	cout << "지역코드		도시\n";
+
+	MapCode::iterator it;
+	for (it = codes.begin(); it != codes.end(); ++it) 
+	{
+		cout << (*it).first << "		  "  << (*it).second << endl;
+	}
+	pair<MapCode::iterator, MapCode::iterator> range = codes.equal_range(718);
+	cout << "지역코드가 718인 도시들:\n"<<endl;
+	for (it = range.first; it != range.second; ++it) { cout << (*it).second << endl; }
+
+	return 0;
 
 	const int N = 6;
 	string s1[N] = { "button","thinkers","for","heavy","can","for" };

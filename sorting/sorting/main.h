@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include<ctime>
-#define swap(type,a,b){type t=a; a=b;b=t;}
+#define swap(type,a,b) do {type t=a; a=b;b=t;}while(0)
 using namespace std;
 
 void selection_0(int *arr, char *mark, int size);
@@ -15,7 +15,9 @@ void bubble_2(int *arr, char * mark, int size);
 void shell(int arr[], char mark[], int size);
 void shell_1(int arr[], char mark[], int size);
 
-void quick(int arr[], char mark[], int size,int pl,int pr);
+void quick(int arr[], char mark[], int size, int px , int pl, int pr);
+void merge(int arr1[], int arr2[], int size, char mark[]);
+
 
 void Print(int *arr, int size);
 void init(int arr[]);

@@ -10,8 +10,9 @@ int main()
 	//변수 선언
 	int i;
 	int size;
-	cout << "배열의 크기 입력: ";
-	cin >> size;
+	//cout << "배열의 크기 입력: ";
+	//cin >> size;
+	size = 8;
 	int *arr = new int[size];
 	init(arr);
 
@@ -33,10 +34,10 @@ int main()
 	int cnt_swap=0;
 	cout << "< quick sort >" << endl;
 	q_timer.start();
-	quick(arr, mark, size,0,size-1);
+	quick(arr, mark, size, size/2 ,0,size-1);
 	q_timer.stop();
 	cout << "걸린시간: " << q_timer.getElapsedTime() << "ms" << endl;
-	cout << "비교를 " << cnt << "회 수행했습니다." << endl;
+	//cout << "비교를 " << cnt << "회 수행했습니다." << endl;
 	delete[] arr;
 	delete[] mark;
 
