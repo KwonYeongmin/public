@@ -6,14 +6,19 @@ int main()
 	StopWatch s_timer;
 	StopWatch shell_timer;
 	StopWatch q_timer;
+	StopWatch m_timer;
 
 	//변수 선언
 	int i;
 	int size;
-	//cout << "배열의 크기 입력: ";
+	//cout << "배열의 크기 입력 : ";
 	//cin >> size;
 	size = 8;
 	int *arr = new int[size];
+	//int *arr2 = new int[4];
+	int arr1[6] = { 2,5,9,10,14,17 };
+	int arr2[4] = { 1,5,8,20 };
+	int arr_[10] = { 1,18,5,20,9,10,17,14,8,2 };
 	init(arr);
 
 	/*
@@ -28,8 +33,23 @@ int main()
 	arr[5] = 9; 
 	arr[6] = 8;*/
 
+
+	
 	char *mark = new char[size];
 	for (i = 0; i < size; i++) mark[i] = ' ';
+
+	cout << "< merge sort >" << endl;
+	m_timer.start();
+	//merge_0(arr2, arr1, 4, 6, mark);
+	merge_1(arr_, mark,10);
+	m_timer.stop();
+	cout << "걸린시간: " << m_timer.getElapsedTime() << "ms" << endl;
+	//cout << "비교를 " << cnt << "회 수행했습니다." << endl;
+	delete[] arr;
+	delete[] mark;
+
+	return 0;
+
 	int cnt=0;
 	int cnt_swap=0;
 	cout << "< quick sort >" << endl;

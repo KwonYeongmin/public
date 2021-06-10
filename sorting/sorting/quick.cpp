@@ -4,7 +4,7 @@ void quick(int arr[], char mark[], int size,int px ,int pl,int pr)
 {
 	int i, j, k;
 	int count = 0; int count_swap=0;
-	int pl = 0; int pr = size-1;
+//	int pl = 0; int pr = size-1;
 	//px = (pr - pl+1) / 2;
 	cout << "px: "<< px <<" , arr[px] : " << arr[px] << endl;
 
@@ -17,7 +17,7 @@ void quick(int arr[], char mark[], int size,int px ,int pl,int pr)
 	}
 	pl--; pr++;
 	Print(arr, size);
-
+/*
 	if (pl < px) 
 	{
 		quick(arr, mark, px - pl, (px - pl) / 2); 
@@ -25,7 +25,7 @@ void quick(int arr[], char mark[], int size,int px ,int pl,int pr)
 	if (pr > px)
 	{
 		quick(arr, mark, pr - px, px + ((pr - px) / 2));
-	}
+	}*/
 	
 
 	
