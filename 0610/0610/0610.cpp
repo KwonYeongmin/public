@@ -62,6 +62,10 @@ void ouput(const std::string &s) { std::cout << s << " "; }
 int main() 
 {
 	using namespace std;
+
+
+	return 0;
+
 	string s1[4] = { "fine","fish","fashion","fate" };
 	string s2[2] = { "busy","bats" };
 	string s3[2] = { "silly","singers" };
