@@ -23,17 +23,7 @@ void quick(int arr[], char mark[], int size, int px, int pl, int pr)
 		left = px - 1;
 		right = px + 1;
 		cout << "px: " << px << " ,right: " << right << " , left: " << left << endl;
-		if (right > px)
-		{
-			int r = size - 1;
-			int l = right - 1;
-			x = (r + l) / 2;
-			int s = r - l + 1;
-			//cout << "r: " << r << " , l: " << l << " , x: " << x << " , s: " << s << endl;
-			//cout << "arr[r]: " << arr[r] << " , arr[l]: " << arr[l] << " , arr[x]: " << arr[x] << " , s: " << s << endl;
-			quick(arr, mark, s, (r + l) / 2, l, r);
 
-		}
 		if (left < px)
 		{
 			int r = left;
@@ -43,7 +33,17 @@ void quick(int arr[], char mark[], int size, int px, int pl, int pr)
 			quick(arr, mark, s, (r + l) / 2, l, r);
 		
 		}  cout << "px: " << px << " ,right: " << right << " , left: " << left << endl;
-		
+		if (right > px)
+		{
+			int r = size - 1;
+			int l = right - 1;
+			x = (r+l) / 2;
+			int s = r - l + 1;
+			//cout << "r: " << r << " , l: " << l << " , x: " << x << " , s: " << s << endl;
+			//cout << "arr[r]: " << arr[r] << " , arr[l]: " << arr[l] << " , arr[x]: " << arr[x] << " , s: " << s << endl;
+			quick(arr, mark, s, (r + l) / 2, l, r);
+			
+		}
 	}
 	
 

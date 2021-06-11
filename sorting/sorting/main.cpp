@@ -54,7 +54,9 @@ int main()
 	int cnt_swap=0;
 	cout << "< quick sort >" << endl;
 	q_timer.start();
-	quick(arr, mark, size, size/2 ,0,size-1);
+	//
+	//quick(arr, mark, size, size/2 ,0,size-1);
+	size = 10; quick(arr_, mark, size, size / 2, 0, size - 1);
 	q_timer.stop();
 	cout << "걸린시간: " << q_timer.getElapsedTime() << "ms" << endl;
 	//cout << "비교를 " << cnt << "회 수행했습니다." << endl;
