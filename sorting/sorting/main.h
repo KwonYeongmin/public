@@ -15,14 +15,12 @@ void bubble_2(int *arr, char * mark, int size);
 void shell(int arr[], char mark[], int size);
 void shell_1(int arr[], char mark[], int size);
 
-void quick(int arr[], char mark[], int size, int px , int pl, int pr);
+void quick(int arr[], char mark[], int size,  int left, int right);
 void merge_0(int arr1[], int arr2[], int size1, int size2, char mark[]);
 void merge_1(int arr[], char mark[],int size,int left,int right );
 
 int heap(int arr[], char mark[], int size);
 void h_sort(int arr[], int size);
-
-void m_sort(void *base, size_t nmemb, size_t size, int(*compr)(const void*, const void*));
 
 
 void Print(int *arr, int size);

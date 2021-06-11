@@ -19,7 +19,7 @@ int main()
 	StopWatch s_timer;
 	StopWatch shell_timer;
 	StopWatch q_timer;
-	StopWatch m_timer;
+	StopWatch m_timer; 
 	StopWatch h_timer;
 
 	//변수 선언
@@ -36,7 +36,7 @@ int main()
 	int arr2[4] = { 1,5,8,20 };*/
 
 	init(arr);
-	int arr1[12] = { 4,5,2,3,8,9,10,20,14,17,1,7 };
+	int arr1[12] = { 10,4,5,2,3,8,9,20,14,17,1,7 };
 	int size1 = 12;
 	int arr2[10] = { 10,9,5,8,3,2,4,6,7,1 };
 	int size2 = 10;
@@ -68,14 +68,26 @@ int main()
 	delete[] mark;
 
 	return 0;*/
-	
+
+		//heap
+	/*
 	cout << "< heap sort >" << endl;
 	//heap(arr, mark,size);
 	h_timer.start();
 	heap(arr2,mark ,size2 );// compare, SHOW_PROCESS);
 	h_timer.stop();
 	cout << "걸린시간: " << h_timer.getElapsedTime() << "ms" << endl;
-	delete[] arr;
+	*/
+
+		//
+	
+	cout << "< quick sort >" << endl;
+	q_timer.start();
+	quick(arr1,mark ,size1,0,size1-1);
+	q_timer.stop();
+	cout << "걸린시간: " << q_timer.getElapsedTime() << "ms" << endl;
+	
+	
 	delete[] mark;
 	return 0;
 	/*

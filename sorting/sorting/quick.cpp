@@ -1,5 +1,33 @@
 #include "main.h"
 //재귀함수
+
+
+void quick(int arr[], char mark[], int size, int left, int right)
+{
+	int px = size / 2;
+	int s = size;
+	
+	int i=0;
+
+	//Print(arr, size);
+	cout << arr[px] << endl;
+	while (1)
+	{	//px가 변하지 않도록 고정해주기
+		while (arr[left] < arr[px]) left++; 
+		while (arr[right] > arr[px]) right--;
+		swap(int, arr[left], arr[right]);
+		cout<<"arr[px] : "<< arr[px] <<" , arr[left] : " << arr[left] << " ,arr[right] :" << arr[right] << endl;
+		
+		Print(arr, size);
+		i++;
+		if (i > size-1) break;
+	}
+	cout << "--------------------------" << endl;
+	Print(arr, size);
+}
+
+
+/*
 void quick(int arr[], char mark[], int size, int px, int pl, int pr)
 {
 	int i, j, k;
@@ -73,12 +101,12 @@ void quick(int arr[], char mark[], int size, int px, int pl, int pr)
 	//}
 	
 
-
+/*
 	cout << endl;
 	cout << "-----------------------" << endl;
 	Print(arr, size);
 	cout << "-----------------------" << endl;
 
-}
+}*/
 
 
