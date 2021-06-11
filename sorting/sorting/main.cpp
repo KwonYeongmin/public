@@ -1,10 +1,13 @@
 #include "main.h"
-void hello(int n,int m) 
+const int ARR_SIZE = 25;
+
+// true : 정렬 진행 과정 출력, false : 출력 X
+const bool SHOW_PROCESS = true;
+
+// 비교 함수 (오름차순 정렬)
+bool compare(const int& i1, const int& i2)
 {
-	int x = n + m;
-	int y = n - m;
-	if (x > 10) { cout << "10"<< endl; hello(x, y); }
-	if (x > 12) { cout << "12"<<endl; hello(x, y);}
+	return i1 > i2;
 }
 
 
@@ -17,20 +20,26 @@ int main()
 	StopWatch shell_timer;
 	StopWatch q_timer;
 	StopWatch m_timer;
+	StopWatch h_timer;
 
 	//변수 선언
 	int i;
 	int size;
 	//cout << "배열의 크기 입력 : ";
 	//cin >> size;
-	size = 8;
+	size = 10;
 	int *arr = new int[size];
-	//int *arr2 = new int[4];
+	
+	/*merge*/
+	/*
 	int arr1[6] = { 2,5,9,10,14,17 };
-	int arr2[4] = { 1,5,8,20 };
-	int arr_[10] = { 1,18,5,20,9,10,17,14,8,2 };
-	init(arr);
+	int arr2[4] = { 1,5,8,20 };*/
 
+	init(arr);
+	int arr1[12] = { 4,5,2,3,8,9,10,20,14,17,1,7 };
+	int size1 = 12;
+	int arr2[10] = { 10,9,5,8,3,2,4,6,7,1 };
+	int size2 = 10;
 	/*
 	//cout << "배열 입력: ";
 	//for (i = 0; i < size; i++) cin >> arr[i];
@@ -59,17 +68,26 @@ int main()
 	delete[] mark;
 
 	return 0;*/
-
+	
+	cout << "< heap sort >" << endl;
+	//heap(arr, mark,size);
+	h_timer.start();
+	heap(arr2,mark ,size2 );// compare, SHOW_PROCESS);
+	h_timer.stop();
+	cout << "걸린시간: " << h_timer.getElapsedTime() << "ms" << endl;
+	delete[] arr;
+	delete[] mark;
+	return 0;
+	/*
 	int cnt=0;
 	int cnt_swap=0;
 	cout << "< quick sort >" << endl;
 	q_timer.start();
-	//
+	
 	//quick(arr, mark, size, size/2 ,0,size-1);
 	size = 10; quick(arr_, mark, size, size / 2, 0, size - 1);
 	q_timer.stop();
 	cout << "걸린시간: " << q_timer.getElapsedTime() << "ms" << endl;
-	//cout << "비교를 " << cnt << "회 수행했습니다." << endl;
 	delete[] arr;
 	delete[] mark;
 
@@ -85,7 +103,7 @@ int main()
 	cout << "걸린시간: " << shell_timer.getElapsedTime() << "ms" << endl;
 	return 0;
 		//bubble sorting
-	/*
+	
 	cout << "< bubble sorting >" << endl;
 	b_timer.start();
 	//bubble_0(arr, mark, size);
@@ -95,7 +113,7 @@ int main()
 	cout << "걸린시간: " << b_timer.getElapsedTime() << "ms" << endl;
 	cout << endl;
 
-	return 0;*/
+	return 0;
 
 	
 	
@@ -122,7 +140,7 @@ int main()
 
 	delete[] arr;
 	delete[] mark;
-	return 0;
+	return 0; */
 	
 }
 
@@ -144,6 +162,7 @@ void init(int arr[])
 	arr[6] = 3;
 	arr[7] = 9;
 	arr[8] = 8;*/
+/*
 	arr[0] = 12;
 	arr[1] = 10;
 	arr[2] = 13;
@@ -152,4 +171,16 @@ void init(int arr[])
 	arr[5] = 3;
 	arr[6] = 5;
 	arr[7] = 7;
-}
+	*/
+
+	arr[0] = 10;
+	arr[1] = 9;
+	arr[2] = 5;
+	arr[3] = 8;
+	arr[4] = 3;
+	arr[5] = 2;
+	arr[6] = 4;
+	arr[7] = 6;
+	arr[8] = 7;
+	arr[9] = 1;
+	}
