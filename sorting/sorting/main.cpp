@@ -1,6 +1,16 @@
 #include "main.h"
+void hello(int n,int m) 
+{
+	int x = n + m;
+	int y = n - m;
+	if (x > 10) { cout << "10"<< endl; hello(x, y); }
+	if (x > 12) { cout << "12"<<endl; hello(x, y);}
+}
+
+
 int main()
 {
+
 	StopWatch b_timer;
 	StopWatch i_timer;
 	StopWatch s_timer;
