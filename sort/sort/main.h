@@ -26,6 +26,7 @@ void merge_1(int arr[], char mark[], int size, int left, int right);
 int heap(int arr[], char mark[], int size);
 void h_sort(int arr[], int size);
 
+void fsort(int arr[], char mark[], int size);
 
 void Print(int *arr, int size);
 void init(int arr[]);

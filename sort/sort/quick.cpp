@@ -7,9 +7,17 @@
 // 1
 void q_sort(int arr[],int left,int right) 
 {
+	
+	
+}
+
+void quick(int arr[], char mark[], int size, int left, int right)
+{
+
 	int i = 0;
 	int s = right - left + 1;
 	int px = arr[s / 2];
+
 	while (i < s / 2)
 	{
 		while (arr[left] < px) left++;
@@ -17,18 +25,7 @@ void q_sort(int arr[],int left,int right)
 		swap(int, arr[left], arr[right]);
 		i++;
 	}
-}
 
-void quick(int arr[], char mark[], int size, int left, int right)
-{
-	int px = arr[size / 2];
-	
-
-	q_sort(arr,left,right);
-	Print(arr, size);
-	cout << "left : " << left << " , right : " << right << endl;
-	q_sort(arr, 0, left-1);
-	q_sort(arr, left, size-1);
 	Print(arr, size);
 	//cout << "arr[" << l << "] :" << arr[l] << " , arr[ px] : " << px << " , arr[" << r << "] : " << arr[r] << endl;
 
@@ -47,8 +44,7 @@ void quick(int arr[], char mark[], int size, int left, int right)
 		//오른쪽일때 
 		quick(arr, mark, s, r, s-1);
 	}*/
-	Print(arr, size);
-	/*
+	
 	/*
 	if (s > 1)
 	{

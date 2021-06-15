@@ -31,6 +31,11 @@ int main()
 	//표시
 	char *mark = new char[size];
 	for (i = 0; i < size; i++) mark[i] = ' ';
+
+	int arr3[11] = { 1,2,3,1,2,4,5,6,5,3,100 };
+	//fsort(arr3, mark, 7);
+	fsort(arr3, mark, 11);
+	return 0;
 	/*
 	cout << "< merge sort >" << endl;
 	m_timer.start();

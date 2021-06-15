@@ -5,13 +5,146 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+#include <iomanip>
+#include <cstring>
+#include <ctime>
 using namespace std;
-void password();
+void password(); void binary();
 
 const char *file = "guests.txt";
+/*
+void binary()
+{
+	planet pl;
+	cout << fixed << right;
+	ifstream fin;
+	fin.open(file, ios_base::in | ios_base::binary);
+	if (fin.is_open())
+	{
+		cout << file << " 파일의 현재 내용은 다음과 같습니다.:\n";
+		while (fin.read((char*)&pl, sizeof pl))
+		{
+			cout << setw(20) << pl.name << ":"
+				<< setprecision(0) << setw(12) << pl.population
+				<< setprecision(2) << setw(6) << pl.g << endl;;
+		}
+	}
+
+	ofstream fout(file, ios_base::out | ios_base::app);
+	{
+		cerr << "출력을 위해 " << file << " 파일을 열 수 없음" << endl;
+		exit(EXIT_FAILURE);
+	}
+	cout << "행성의 이름을 입력:()";
+}
+
+*/
+bool stringCmp(const string data, const char* abc,int *cnt)
+{
+	/*
+	for (int i = 0; i < strlen(data); i++)
+	{
+		for (int j = 0; j < strlen(abc); j++) 
+		{
+			if (data[i] == abc[j])
+			{
+				if (data[i + j] == abc[j])
+				{
+					if (data[i + j] == abc[j])
+					{
+						return true;					}
+				}
+			}
+		}
+		
+	}*/
+
+	int pd = 0;
+	int px=0;	
+	char *mark=new char[data.length()];
+	int count = 0;
+	while (1) 
+	{
+		if ((data[pd] == 0) || (abc[px] == 0)) break;
+		for (int i = 0; i < data.length(); i++) mark[i] = ' ';
+
+		if (data[pd] == abc[px]) 
+		{
+			mark[pd] = '+';
+			cout << data << endl;
+			for (int i = 0; i < data.length(); i++)cout << mark[i];
+			cout << endl;
+			for (int i = 0; i < pd-px; i++) cout << " ";
+			cout << abc << endl;
+			pd++; px++;
+			if (data[pd] == abc[px])
+			{
+				count++;
+			}
+			else { px--; }
+		}
+		else
+		{
+			pd++;
+			mark[pd] = '|';
+			cout << data << endl;
+			for (int i = 0; i < data.length(); i++)cout << mark[i];
+			cout << endl;
+			for (int i = 0; i < pd - px; i++) cout << " ";
+			cout << abc << endl;
+		}
+		
+		
+	}
+	*cnt=count;
+	if(*cnt==strlen(abc)-1) return 1;
+	
+}
+
 int main()
 {
+	//const char*data = "qweuiocvnm,akl;gfjklabckl;qwiorp[";
+	const char*abc = "abc";
+	string data;
+	cout << "입력: ";
+	cin >> data;
+
+	int j = 0;
+	int cnt;
+	clock_t start, end;
+	start= clock();
+	if (stringCmp(data, abc,&cnt) == 1) 
+	{
+		cout<<endl << abc << "는 " << data << "에 있습니다."<<endl;
+	}
+	end = clock();
+	cout << end - start << "ms" << endl;
+	return 0;
+	/*
+	for (int i = 0; i < strlen(data); i++)
+	{
+
+		if (data[i] == abc[0])
+		{
+			if (data[i + 1] == abc[1])
+			{
+				if (data[i + 2] == abc[2])
+				{
+					cout <<i<<" : "<< data[i]<<" , "<< i+1 << " : " << data[i + 1] << " , " << i+2 << " : " << data[i + 2] << " , " << endl;
+				}
+			}
+		}
+	}*/
 	
+	
+
+
+
+	return 0;
+	
+	/*
+	binary();
+	return 0;
 	char ch;
 	ifstream fin;
 	fin.open(file);
@@ -47,7 +180,7 @@ int main()
 		
 		return 0;
 
-	
+	*/
 	/*
 	int input;
 	int sum = 0;
@@ -88,3 +221,13 @@ void password()
 	cout << "프로그램을 종료합니다.\n";
 	fin_.close();
 }
+
+inline void eatline() { while(std::cin.get() != '\n') continue; }
+struct planet 
+{
+	char name[20];
+	double population;
+	double g;
+};
+
+//p1434,p1444

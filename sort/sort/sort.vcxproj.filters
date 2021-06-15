@@ -39,6 +39,9 @@
     <ClCompile Include="shell.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="fsort.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

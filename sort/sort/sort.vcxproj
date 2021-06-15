@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bubble.cpp" />
+    <ClCompile Include="fsort.cpp" />
     <ClCompile Include="heap.cpp" />
     <ClCompile Include="insert.cpp" />
     <ClCompile Include="merge.cpp" />
