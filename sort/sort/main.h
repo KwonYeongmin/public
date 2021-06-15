@@ -16,9 +16,7 @@ void bubble_2(int *arr, char * mark, int size);
 void shell(int arr[], char mark[], int size);
 void shell_1(int arr[], char mark[], int size);
 
-void quick(int arr[], char mark[], int size, int left, int right);
-void q_sort(int arr[], int left, int right);
-
+void quick(int arr[], char mark[], int left, int right);
 
 void merge_0(int arr1[], int arr2[], int size1, int size2, char mark[]);
 void merge_1(int arr[], char mark[], int size, int left, int right);

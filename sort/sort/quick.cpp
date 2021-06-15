@@ -1,49 +1,54 @@
 #include "main.h"
 //재귀함수
 
-// { 10, 4, 5, 2, 3, 8, 9, 20, 14, 17, 1, 7 };
-// 7 4 5 2 3 8 1 9 14 17 20 10
-// 1 2 5 4 3 8 7
-// 1
-void q_sort(int arr[],int left,int right) 
-{
-	
-	
-}
+//10,4,5,2,3,8,9,20,14,17,1,7 
 
-void quick(int arr[], char mark[], int size, int left, int right)
+void quick(int arr[], char mark[], int left, int right)
 {
-
+	int pl = left; //0 
+	int pr = right; //size-1
+	int x = arr[(pr + pl) / 2];
 	int i = 0;
-	int s = right - left + 1;
-	int px = arr[s / 2];
+	//cout << "pl : " << pl << " , pr : " << pr<<" , x : "<<x << endl;
 
-	while (i < s / 2)
+	while (pl <= pr) 
 	{
-		while (arr[left] < px) left++;
-		while (arr[right] > px) right--;
-		swap(int, arr[left], arr[right]);
-		i++;
+		while (arr[pl] < x) pl++;
+		while (arr[pr] > x) pr--;
+		if (pl <= pr) 
+		{
+			swap(int, arr[pl], arr[pr]);
+			pl++; pr--;
+		}
 	}
+	//Print(arr, 12);
+	//cout<<"left: " << left << " , pr: " << pr<<endl;
+	//cout << "right: " << right << " , pl: " << pl << endl;
+	if (left < pr) quick(arr, mark, left, pr); 
+	//Print(arr, 12);
+	if (pl < right) quick(arr,mark, pl, right);
+	//Print(arr, 12);
 
-	Print(arr, size);
-	//cout << "arr[" << l << "] :" << arr[l] << " , arr[ px] : " << px << " , arr[" << r << "] : " << arr[r] << endl;
 
-	/*
-	left = 0;
-	right = l - 1;
 
+/*
+
+	//right = left - 1;
+	//left = 0;
+	//left = left - 1;
+	right = size - 1; 
 	s = right - left + 1;
 	px = s / 2;
-	*/
-	/*
+	cout << "left: " << left << " , right: " << right << endl;
+	cout << "s:" << s << ", px: " << px << endl;
+	
 	if (size > 1)
 	{
 		//왼쪽일때
-		quick(arr, mark, s, 0, l-1);
+		//quick(arr, mark, s, 0, right);
 		//오른쪽일때 
-		quick(arr, mark, s, r, s-1);
-	}*/
+		quick(arr, mark, s, left, right);
+	}
 	
 	/*
 	if (s > 1)

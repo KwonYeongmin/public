@@ -2,7 +2,6 @@
 
 int main()
 {
-
 	StopWatch b_timer;
 	StopWatch i_timer;
 	StopWatch s_timer;
@@ -10,6 +9,7 @@ int main()
 	StopWatch q_timer;
 	StopWatch m_timer;
 	StopWatch h_timer;
+	StopWatch f_timer;
 
 		//변수 선언
 	int i;
@@ -27,16 +27,24 @@ int main()
 	//arr2
 	int arr2[10] = { 10,9,5,8,3,2,4,6,7,1 };
 	int size2 = 10;
-
+	//arr3
+	int arr3[11] = { 1,2,3,1,2,4,5,6,5,3,100 };
+	int size3 = 11;
 	//표시
 	char *mark = new char[size];
 	for (i = 0; i < size; i++) mark[i] = ' ';
 
-	int arr3[11] = { 1,2,3,1,2,4,5,6,5,3,100 };
-	//fsort(arr3, mark, 7);
-	fsort(arr3, mark, 11);
-	return 0;
+		//도수 정렬
 	/*
+	f_timer.start();
+	fsort(arr, mark, size);
+	f_timer.stop();
+	cout << "걸린시간: " << f_timer.getElapsedTime() << "ms" << endl;
+	return 0;
+	*/
+
+		//merge 정렬
+	
 	cout << "< merge sort >" << endl;
 	m_timer.start();
 	//merge_0(arr2, arr1, 4, 6, mark);
@@ -47,7 +55,7 @@ int main()
 	delete[] arr;
 	delete[] mark;
 
-	return 0;*/
+	return 0;
 
 	//heap
 /*
@@ -60,15 +68,16 @@ cout << "걸린시간: " << h_timer.getElapsedTime() << "ms" << endl;
 */
 
 //
-	
+	/*
 	cout << "< quick sort >" << endl;
 	q_timer.start();
 	//quick(arr1, mark, size1, 0, size1 - 1);
-	quick(arr1, mark, size1, 0, size1 - 1);
+	quick(arr1, mark,  0, size1-1);
+	Print(arr1, size1);
 	q_timer.stop();
-	cout << "걸린시간: " << q_timer.getElapsedTime() << "ms" << endl;
+	cout << "걸린시간: " << q_timer.getElapsedTime() << "ms" << endl;*/
 
-
+	
 	delete[] mark;
 	return 0;
 	/*

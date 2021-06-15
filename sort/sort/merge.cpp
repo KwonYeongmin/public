@@ -128,3 +128,8 @@ void merge_1(int arr[], char mark[], int size, int left, int right)
 
 	Print(arr, size);
 }
+
+void merge(int arr[],char mark[],int left, int right) 
+{
+
+}
