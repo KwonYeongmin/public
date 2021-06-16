@@ -17,7 +17,6 @@ void shell(int arr[], char mark[], int size);
 void shell_1(int arr[], char mark[], int size);
 
 void quick(int arr[], char mark[], int left, int right);
-void quick_0(int arr[], char mark[], int left, int right);
 
 void merge_0(int arr1[], int arr2[], int size1, int size2, char mark[]);
 void merge_1(int arr[], char mark[], int size, int left, int right);

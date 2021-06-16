@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-
+/*
 void swapr(int &a, int &b) 
 {
 	int temp;
@@ -89,6 +89,6 @@ int main()
 	cout << " , value의 주소 = " << (unsigned long)&value<<endl;
 	cout << "pointer의 값 = " << (unsigned long)pointer;
 	cout << ", reference의 주소 = " << (unsigned long)&reference << endl;
-	*/
+	
 	return 0;
-}
+}*/

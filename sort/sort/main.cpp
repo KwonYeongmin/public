@@ -28,7 +28,7 @@ int main()
 	int cnt;
 	clock_t start, end;
 
-
+	/*
 	cout << "<bf_match>" << endl;
 	start = clock();
 	int ck1 = bf_match(data, abc, &cnt);
@@ -65,9 +65,9 @@ int main()
 
 	return 0;
 
+	*/
 
-
-	/*
+	
 	StopWatch b_timer;
 	StopWatch i_timer;
 	StopWatch s_timer;
@@ -103,7 +103,7 @@ int main()
 
 
 
-	* /
+	
 		//도수 정렬
 	/*
 	f_timer.start();
@@ -128,17 +128,17 @@ int main()
 	return 0;*/
 
 	//heap
-/*
-cout << "< heap sort >" << endl;
-//heap(arr, mark,size);
-h_timer.start();
-heap(arr2,mark ,size2 );// compare, SHOW_PROCESS);
-h_timer.stop();
-cout << "걸린시간: " << h_timer.getElapsedTime() << "ms" << endl;
-*/
-
-//
 	/*
+	cout << "< heap sort >" << endl;
+	//heap(arr, mark,size);
+	h_timer.start();
+	heap(arr2,mark ,size2 );// compare, SHOW_PROCESS);
+	h_timer.stop();
+	cout << "걸린시간: " << h_timer.getElapsedTime() << "ms" << endl;
+	*/
+
+		//퀵정렬
+	
 	cout << "< quick sort >" << endl;
 	q_timer.start();
 	//quick(arr1, mark, size1, 0, size1 - 1);
@@ -147,9 +147,8 @@ cout << "걸린시간: " << h_timer.getElapsedTime() << "ms" << endl;
 	q_timer.stop();
 	cout << "걸린시간: " << q_timer.getElapsedTime() << "ms" << endl;
 
-	
 	delete[] mark;
-	return 0;*/
+	return 0;
 	/*
 	int cnt=0;
 	int cnt_swap=0;
