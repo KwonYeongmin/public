@@ -1,5 +1,7 @@
 ﻿#include <iostream>
+
 /*
+
 void swapr(int &a, int &b) 
 {
 	int temp;
@@ -92,3 +94,97 @@ int main()
 	
 	return 0;
 }*/
+
+int main() 
+{
+	using namespace std;
+	/*
+	cout.fill('*');
+	const char * staff[2] = { "윤성일","박순용" };
+	long bonus[2] = { 900,1350 };
+	for (int i = 0; i < 2; i++)
+	{
+		cout << staff[i] << " : $ ";
+		cout.width(7);
+		cout << bonus[i] << "\n";
+	}*/
+	cout.fill('♡');
+	const char * staff[2] = { "이제노","정재현" };
+	string me = "권영민";
+	for (int i = 0; i < 2; i++)
+	{
+		cout << staff[i];
+		cout.width(4);
+		cout << me<<"\n";
+	}
+
+	return 0;
+	cout.width(12);
+	cout << "hello"<<endl; 
+	cout.width(12);
+	cout << "안녕하세요" << endl;
+	cout.width(12);
+	cout << "bye" << endl;
+	cout.width(12);
+	cout << "안녕히계세요" << endl;
+	return 0;
+	int w = cout.width();
+	cout << "디폴트 필드 폭 = " << w << " : \n";
+
+	cout.width(5);
+	cout << "N" << ':';
+	cout.width(8);
+	cout << " N * N " << ":\n";
+
+	for (long i = 1; i <= 100; i *= 10) 
+	{
+		cout.width(5);
+		cout << i << ':';
+		cout.width(8);
+		cout << i * i << ":\n";
+	}
+
+	return 0;
+	cout << "하나의 정수를 입력: ";
+	int n;
+	cin >> n;
+	cout << "n		n*n \n";
+	cout << n << "		" << (unsigned long)n * n << " (10진법) \n";
+
+	cout << hex;
+	cout << n << "		";
+	cout << n*n << " (16진법)\n";
+	
+	cout << oct << n << "		" << n * n << " (8진법)\n";
+
+	dec(cout);
+	cout << n << "		" << n * n << " (10진법)\n";
+	
+	return 0;
+	
+	std::cout << "12345678901234567890\n";
+	char ch = 'k';
+	int t = 273;
+	std::cout << ch << " : \n";
+	std::cout << t << " : \n";
+	std::cout << -t << " : \n";
+
+	double f1 = 1.200;
+	std::cout << f1 << " : \n";
+	std::cout << (f1+1.0/9.0) << " : \n";
+
+	double f2 = 1.67E2;
+	std::cout << f2 << " : \n";
+	f2 += 1.0 / 9.0;
+	std::cout << f2 << " : \n";
+	std::cout<<(f2*1.0e4)<< " : \n";
+
+	double f3 = 2.3e-4;
+	std::cout << f3 << " : \n";
+	std::cout << f3/10 << " : \n";
+
+	return 0;
+	std::cout << "안녕하십니까";
+	std::cout<<std::flush;
+	std::cout << "잠시만 기다려 주십시오." << std::endl;
+}
