@@ -3,13 +3,33 @@
 
 //10,4,5,2,3,8,9,20,14,17,1,7 
 
+	//å
+void quick_0(int arr[], char mark[], int left, int right) 
+{
+	int pl = left;
+	int pr = right;
+	int x = arr[(left + right) / 2];
+
+	while (pl <= pr) 
+	{
+		while (arr[pl] < x)pl++;
+		while (arr[pr] > x)pr--;
+		if (pl <= pr) 
+		{
+			swap(int, pl, pr);
+			pl++; pr--;
+		}
+	}
+	if (left < pr) quick(arr, mark, left, pr);
+	if (pl <right) quick(arr,mark,pl,right);
+}
+
 void quick(int arr[], char mark[], int left, int right)
 {
 	int pl = left; //0 
 	int pr = right; //size-1
 	int x = arr[(pr + pl) / 2];
 	int i = 0;
-	//cout << "pl : " << pl << " , pr : " << pr<<" , x : "<<x << endl;
 
 	while (pl <= pr) 
 	{
@@ -21,13 +41,8 @@ void quick(int arr[], char mark[], int left, int right)
 			pl++; pr--;
 		}
 	}
-	//Print(arr, 12);
-	//cout<<"left: " << left << " , pr: " << pr<<endl;
-	//cout << "right: " << right << " , pl: " << pl << endl;
 	if (left < pr) quick(arr, mark, left, pr); 
-	//Print(arr, 12);
 	if (pl < right) quick(arr,mark, pl, right);
-	//Print(arr, 12);
 
 
 

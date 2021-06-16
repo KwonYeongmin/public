@@ -17,9 +17,12 @@ void shell(int arr[], char mark[], int size);
 void shell_1(int arr[], char mark[], int size);
 
 void quick(int arr[], char mark[], int left, int right);
+void quick_0(int arr[], char mark[], int left, int right);
 
 void merge_0(int arr1[], int arr2[], int size1, int size2, char mark[]);
 void merge_1(int arr[], char mark[], int size, int left, int right);
+
+void merge(int arr[], char mark[], int left, int right);
 
 int heap(int arr[], char mark[], int size);
 void h_sort(int arr[], int size);
@@ -28,6 +31,13 @@ void fsort(int arr[], char mark[], int size);
 
 void Print(int *arr, int size);
 void init(int arr[]);
+
+
+
+int bf_match(const string data, const char* abc, int *cnt);
+int kmp_match(const string data, const char* abc, int *cnt);
+void print_match(char mark[], int len, int px, int pd, string data, const char abc[]);
+
 
 class StopWatch
 {

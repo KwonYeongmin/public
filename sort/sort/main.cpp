@@ -2,6 +2,72 @@
 
 int main()
 {
+	/*
+	const char*abc = "abc";
+	string data;
+	cout << "입력: ";
+	cin >> data;
+
+	int j = 0;
+	int cnt;
+	clock_t start, end;
+	start = clock();
+	if (bf_match(data, abc, &cnt) == 1)
+	{
+		cout << endl << abc << "는 " << data << "에 있습니다." << endl;
+	}
+	end = clock();
+	cout << end - start << "ms" << endl;
+	return 0;
+	*/
+
+	const char*abc = "abcad";
+	string data = "abcabccabcafegabcaffabcad";
+
+	int j = 0;
+	int cnt;
+	clock_t start, end;
+
+
+	cout << "<bf_match>" << endl;
+	start = clock();
+	int ck1 = bf_match(data, abc, &cnt);
+	if (ck1 != -1)
+	{
+		cout << abc << "는 " << data << "의 " << ck1 << "번째에 있습니다. \n";
+	}
+	else
+	{
+		cout << abc << "는 " << data << "에 없습니다. \n";
+	}
+	end = clock();
+	cout << "<bf_match>" << endl;
+	cout << end - start << "ms" << endl;
+	cout << "비교를 " << cnt << "회 진행" << endl;
+
+	cout << endl << "<kmp match>" << endl;
+	cnt = 0;
+	start = clock();
+	int ck2 = kmp_match(data, abc, &cnt);
+	if (ck2 != -1)
+	{
+		cout << abc << "는 " << data << "의 " << ck2 << "번째에 있습니다. \n";
+	}
+	else
+	{
+		cout << abc << "는 " << data << "에 없습니다. \n";
+	}
+	end = clock();
+	cout << "<kmp match>" << endl;
+	cout << end - start << "ms" << endl;
+	cout << "비교를 " << cnt << "회 진행" << endl;
+
+
+	return 0;
+
+
+
+	/*
 	StopWatch b_timer;
 	StopWatch i_timer;
 	StopWatch s_timer;
@@ -12,6 +78,7 @@ int main()
 	StopWatch f_timer;
 
 		//변수 선언
+
 	int i;
 	
 	//arr
@@ -34,6 +101,9 @@ int main()
 	char *mark = new char[size];
 	for (i = 0; i < size; i++) mark[i] = ' ';
 
+
+
+	* /
 		//도수 정렬
 	/*
 	f_timer.start();
@@ -44,7 +114,7 @@ int main()
 	*/
 
 		//merge 정렬
-	
+	/*
 	cout << "< merge sort >" << endl;
 	m_timer.start();
 	//merge_0(arr2, arr1, 4, 6, mark);
@@ -55,7 +125,7 @@ int main()
 	delete[] arr;
 	delete[] mark;
 
-	return 0;
+	return 0;*/
 
 	//heap
 /*
@@ -75,11 +145,11 @@ cout << "걸린시간: " << h_timer.getElapsedTime() << "ms" << endl;
 	quick(arr1, mark,  0, size1-1);
 	Print(arr1, size1);
 	q_timer.stop();
-	cout << "걸린시간: " << q_timer.getElapsedTime() << "ms" << endl;*/
+	cout << "걸린시간: " << q_timer.getElapsedTime() << "ms" << endl;
 
 	
 	delete[] mark;
-	return 0;
+	return 0;*/
 	/*
 	int cnt=0;
 	int cnt_swap=0;
