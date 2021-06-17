@@ -145,39 +145,10 @@ void drawCircle(HDC hdc,POINT p,double r)
 	Ellipse(hdc, p.x-r, p.y - r, p.x + r, p.y + r);
 }
 
-//반지름주어짐
-void drawSunflower1(HDC hdc, POINT p, double r,double nr)
-{
-	const double PI = 3.14159265358979323846;
 
-	//큰 원 그리기
-	drawCircle(hdc, { p.x, p.y }, r);
-	//개수 구하기
-	const int n;
-	//각도 구하기
-	const double a = 2 * PI / (double)(n);
-
-
-	const double A = sin(((a / 2)*PI) / PI);
-	//const double A = sin((( 2 * PI / (double)(n) / 2)*PI) / PI);
-	//꽃잎의 반지름
-	const double nr = (A*r) / (1 - A);
-	/*
-	POINT nn;
-	int i = 0;
-	while (1) 
-	{
-		if()
-		nn.x = p.x + (r + nr)*sin(a*i);
-		nn.y = p.y + (r + nr)*cos(a*i);
-		drawCircle(hdc, { nn.x, nn.y }, nr);
-		i++;
-	}*/
-		
-}
 
 //원의 개수로 구하기
-void drawSunflower2(HDC hdc, POINT p, double r, int n)
+void drawSunflower1(HDC hdc, POINT p, double r, int n)
 {
 	const double PI = 3.14159265358979323846;
 
@@ -189,7 +160,7 @@ void drawSunflower2(HDC hdc, POINT p, double r, int n)
 
 	const double A = sin(((a/2)*PI) / PI);
 	//꽃잎의 반지름
-	const double nr = (A*r)/(1-A);//= C*(r*(B/(1-B*C)));
+	const double nr = (A*r)/(1-A);
 	
 	POINT nn;
 	for (int i = 0; i < n; i++)
@@ -200,7 +171,45 @@ void drawSunflower2(HDC hdc, POINT p, double r, int n)
 	}
 
 }
+//반지름주어짐
+void drawSunflower2(HDC hdc, POINT p, double r, double nr)
+{
+	const double PI = 3.14159265358979323846;
 
+	//큰 원 그리기
+	drawCircle(hdc, { p.x, p.y }, r);
+
+	POINT nn;
+	int i = 0;
+	
+	double Ao = nr / (nr + r); 
+	double Bo = (sqrt(pow(r, 2) + 2 * r*nr)) / (r + nr);
+	double A = Ao;
+	double B = Bo;
+
+	//첫번째
+	nn.x = p.x ;
+	nn.y = p.y - (r + nr);
+	drawCircle(hdc, { nn.x, nn.y }, nr);
+	A = 2 * Ao*Bo;
+	B = pow(Bo, 2) - pow(Ao, 2);
+	
+	
+	while (i<14)
+	{
+		nn.x = p.x - (r + nr)*A;
+		nn.y = p.y - (r + nr)*B;
+		//if (A==1) break;
+		if(i%2==0)drawCircle(hdc, { nn.x, nn.y }, nr);
+		double temp_A = A;
+		double temp_B = B;
+
+		A = temp_A * Bo + temp_B * Ao;
+		B = temp_B * Bo - temp_A * Ao;		
+		i++;
+	}
+
+}
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
@@ -289,8 +298,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			DrawGrid(hdc,0,100,4);
 			drawCircle(hdc, { 1000, 100 }, 30);
-			drawSunflower1(hdc, { 700,200 }, 80, 8);
-			drawSunflower2(hdc, { 300,300 }, 100, 8);
+			drawSunflower2(hdc, { 700,200 }, 80, 50);
+			drawSunflower1(hdc, { 300,300 }, 100, 8);
 			//SetCaretPos(size.cx,yPos);
 			EndPaint(hWnd, &ps);
         }
