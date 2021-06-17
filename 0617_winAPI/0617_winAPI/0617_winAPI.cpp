@@ -160,16 +160,38 @@ void drawSunflower1(HDC hdc, double x, double y, double r,double rs)
 //원의 개수 주어짐
 void drawSunflower2(HDC hdc, POINT p, double r, int n)
 {
-	const double PI = 3.1415926;
+	const double PI = 3.14159265358979323846;
 
+	//큰 원 그리기
 	drawCircle(hdc, {p.x, p.y}, r);
-	double a = 360.0 /(double)(n*2);
+	double a = 360 /(double)(n);
 
-	const double A = sin((a*PI) / 180);
-	const double B = cos(((a)*PI) / 180);
-	const double C = tan(((a)*PI) / 180);
+	const double A = sin((a/2*PI) / 180);
+	const double B = cos(((a/2)*PI) / 180);
+	const double C = tan(((a/2)*PI) / 180);
+
+	//꽃잎의 반지름
 	const double nr = C*(r*(B/(1-B*C)));
 	
+	POINT nn;
+	nn.x = (r + nr)*sin((a) *1);
+	nn.y = (r + nr)*cos((a) *1);
+	drawCircle(hdc, nn, nr);
+
+	nn.x = (r + nr)*sin((a) * 2);
+	nn.y = (r + nr)*cos((a) * 2);
+	drawCircle(hdc, nn, nr);
+
+	
+	
+	for (int i = 0; i < n; i++)
+	{
+	nn.x = (r + nr)*sin((a) * i);
+	nn.y = (r + nr)*cos((a) * i);
+	drawCircle(hdc, nn, nr);
+	}
+
+	/*
 	const double A_ = sin(((90 + a)*PI) / 180);
 	const double B_ = cos(((90 + a)*PI) / 180);
 	const double C_ = tan(((90 + a)*PI) / 180);
@@ -177,14 +199,14 @@ void drawSunflower2(HDC hdc, POINT p, double r, int n)
 	const double cc = 2 * nr;
 	double aa = cc*A_;
 	double bb = cc*B_;
+	*/
+
+
+
 	
 
-	POINT nn;
-	nn.x = p.x;
-	nn.y = p.y - r - nr;
-	drawCircle(hdc, nn, nr);
-	int dir = -1;
-	int dir_ = -1;
+	
+	/*
 	for (int i = 0; i < 3; i++)//n - 1; i++)
 	{	
 		
@@ -224,8 +246,7 @@ void drawSunflower2(HDC hdc, POINT p, double r, int n)
 		double t = aa;
 		aa = bb;
 		bb = t;
-	}
-	//int m = rs + r;
+	}*/
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
