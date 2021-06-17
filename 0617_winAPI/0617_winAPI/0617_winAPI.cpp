@@ -146,107 +146,59 @@ void drawCircle(HDC hdc,POINT p,double r)
 }
 
 //반지름주어짐
-void drawSunflower1(HDC hdc, double x, double y, double r,double rs)
+void drawSunflower1(HDC hdc, POINT p, double r,double nr)
 {
-//	drawCircle(hdc, x, y, r);
-	
+	const double PI = 3.14159265358979323846;
+
+	//큰 원 그리기
+	drawCircle(hdc, { p.x, p.y }, r);
+	//개수 구하기
+	const int n;
+	//각도 구하기
+	const double a = 2 * PI / (double)(n);
+
+
+	const double A = sin(((a / 2)*PI) / PI);
+	//const double A = sin((( 2 * PI / (double)(n) / 2)*PI) / PI);
+	//꽃잎의 반지름
+	const double nr = (A*r) / (1 - A);
+	/*
+	POINT nn;
+	int i = 0;
 	while (1) 
 	{
-	
-	}
-
+		if()
+		nn.x = p.x + (r + nr)*sin(a*i);
+		nn.y = p.y + (r + nr)*cos(a*i);
+		drawCircle(hdc, { nn.x, nn.y }, nr);
+		i++;
+	}*/
+		
 }
 
-//원의 개수 주어짐
+//원의 개수로 구하기
 void drawSunflower2(HDC hdc, POINT p, double r, int n)
 {
 	const double PI = 3.14159265358979323846;
 
 	//큰 원 그리기
-	drawCircle(hdc, {p.x, p.y}, r);
-	double a = 360 /(double)(n);
+	drawCircle(hdc,{ p.x, p.y}, r);
+	//각도 구하기
+	const double a = 2*PI /(double)(n);
 
-	const double A = sin((a/2*PI) / 180);
-	const double B = cos(((a/2)*PI) / 180);
-	const double C = tan(((a/2)*PI) / 180);
 
+	const double A = sin(((a/2)*PI) / PI);
 	//꽃잎의 반지름
-	const double nr = C*(r*(B/(1-B*C)));
+	const double nr = (A*r)/(1-A);//= C*(r*(B/(1-B*C)));
 	
 	POINT nn;
-	nn.x = (r + nr)*sin((a) *1);
-	nn.y = (r + nr)*cos((a) *1);
-	drawCircle(hdc, nn, nr);
-
-	nn.x = (r + nr)*sin((a) * 2);
-	nn.y = (r + nr)*cos((a) * 2);
-	drawCircle(hdc, nn, nr);
-
-	
-	
 	for (int i = 0; i < n; i++)
 	{
-	nn.x = (r + nr)*sin((a) * i);
-	nn.y = (r + nr)*cos((a) * i);
-	drawCircle(hdc, nn, nr);
+		nn.x = p.x + (r + nr)*sin(a*i);
+		nn.y = p.y + (r + nr)*cos(a*i);
+		drawCircle(hdc, {nn.x, nn.y}, nr);
 	}
 
-	/*
-	const double A_ = sin(((90 + a)*PI) / 180);
-	const double B_ = cos(((90 + a)*PI) / 180);
-	const double C_ = tan(((90 + a)*PI) / 180);
-	
-	const double cc = 2 * nr;
-	double aa = cc*A_;
-	double bb = cc*B_;
-	*/
-
-
-
-	
-
-	
-	/*
-	for (int i = 0; i < 3; i++)//n - 1; i++)
-	{	
-		
-		if (i < (n - 1) / 4)
-		{
-			nn.x -= aa;// *dir;
-			nn.y -= bb;// *dir_;
-			
-		}
-		else if (i < 2*((n - 1) / 4)) 
-		{
-			nn.x += aa;// *dir;
-			nn.y += bb;// *dir_;
-			if (i == (2*(n - 1) / 4) - 1) 
-			{
-				double t = aa;
-				aa = bb;
-				bb = t;
-			}
-		}
-		else if (i < 3 * ((n - 1) / 4)) 
-		{
-			nn.x += aa;// *dir;
-			nn.y -= bb;// *dir_;
-			if (i == (i < 3 * (n - 1) / 4) - 1)
-			{
-				double t = aa;
-				aa = bb;
-				bb = t;
-			}
-		}
-		else
-		{
-			nn.x -= aa;// *dir;
-			nn.y -= bb;// *dir_;
-		}	drawCircle(hdc, nn, nr);
-		double t = aa;
-		aa = bb;
-		bb = t;
-	}*/
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -320,7 +272,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			rect.top = 0;
 			rect.right = 400;
 			rect.bottom = 400;
-			SetTextColor(hdc,RGB(120,0,180));
+			//SetTextColor(hdc,RGB(120,0,180));
 			//DrawText(hdc, _T("hello world2"), _tcslen(_T("hello world2")), 
 			//	&rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 			//SetTextColor(hdc, RGB(0, 0, 0));
@@ -328,14 +280,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//TextOut(hdc, 0, yPos, str, _tcslen(str));
 			//GetTextExtentPoint(hdc, str, _tcslen(str), &size);
 			//DrawText(hdc, str, _tcslen(str), &rt, DT_TOP | DT_LEFT);
-			DrawGrid(hdc,0,100,4);
+			
 			/*
 			LPPOINT p;// = 300;// , 300);
 			p->x = 300;
 			p->y = 300;*/
 			//drawCircle(hdc, &p, 100);
-			//drawCircle(hdc, { 200, 200 }, 30);
-			drawSunflower2(hdc, { 300,300 },100, 8);
+
+			DrawGrid(hdc,0,100,4);
+			drawCircle(hdc, { 1000, 100 }, 30);
+			drawSunflower1(hdc, { 700,200 }, 80, 8);
+			drawSunflower2(hdc, { 300,300 }, 100, 8);
 			//SetCaretPos(size.cx,yPos);
 			EndPaint(hWnd, &ps);
         }

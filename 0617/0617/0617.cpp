@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <cmath>
 
 /*
 문1
@@ -22,7 +23,22 @@ using namespace std;
 
 int main()
 {
+	const double PI = 3.14159265358979323846;
+	int n = 8;
+	int r = 100;
+	//큰 원 그리기
+	//drawCircle(hdc, { p.x, p.y }, r);
+	double a = PI * 2 / (double)(n);
 
+	const double A = sin(((2 /a )*PI) / 180);
+	const double B = cos(((2 /a )*PI) / 180);
+	const double C = tan(((2/a )*PI) / 180);
+
+	//꽃잎의 반지름
+	const double nr = (A*r) / (1 - A);//= C*(r*(B/(1-B*C)));
+	cout << A << endl;
+	cout << nr;
+	//cout << a << endl;
 	//encoding();
 	//decoding();
 	return 0;
