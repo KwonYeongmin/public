@@ -35,6 +35,10 @@ void init(int arr[]);
 
 int bf_match(const string data, const char* abc, int *cnt);
 int kmp_match(const string data, const char* abc, int *cnt);
+int bm_match_0(const string data, const char* abc, int *cnt);
+int bm_match_1(const string data, const char* abc, int *cnt);
+int bm_match(const string data, const char* abc, int *cnt);
+
 void print_match(char mark[], int len, int px, int pd, string data, const char abc[]);
 
 

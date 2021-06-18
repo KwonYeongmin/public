@@ -6,6 +6,21 @@
 
 #define MAX_LOADSTRING 100
 
+
+//함수 정의
+void DrawGrid(HDC hdc, int start, int end, int line);
+void drawCircle(HDC hdc, POINT p, double r);
+void drawSunflower1(HDC hdc, POINT p, double r, int n);
+void drawSunflower2(HDC hdc, POINT p, double r, double nr);
+
+
+void drawInputText(HDC hdc,RECT rect, LPCUWSTR str, int yPos);
+RECT drawRectangle(HDC hdc, POINT center, long width, long height);
+void DrawStar(HDC hdc, POINT center, int r,int size);
+
+void keypad(HDC hdc, RECT up, RECT down, RECT left, RECT right, RECT center);
+
+
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
@@ -121,95 +136,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
-void DrawGrid(HDC hdc,int start, int end,int line)
-{
-	double width = (end - start) / (line - 1);
-	//가로
-	for (int i = 0; i < line; i++) 
-	{
-		MoveToEx(hdc, start, start + i * width,NULL);
-		LineTo(hdc, end, start + i * width);
-	}
-	//세로
-	for (int i = 0; i < line; i++)
-	{
-		MoveToEx(hdc, start + i * width, start, NULL);
-		LineTo(hdc, start + i * width, end);
-	}
-}
 
-
-//drawCircle(중심,반지름)
-void drawCircle(HDC hdc,POINT p,double r) 
-{
-	Ellipse(hdc, p.x-r, p.y - r, p.x + r, p.y + r);
-}
-
-
-
-//원의 개수로 구하기
-void drawSunflower1(HDC hdc, POINT p, double r, int n)
-{
-	const double PI = 3.14159265358979323846;
-
-	//큰 원 그리기
-	drawCircle(hdc,{ p.x, p.y}, r);
-	//각도 구하기
-	const double a = 2*PI /(double)(n);
-
-
-	const double A = sin(((a/2)*PI) / PI);
-	//꽃잎의 반지름
-	const double nr = (A*r)/(1-A);
-	
-	POINT nn;
-	for (int i = 0; i < n; i++)
-	{
-		nn.x = p.x + (r + nr)*sin(a*i);
-		nn.y = p.y + (r + nr)*cos(a*i);
-		drawCircle(hdc, {nn.x, nn.y}, nr);
-	}
-
-}
-//반지름주어짐
-void drawSunflower2(HDC hdc, POINT p, double r, double nr)
-{
-	const double PI = 3.14159265358979323846;
-
-	//큰 원 그리기
-	drawCircle(hdc, { p.x, p.y }, r);
-
-	POINT nn;
-	int i = 0;
-	
-	double Ao = nr / (nr + r); 
-	double Bo = (sqrt(pow(r, 2) + 2 * r*nr)) / (r + nr);
-	double A = Ao;
-	double B = Bo;
-
-	//첫번째
-	nn.x = p.x ;
-	nn.y = p.y - (r + nr);
-	drawCircle(hdc, { nn.x, nn.y }, nr);
-	A = 2 * Ao*Bo;
-	B = pow(Bo, 2) - pow(Ao, 2);
-	
-	
-	while (i<14)
-	{
-		nn.x = p.x - (r + nr)*A;
-		nn.y = p.y - (r + nr)*B;
-		//if (A==1) break;
-		if(i%2==0)drawCircle(hdc, { nn.x, nn.y }, nr);
-		double temp_A = A;
-		double temp_B = B;
-
-		A = temp_A * Bo + temp_B * Ao;
-		B = temp_B * Bo - temp_A * Ao;		
-		i++;
-	}
-
-}
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
@@ -218,6 +145,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	static int count,yPos;
 	RECT rt = { 0,0,1000,1000 };
 	static SIZE size;
+	static  bool isleft = false;
+	static  bool isright = false;
+	static  bool isup = false;
+	static  bool isdown = false;
     switch (message)
     {
     case WM_COMMAND:
@@ -239,49 +170,67 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
 	case WM_CREATE: 
-		//CreateCaret(hWnd,NULL,5,15);
-		//ShowCaret(hWnd);
-		
+		CreateCaret(hWnd,NULL,5,15);
+		ShowCaret(hWnd);
 		count = 0; 
 		yPos = 0;
 		break;
 	
+	case WM_KEYDOWN:
+	{
+		if (wParam == VK_UP) isup == true;
+		if (wParam == VK_DOWN)  isdown == true;
+		if (wParam == VK_RIGHT)  isright == true;
+		if (wParam == VK_LEFT)  isleft == true;
+	}
+	break;
+	case WM_KEYUP:
+	{
+		if (wParam == VK_UP)isup == false;
+		if (wParam == VK_DOWN) isdown == false;
+		if (wParam == VK_RIGHT)  isright == false;
+		if (wParam == VK_LEFT)  isleft == false;
+	}	break;
+	
 	case WM_CHAR:
 		{
 		// count가 0보다 작거나 100보다 크면 안된다.
+		/*
 			if (wParam == VK_BACK&& count > 0) { str[--count] = NULL; }
 			
 			else if (wParam == VK_RETURN) 
 			{
 				count = 0; 
 				str[0] = NULL;
-				yPos =yPos+ 20;
+				yPos+= 20;
 			}	
 			else
 			{
 				str[count++] = wParam;
 				str[count] = NULL;
-			}
-			InvalidateRect(hWnd, NULL, true);
-			
+			}*/
+		if (wParam == VK_UP)isup == true;
+		InvalidateRect(hWnd, NULL, true);	
 		}
-		break;
+		break; 
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-				
-				//추가
+		
+
+				//글씨 쓰기	
 			//TextOut(hdc, 100, 100, _T("hello world"), _tcslen(_T("hello world")));// wcslen);
 			
 				//rect구조체 선언
-			RECT rect;
+			/*RECT rect;
 			rect.left = 0;
 			rect.top = 0;
 			rect.right = 400;
-			rect.bottom = 400;
+			rect.bottom = 400;*/
 			//SetTextColor(hdc,RGB(120,0,180));
+		
 			//DrawText(hdc, _T("hello world2"), _tcslen(_T("hello world2")), 
 			//	&rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 			//SetTextColor(hdc, RGB(0, 0, 0));
@@ -295,18 +244,103 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			p->x = 300;
 			p->y = 300;*/
 			//drawCircle(hdc, &p, 100);
-
+			/*
 			DrawGrid(hdc,0,100,4);
-			drawCircle(hdc, { 1000, 100 }, 30);
-			drawSunflower2(hdc, { 700,200 }, 80, 50);
+			drawCircle(hdc, { 1000, 100 }, 30);*/
+			/*drawSunflower2(hdc, { 700,200 }, 80, 50);
+			
 			drawSunflower1(hdc, { 300,300 }, 100, 8);
-			//SetCaretPos(size.cx,yPos);
-			EndPaint(hWnd, &ps);
+				
+			RECT rect=drawRectangle(hdc, {500,200},100,100);
+			drawInputText(hdc, rect,str,yPos);*/
+				
+				//선,면 색 바꾸기
+			/*
+			HPEN pen = CreatePen(PS_DOT,1, RGB(0, 0, 0));
+			HPEN oldPen = (HPEN)SelectObject(hdc, pen);
+			HBRUSH hBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+			//HBRUSH hBrush = CreateSolidBrush(RGB(130, 50, 220));
+			HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+			DrawStar(hdc, { 800,200 }, 100, 8);
+			DrawStar(hdc, {1000,400},100,5);
+			SelectObject(hdc,oldPen);
+			DeleteObject(pen); 
+			SelectObject(hdc, oldBrush);
+			DeleteObject(hBrush);*/
+
+
+			HBRUSH 	hBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+			//HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0));
+			HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+			
+			//초기화상태
+			//위
+			RECT up = drawRectangle(hdc, { 500,200 }, 80, 100);
+			DrawText(hdc, _T("위쪽"), _tcslen(_T("위쪽")),
+				&up, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+			//아래
+			RECT down = drawRectangle(hdc, { 500,400 }, 80, 100);
+			DrawText(hdc, _T("아래쪽"), _tcslen(_T("아래쪽")),
+				&down, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+			//오른쪽
+			RECT right = drawRectangle(hdc, { 580,300 }, 80, 100);
+			DrawText(hdc, _T("오른쪽"), _tcslen(_T("오른쪽")),
+				&right, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+			//왼쪽
+			RECT left = drawRectangle(hdc, { 420,300 }, 80, 100);
+			DrawText(hdc, _T("왼쪽"), _tcslen(_T("왼쪽")),
+				&left, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+			RECT center = drawRectangle(hdc, { 500,300 }, 80, 100);
+
+			if (isup == true) 
+			{
+				hBrush = CreateSolidBrush(RGB(255, 0, 0));
+				oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+				up = drawRectangle(hdc, { 500,200 }, 80, 100);
+			}
+			else if (isup == false)
+			{
+				hBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+				oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+				keypad(hdc,up, down,  left, right, center);
+			}
+
+			
+		
+
+
+			
+
+			if (isup == true) 
+			{
+				hBrush = CreateSolidBrush(RGB(255, 0, 0));
+				oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+				break;
+			}
+			//while (1) 
+			//{
+			
+			/*
+			else 
+			{
+				hBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+				//HBRUSH hBrush = CreateSolidBrush(RGB(130, 50, 220));
+				oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+				up = drawRectangle(hdc, { 500,200 }, 80, 100);
+				drawInputText(hdc, up, _T("위쪽"), yPos);
+				break;
+				}
+			}*/
+			
+		
+			EndPaint(hWnd, &ps);	
+			SelectObject(hdc, oldBrush);
+			DeleteObject(hBrush);
         }
         break;
     case WM_DESTROY:
-		//HideCaret(hWnd);
-		//DestroyCaret();
+		HideCaret(hWnd);
+		DestroyCaret();
         PostQuitMessage(0);
         break;
     default:
@@ -333,4 +367,177 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     return (INT_PTR)FALSE;
+}
+
+//사각형
+RECT drawRectangle(HDC hdc, POINT center, long width, long height) 
+{
+	POINT start, end;
+	start.x = center.x  -width / 2;
+	start.y = center.y - height / 2;
+	end.x =  center.x+ width /2;
+	end.y = center.y+height/2;
+	Rectangle(hdc, start.x, start.y, end.x, end.y);
+
+	RECT rect;
+	rect.left = start.x;
+	rect.top = start.y;
+	rect.right = end.x;
+	rect.bottom = end.y;
+	
+	return rect;
+}
+void keypad(HDC hdc,RECT up,RECT down, RECT left, RECT right,RECT center) 
+{
+	//위
+	up = drawRectangle(hdc, { 500,200 }, 80, 100);
+	DrawText(hdc, _T("위쪽"), _tcslen(_T("위쪽")),
+		&up, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+	//아래
+	down = drawRectangle(hdc, { 500,400 }, 80, 100);
+	DrawText(hdc, _T("아래쪽"), _tcslen(_T("아래쪽")),
+		&down, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+	//오른쪽
+	right = drawRectangle(hdc, { 580,300 }, 80, 100);
+	DrawText(hdc, _T("오른쪽"), _tcslen(_T("오른쪽")),
+		&right, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+	//왼쪽
+	left = drawRectangle(hdc, { 420,300 }, 80, 100);
+	DrawText(hdc, _T("왼쪽"), _tcslen(_T("왼쪽")),
+		&left, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+	center = drawRectangle(hdc, { 500,300 }, 80, 100);
+}
+//사각형안에 글씨쓰기
+void drawInputText(HDC hdc, RECT rect, LPCUWSTR str, int yPos)
+{
+	SIZE size;
+	Rectangle(hdc,rect.left, rect.top, rect.right, rect.bottom);
+	yPos = rect.top;
+	TextOut(hdc, rect.left + 5, yPos+5, str, _tcslen(str));
+	GetTextExtentPoint(hdc, str, _tcslen(str), &size);
+	//SetCaretPos(rect.left+size.cx + 5, yPos + 5);
+}
+
+void DrawStar(HDC hdc,POINT center,int r,int size) 
+{
+	const double PI = 3.14159265358979323846;
+	POINT *point = (POINT*)calloc(size*2, sizeof(POINT));
+
+	const double a = 2 * PI /(double)( size);
+	int i;
+	//원 위의 점 구하기
+	for (i = 0; i < size; i++) 
+	{
+		(point + i*2)->x = center.x-r * sin(a*i);
+		(point + i*2)->y = center.y-r * cos(a*i);
+	}
+
+	const double A = sin(a);
+	const double B = cos(a);
+	double A_ = sin(a/2);
+	double B_ = cos(a/2);
+	double ta = A_;
+	double tb = B_;
+
+	//다각형의 반지름
+	const int nr = 2 * (B*(r - B * r) / A);
+	
+	//다각형 외접원의 점 구하기 
+	for (i = 0; i < size ;i++) 
+	{
+		point[i*2+1].x= center.x - nr * A_;
+		point[i * 2 + 1].y = center.y - nr * B_;
+		ta = A_;
+		tb = B_;
+		A_ = ta * B + A * tb;
+		B_ = tb * B - A * ta;
+	}
+	Polygon(hdc, point, size*2);
+}
+
+//그리드 그리기
+void DrawGrid(HDC hdc, int start, int end, int line)
+{
+	double width = (end - start) / (line - 1);
+	for (int i = 0; i < line; i++)
+	{
+		MoveToEx(hdc, start, start + i * width, NULL);
+		LineTo(hdc, end, start + i * width);
+	}
+	for (int i = 0; i < line; i++)
+	{
+		MoveToEx(hdc, start + i * width, start, NULL);
+		LineTo(hdc, start + i * width, end);
+	}
+}
+
+//원 그리기
+void drawCircle(HDC hdc, POINT p, double r)
+{
+	Ellipse(hdc, p.x - r, p.y - r, p.x + r, p.y + r);
+}
+
+//원의 개수로 구하기
+void drawSunflower1(HDC hdc, POINT p, double r, int n)
+{
+	const double PI = 3.14159265358979323846;
+	//큰 원 그리기
+	drawCircle(hdc, { p.x, p.y }, r);
+	//각도 구하기
+	const double a = 2 * PI / (double)(n);
+
+	const double A = sin(((a / 2)*PI) / PI);
+	const double nr = (A*r) / (1 - A);
+
+	POINT nn;
+	for (int i = 0; i < n; i++)
+	{
+		nn.x = p.x + (r + nr)*sin(a*i);
+		nn.y = p.y + (r + nr)*cos(a*i);
+		drawCircle(hdc, { nn.x, nn.y }, nr);
+	}
+}
+
+//반지름주어짐
+void drawSunflower2(HDC hdc, POINT p, double r, double nr)
+{
+	const double PI = 3.14159265358979323846;
+
+	//큰 원 그리기
+	drawCircle(hdc, { p.x, p.y }, r);
+
+	POINT nn;
+	int i = 0;
+
+	double Ao = nr / (nr + r);
+	double Bo = (sqrt(pow(r, 2) + 2 * r*nr)) / (r + nr);
+	double A = Ao;
+	double B = Bo;
+
+	//첫번째
+	nn.x = p.x;
+	nn.y = p.y - (r + nr);
+	drawCircle(hdc, { nn.x, nn.y }, nr);
+	A = 2 * Ao*Bo;
+	B = pow(Bo, 2) - pow(Ao, 2);
+
+	int ck = 0;
+
+	while (i < 13)
+	{
+		nn.x = p.x - (r + nr)*A;
+		nn.y = p.y - (r + nr)*B;
+		if (A == 1) break;
+		if (i % 2 == 0)
+		{
+			drawCircle(hdc, { nn.x, nn.y }, nr);
+			ck++;
+		}
+		double temp_A = A;
+		double temp_B = B;
+
+		A = temp_A * Bo + temp_B * Ao;
+		B = temp_B * Bo - temp_A * Ao;
+		i++;
+	}
 }
