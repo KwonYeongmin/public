@@ -139,16 +139,12 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	HDC hdc;
+
 	//static bool isPressed= false;
 	static TCHAR str[100];
 	static int count,yPos;
 	RECT rt = { 0,0,1000,1000 };
-	static SIZE size;
-	static  bool isleft = false;
-	static  bool isright = false;
-	static  bool isup = false;
-	static  bool isdown = false;
+	//static SIZE size;
     switch (message)
     {
     case WM_COMMAND:
@@ -175,9 +171,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		count = 0; 
 		yPos = 0;
 		break;
-	
+	/*
 	case WM_KEYDOWN:
 	{
+		RECT up = drawRectangle(hdc, { 500,200 }, 80, 100);
+		DrawText(hdc, _T("위쪽"), _tcslen(_T("위쪽")),
+			&up, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 		if (wParam == VK_UP) isup == true;
 		if (wParam == VK_DOWN)  isdown == true;
 		if (wParam == VK_RIGHT)  isright == true;
@@ -190,12 +189,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		if (wParam == VK_DOWN) isdown == false;
 		if (wParam == VK_RIGHT)  isright == false;
 		if (wParam == VK_LEFT)  isleft == false;
-	}	break;
+	}	break;*/
 	
 	case WM_CHAR:
 		{
 		// count가 0보다 작거나 100보다 크면 안된다.
-		/*
+		
 			if (wParam == VK_BACK&& count > 0) { str[--count] = NULL; }
 			
 			else if (wParam == VK_RETURN) 
@@ -208,15 +207,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				str[count++] = wParam;
 				str[count] = NULL;
-			}*/
-		if (wParam == VK_UP)isup == true;
+			}
 		InvalidateRect(hWnd, NULL, true);	
 		}
 		break; 
     case WM_PAINT:
         {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
+	
+		//HDC hdc;
+		static PAINTSTRUCT ps;
+		static HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 		
 
@@ -234,15 +234,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//DrawText(hdc, _T("hello world2"), _tcslen(_T("hello world2")), 
 			//	&rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 			//SetTextColor(hdc, RGB(0, 0, 0));
-			//TextOut(hdc, 0, 0, str, _tcslen(str));
+			TextOut(hdc, 0, 0, str, _tcslen(str));
 			//TextOut(hdc, 0, yPos, str, _tcslen(str));
 			//GetTextExtentPoint(hdc, str, _tcslen(str), &size);
 			//DrawText(hdc, str, _tcslen(str), &rt, DT_TOP | DT_LEFT);
 			
-			/*
-			LPPOINT p;// = 300;// , 300);
-			p->x = 300;
-			p->y = 300;*/
 			//drawCircle(hdc, &p, 100);
 			/*
 			DrawGrid(hdc,0,100,4);
@@ -267,75 +263,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DeleteObject(pen); 
 			SelectObject(hdc, oldBrush);
 			DeleteObject(hBrush);*/
-
-
-			HBRUSH 	hBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
-			//HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0));
-			HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
-			
-			//초기화상태
-			//위
-			RECT up = drawRectangle(hdc, { 500,200 }, 80, 100);
-			DrawText(hdc, _T("위쪽"), _tcslen(_T("위쪽")),
-				&up, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
-			//아래
-			RECT down = drawRectangle(hdc, { 500,400 }, 80, 100);
-			DrawText(hdc, _T("아래쪽"), _tcslen(_T("아래쪽")),
-				&down, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
-			//오른쪽
-			RECT right = drawRectangle(hdc, { 580,300 }, 80, 100);
-			DrawText(hdc, _T("오른쪽"), _tcslen(_T("오른쪽")),
-				&right, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
-			//왼쪽
-			RECT left = drawRectangle(hdc, { 420,300 }, 80, 100);
-			DrawText(hdc, _T("왼쪽"), _tcslen(_T("왼쪽")),
-				&left, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
-			RECT center = drawRectangle(hdc, { 500,300 }, 80, 100);
-
-			if (isup == true) 
-			{
-				hBrush = CreateSolidBrush(RGB(255, 0, 0));
-				oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
-				up = drawRectangle(hdc, { 500,200 }, 80, 100);
-			}
-			else if (isup == false)
-			{
-				hBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
-				oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
-				keypad(hdc,up, down,  left, right, center);
-			}
-
-			
-		
-
-
-			
-
-			if (isup == true) 
-			{
-				hBrush = CreateSolidBrush(RGB(255, 0, 0));
-				oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
-				break;
-			}
-			//while (1) 
-			//{
-			
-			/*
-			else 
-			{
-				hBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
-				//HBRUSH hBrush = CreateSolidBrush(RGB(130, 50, 220));
-				oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
-				up = drawRectangle(hdc, { 500,200 }, 80, 100);
-				drawInputText(hdc, up, _T("위쪽"), yPos);
-				break;
-				}
-			}*/
-			
-		
+			RECT rect=drawRectangle(hdc, { 200,200 }, 400,400);
+			drawInputText(hdc,rect, str, yPos);
+	
 			EndPaint(hWnd, &ps);	
-			SelectObject(hdc, oldBrush);
-			DeleteObject(hBrush);
+			//SelectObject(hdc, oldBrush);
+			//DeleteObject(hBrush);
         }
         break;
     case WM_DESTROY:
@@ -415,7 +348,7 @@ void drawInputText(HDC hdc, RECT rect, LPCUWSTR str, int yPos)
 	yPos = rect.top;
 	TextOut(hdc, rect.left + 5, yPos+5, str, _tcslen(str));
 	GetTextExtentPoint(hdc, str, _tcslen(str), &size);
-	//SetCaretPos(rect.left+size.cx + 5, yPos + 5);
+	SetCaretPos(rect.left+size.cx + 5, yPos + 5);
 }
 
 void DrawStar(HDC hdc,POINT center,int r,int size) 
