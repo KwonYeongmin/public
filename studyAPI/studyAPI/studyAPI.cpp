@@ -15,9 +15,12 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름�
 //함수
 void DrawGrid(HDC hdc, POINT start, POINT end, int num);
 
+void DrawSunFlower(HDC hdc, POINT center, long r, int num);
 void DrawCircle(HDC hdc, POINT center, int r);
+RECT DrawRectangle(HDC hdc, POINT center, long width, long height);
+void drawInputText(HDC hdc, HWND hWnd, RECT rect, TCHAR text[],int yPos);
 
-
+void DrawStar(HDC hdc, POINT center, int r, int num);
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -26,41 +29,41 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+					 _In_opt_ HINSTANCE hPrevInstance,
+					 _In_ LPWSTR    lpCmdLine,
+					 _In_ int       nCmdShow)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+	UNREFERENCED_PARAMETER(hPrevInstance);
+	UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // TODO: 여기에 코드를 입력합니다.
+	// TODO: 여기에 코드를 입력합니다.
 
-    // 전역 문자열을 초기화합니다.
-    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_STUDYAPI, szWindowClass, MAX_LOADSTRING);
-    MyRegisterClass(hInstance);
+	// 전역 문자열을 초기화합니다.
+	LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+	LoadStringW(hInstance, IDC_STUDYAPI, szWindowClass, MAX_LOADSTRING);
+	MyRegisterClass(hInstance);
 
-    // 애플리케이션 초기화를 수행합니다:
-    if (!InitInstance (hInstance, nCmdShow))
-    {
-        return FALSE;
-    }
+	// 애플리케이션 초기화를 수행합니다:
+	if (!InitInstance (hInstance, nCmdShow))
+	{
+		return FALSE;
+	}
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_STUDYAPI));
+	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_STUDYAPI));
 
-    MSG msg;
+	MSG msg;
 
-    // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
+	// 기본 메시지 루프입니다:
+	while (GetMessage(&msg, nullptr, 0, 0))
+	{
+		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
 
-    return (int) msg.wParam;
+	return (int) msg.wParam;
 }
 
 
@@ -72,7 +75,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
-    WNDCLASSEXW wcex;
+	WNDCLASSEXW wcex;
 
 	wcex.cbSize = sizeof(WNDCLASSEX); //구조체 크기
 
@@ -88,7 +91,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.lpszClassName = szWindowClass; // 윈도우 클래스의 이름(문자열)
 	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));//MAKEINTRESOURCE(IDI_SMALL)); // 작은 아이콘 등록
 
-    return RegisterClassExW(&wcex);
+	return RegisterClassExW(&wcex);
 }
 
 
@@ -117,7 +120,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    if (!hWnd)
    {
-      return FALSE;
+	  return FALSE;
    }
 
    ShowWindow(hWnd, nCmdShow);
@@ -139,35 +142,35 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
-	static TCHAR input[200];
+	static TCHAR input[10][100];
 	static int count = 0;
 	static int yPos;
 	static int XPos;
 	static SIZE size;
-	//static RECT rect{ rect.left = 200,rect.top = 200,rect.bottom = 400,rect.right = 400 };
 			
-    switch (message)
-    {
-    case WM_COMMAND:
-        {
-            int wmId = LOWORD(wParam);
-            // 메뉴 선택을 구문 분석합니다:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
-        }
-        break;
+	switch (message)
+	{
+	case WM_COMMAND:
+		{
+			int wmId = LOWORD(wParam);
+			// 메뉴 선택을 구문 분석합니다:
+			switch (wmId)
+			{
+			case IDM_ABOUT:
+				DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+				break;
+			case IDM_EXIT:
+				DestroyWindow(hWnd);
+				break;
+			default:
+				return DefWindowProc(hWnd, message, wParam, lParam);
+			}
+		}
+		break;
 	case WM_CREATE: 
 		{
-		CreateCaret(hWnd, NULL, 5, 15);ShowCaret(hWnd);
+		CreateCaret(hWnd, NULL, 5, 15);
+		ShowCaret(hWnd);
 			count = 0;
 			yPos = 0;
 		}
@@ -198,9 +201,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 		break;
 	
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
+	case WM_PAINT:
+		{
+			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
 			/*
 			LPCWSTR str = _T("helloWolrd");
@@ -218,40 +221,58 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//DrawText(hdc, str, _tcslen(str), &rect,DT_CENTER | DT_SINGLELINE|DT_VCENTER );
 
 				//input
-			DrawGrid(hdc, { 400,400 }, { 500,500 }, 4);
-			DrawCircle(hdc, {100,100}, 50);
-            EndPaint(hWnd, &ps);
-        }
-        break;
-    case WM_DESTROY:
+			//DrawGrid(hdc, { 400,400 }, { 500,500 }, 4);
+			//DrawCircle(hdc, {100,100}, 50);
+			//DrawSunFlower(hdc, { 300,300 }, 100, 20);
+			/*
+			
+			TextOut(hdc, 200, 200 + yPos, input, _tcslen(input));
+			GetTextExtentPoint(hdc, input, _tcslen(input), &size);
+			SetCaretPos(200 + size.cx, 200+ yPos);
+			ReleaseDC(hWnd, hdc);*/
+			//RECT r=DrawRectangle(hdc, {300,300}, 200, 200);
+			//drawInputText(hdc,hWnd, r, input,yPos);
+			//DrawStar(hdc, {400,400},100, 5);
+			//LPCWCHAR temp = _T("I love you");
+			/*
+			srand((unsigned)time(NULL));
+			int x = rand() % 300;
+			int y = rand() % 300;
+			TextOut(hdc,x, y+yPos, input,_tcsclen(input));
+			GetTextExtentPoint(hdc, input, _tcsclen(input), &size);
+			SetCaretPos(x+size.cx, y+yPos);
+			EndPaint(hWnd, &ps);*/
+		}
+		break;
+	case WM_DESTROY:
 		HideCaret(hWnd);
 		DestroyCaret();
-        PostQuitMessage(0);
-        break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
-    }
-    return 0;
+		PostQuitMessage(0);
+		break;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+	return 0;
 }
 
 // 정보 대화 상자의 메시지 처리기입니다.
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    UNREFERENCED_PARAMETER(lParam);
-    switch (message)
-    {
-    case WM_INITDIALOG:
-        return (INT_PTR)TRUE;
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
 
-    case WM_COMMAND:
-        if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-        {
-            EndDialog(hDlg, LOWORD(wParam));
-            return (INT_PTR)TRUE;
-        }
-        break;
-    }
-    return (INT_PTR)FALSE;
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		break;
+	}
+	return (INT_PTR)FALSE;
 }
 
 //문제1 : 그리드 그리기
@@ -277,11 +298,67 @@ void DrawCircle(HDC hdc,POINT center, int r)
 	Ellipse(hdc,center.x-r,center.y-r, center.x + r, center.y + r);
 }
 
-//해바라기 그리기
-void DrawSunFlower(HDC hdc,POINT center,int r, int num) 
+//문제2 : 해바라기 그리기
+void DrawSunFlower(HDC hdc,POINT center,long r, int num) 
 {
 	const double PI = 3.14159265359;
-	const int angle = 2 * PI / num;
-	const double A;
+	const double angle = 2 * PI / num;
+	const double A = sin(angle/2);
+	const double nr = r * A / (1 - A);
 	DrawCircle(hdc, { center.x,center.y }, r);
+	POINT ncenter;
+	for (int i = 0; i < num; i++)
+	{	
+		ncenter.x = center.x + (long)((r + nr)*sin(angle*i));
+		ncenter.y = center.y + (long)((r + nr)*cos(angle*i));
+		DrawCircle(hdc, {ncenter.x, ncenter.y}, nr);
+	}
+}
+ //﻿문제 3 : 직사각형 안에 글씨 쓰기
+RECT DrawRectangle(HDC hdc,POINT center, long width,long height)
+{
+	RECT rect = { center.x - (width / 2) ,center.y - (height / 2),center.x + (width / 2),center.y + (height / 2)};
+	Rectangle(hdc, rect.left,rect.top,rect.right,rect.bottom);
+	return rect;
+}
+void drawInputText(HDC hdc, HWND hWnd,RECT rect, TCHAR text[],int yPos)
+{
+	//글씨가 들어가는 내부의 직사각형
+	RECT r = { rect.left + 5,rect.top + 5+yPos,rect.right - 5,rect.bottom -5 };
+	SIZE size;
+	DrawText(hdc, text, _tcslen(text), &r, DT_VCENTER);
+	GetTextExtentPoint(hdc, text, _tcslen(text), &size);
+	SetCaretPos(r.left + size.cx, r.top);
+	ReleaseDC(hWnd, hdc);
+}
+//﻿문제 4 : 별 그리기
+void DrawStar(HDC hdc, POINT center,int r,int num) 
+{
+	POINT *p=(POINT*)calloc(num*2,sizeof(POINT));
+	int i;
+	const double PI = 3.14159265359;
+	const double angle = 2.0 * PI / (double)num;
+	for (i = 0; i < num;i++) 
+	{
+		p[i*2].x = center.x - ((double)r * sin(angle*i));
+		p[i*2].y = center.y- ((double)r *cos(angle*i));
+	}
+	
+	
+	double A = sin(angle/2.0);
+	double B = cos(angle/2.0);
+	const int nr = 2 * (cos(angle)*(r- cos(angle)*r)/ sin(angle));
+	//const int nr = r*(B_/A_);
+	double ta = A;
+	double tb = B;
+	for (i = 0; i < num; i++)
+	{
+		p[i*2+1].x = center.x - (double)(nr * A);
+		p[i*2+1].y = center.y - (double)(nr * B);
+		ta = A;
+		tb = B;
+		A = ta * cos(angle) +tb * sin(angle);
+		B = tb * cos(angle) - ta * sin(angle);
+	}
+	Polygon(hdc, p, num*2);
 }
