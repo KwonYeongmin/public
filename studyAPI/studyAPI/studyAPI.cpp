@@ -15,6 +15,7 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름�
 //함수
 void DrawGrid(HDC hdc, POINT start, POINT end, int num);
 
+void DrawCircle(HDC hdc, POINT center, int r);
 
 
 
@@ -93,22 +94,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 
 
-//문제1 : 그리드 그리기
-void DrawGrid(HDC hdc, POINT start, POINT end, int num)
-{
-	int i;
-	const int width = (end.x - start.x) / num;
-	const int height = (end.y - start.y) / num;
-	//가로
-	for (i = 0; i < num + 1; i++)
-	{
-		MoveToEx(hdc, start.x, start.y + height * i, NULL);
-		LineTo(hdc, end.x, start.y + height*i);
-
-		MoveToEx(hdc, start.x + width * i, start.y, NULL);
-		LineTo(hdc, start.x + width*i, end.y);
-	}
-}
 
 
 
@@ -234,6 +219,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 				//input
 			DrawGrid(hdc, { 400,400 }, { 500,500 }, 4);
+			DrawCircle(hdc, {100,100}, 50);
             EndPaint(hWnd, &ps);
         }
         break;
@@ -268,3 +254,34 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     return (INT_PTR)FALSE;
 }
 
+//문제1 : 그리드 그리기
+void DrawGrid(HDC hdc, POINT start, POINT end, int num)
+{
+	int i;
+	const int width = (end.x - start.x) / num;
+	const int height = (end.y - start.y) / num;
+	//가로
+	for (i = 0; i < num + 1; i++)
+	{
+		MoveToEx(hdc, start.x, start.y + height * i, NULL);
+		LineTo(hdc, end.x, start.y + height * i);
+
+		MoveToEx(hdc, start.x + width * i, start.y, NULL);
+		LineTo(hdc, start.x + width * i, end.y);
+	}
+}
+
+void DrawCircle(HDC hdc,POINT center, int r) 
+{
+	
+	Ellipse(hdc,center.x-r,center.y-r, center.x + r, center.y + r);
+}
+
+//해바라기 그리기
+void DrawSunFlower(HDC hdc,POINT center,int r, int num) 
+{
+	const double PI = 3.14159265359;
+	const int angle = 2 * PI / num;
+	const double A;
+	DrawCircle(hdc, { center.x,center.y }, r);
+}
