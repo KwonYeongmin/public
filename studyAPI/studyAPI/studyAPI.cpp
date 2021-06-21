@@ -143,7 +143,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
 	static TCHAR input[10][100];
-	static int count = 0;
+	static int yCount;
+	static int xCount;
 	static int yPos;
 	static int XPos;
 	static SIZE size;
@@ -171,28 +172,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 		CreateCaret(hWnd, NULL, 5, 15);
 		ShowCaret(hWnd);
-			count = 0;
-			yPos = 0;
+		yCount = 0;
+		xCount = 0;
+		yPos = 0;
 		}
 		break;
 	case WM_CHAR: 
 	{
 		int ck = 0;
 		hdc = GetDC(hWnd);
-		if (wParam == VK_BACK && count>0) 
+		if (wParam == VK_BACK && yCount>0) 
 		{
-			input[--count] = NULL;
+			input[xCount][--yCount] = NULL;
 		}
-		else if (wParam == VK_RETURN )// || ((size.cx % 200 >190)))//||(ck==0))//
+		else if (wParam == VK_RETURN )//|| (size.cx % 100 > 99))// 
 		{
 			yPos += 20;
-			input[count] != NULL;
+			input[++xCount][yCount] != NULL;
 			XPos++;	
 		}
 		else 
 		{
-			input[count++] = wParam;
-			input[count] = NULL;
+			input[xCount][yCount++] = wParam;
+			input[xCount][yCount] = NULL;
 			XPos++;
 			//ck = 0;
 		}
@@ -237,11 +239,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			/*
 			srand((unsigned)time(NULL));
 			int x = rand() % 300;
-			int y = rand() % 300;
-			TextOut(hdc,x, y+yPos, input,_tcsclen(input));
-			GetTextExtentPoint(hdc, input, _tcsclen(input), &size);
-			SetCaretPos(x+size.cx, y+yPos);
-			EndPaint(hWnd, &ps);*/
+			int y = rand() % 300;*/
+			TextOut(hdc,100,100+yPos, input[xCount],_tcsclen(input[xCount]));
+			GetTextExtentPoint(hdc, input[xCount], _tcsclen(input[xCount]), &size);
+			SetCaretPos(100+size.cx, 100+yPos);
+			EndPaint(hWnd, &ps);
 		}
 		break;
 	case WM_DESTROY:
