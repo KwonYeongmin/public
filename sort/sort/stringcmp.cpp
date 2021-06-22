@@ -55,14 +55,23 @@ int kmp_match(const string data, const char* abc, int *cnt)
 		count++;
 		if (data[pd] == abc[px])
 		{
+			cout << "data[" << pd << "]: " << data[pd]
+				<< " ,abc[" << px << "]: " << abc[px]
+				<< " , ck: " << ck << endl;
 			pd++; px++;
 			ck++; 
 			//출력
 			//mark[pd - 1] = '+';
 			//print_match(mark, len, px, pd, data, abc);
+			cout << "data[" << pd << "]: " << data[pd]
+				<< " ,abc[" << px << "]: " << abc[px]
+				<< " , ck: " << ck << endl;
 		}
 		else
 		{
+			cout << "data[" << pd << "]: " << data[pd]
+				<< " ,abc[" << px << "]: " << abc[px]
+				<< " , ck: " << ck << endl;
 			if (ck != 0)
 			{
 				for (m = 0; m < pd+1; m++)
@@ -75,6 +84,9 @@ int kmp_match(const string data, const char* abc, int *cnt)
 			//출력
 			//mark[pd] = '|';
 			//print_match(mark,len, px, pd,data,abc);
+			cout << "data[" << pd << "]: " << data[pd]
+				<< " ,abc[" << px << "]: " << abc[px]
+				<< " , ck: " << ck << endl;
 		}
 		print_match(mark, len, px, pd, data, abc);
 

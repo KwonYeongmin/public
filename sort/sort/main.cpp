@@ -49,9 +49,9 @@ int main()
 	{
 		cout << abc << "는 " << data << "에 없습니다. \n";
 	}
-	cout << endl << "<bm_match>" << endl;
+	cout << "<bm_match>" << endl;
 	cout << (end - start) << "ms" << endl;
-	cout << "비교를 " << cnt << "회 진행" << endl;
+	cout << "비교를 " << cnt << "회 진행" << endl << endl;
 
 
 		cout<<endl << "<bf_match>" << endl;
@@ -60,7 +60,7 @@ int main()
 	end = clock();
 	if (ck1 != -1)
 	{
-		cout << abc << "는 " << data << "의 " << ck1 << "번째에 있습니다. \n";
+		cout << abc << "는 " << data << "의 " << ck1+1 << "번째에 있습니다. \n";
 	}
 	else
 	{
@@ -69,7 +69,7 @@ int main()
 	
 	cout << "<bf_match>" << endl;
 	cout << (end - start) << "ms" << endl;
-	cout << "비교를 " << cnt << "회 진행" << endl;
+	cout << "비교를 " << cnt << "회 진행" << endl << endl;
 
 	cout << endl << "<kmp match>" << endl;
 	cnt = 0;
@@ -78,7 +78,7 @@ int main()
 	end = clock();
 	if (ck2 != -1)
 	{
-		cout << abc << "는 " << data << "의 " << ck2 << "번째에 있습니다. \n";
+		cout << abc << "는 " << data << "의 " << ck2+1 << "번째에 있습니다. \n";
 	}
 	else
 	{
