@@ -34,7 +34,7 @@ public:
 private:
 	double width;
 	double height;
-	double right =x + width / 2;
+	double right = x + width / 2;
 	double left = x - width / 2;
 	double top = y + height / 2;
 	double bottom = y - height / 2;
