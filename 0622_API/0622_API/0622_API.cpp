@@ -127,20 +127,21 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	/*
+	
 	static int R;
 	static RECT rclient;
 	static POINT circleP;
 	static int speed;
 	static POINT dir;
-
-	static CCircle0 *circle;*/
+	static std::list<CCircle0*> basket;
+	static CCircle0 *circle;
+	/*
 	static int r;
 	static RECT rect;
 	static POINT circle2P;
-	static POINT direct;
+	static POINT direct;*/
 	//circle을 저장할 리스트
-	static std::list<CCircle0*> basket;
+	
 	
     switch (message)
     {
@@ -182,7 +183,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		circleP.y = HIWORD(lParam);
 
 		//리스트에 추가
-		circle = new CCircle0({ circleP.x,circleP.y }, R, speed, dir);
+		circle = new CCircle0({ circleP.x,circleP.y }, R,speed, dir);
+		
 		basket.push_back(circle);
 		InvalidateRect(hWnd,NULL,true);
 	}break;

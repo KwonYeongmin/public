@@ -16,8 +16,8 @@ public:
 		center.x = p.x; center.y = p.y;
 		direction.x = dir.x; direction.y = dir.y;
 	}
-	virtual void Collision(RECT rclient);
-	virtual void Draw(HDC hdc);
+	//virtual void Collision(RECT rclient);
+	//virtual void Draw(HDC hdc);
 	POINT getCenter() { return center; }
 	POINT getDirection() { return direction; }
 
@@ -40,8 +40,8 @@ public:
 		setCenter();
 		center.x = p.x;
 		center.y = p.y;
-		movespeed.x = speed;
-		movespeed.y = speed;
+		movespeed.x = rand()%10+40;
+		movespeed.y = rand() %10 + 40;
 		direction = dir;
 		R = r;
 	}

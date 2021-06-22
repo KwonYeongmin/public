@@ -20,15 +20,15 @@ void CCircle0::Draw(HDC hdc)
 }
 void CCircle0::Update()
 {
-	center.x += direction.x * movespeed;
-	center.y += direction.y * movespeed;
+	center.x += direction.x * movespeed.x;
+	center.y += direction.y * movespeed.y;
 }
 
 //°¢µµ ÀÏÁ¤, ¿ø³¢¸® °ãÃÄÁö¸é Æ¨±è
 void CCircle0::Collision(RECT rclient, CCircle0 &other)
 {
 	//º®ÀÌ¶û Ãæµ¹ÇÒ ¶§
-	if (center.x + R > rclient.right) direction.x *= (-1); //¹ý¼±º¤ÅÍ ??
+	if (center.x + R > rclient.right) direction.x *= (-1); 
 	if (center.y + R > rclient.bottom) direction.y *= (-1);
 	if (center.x - R < rclient.left) direction.x *= (-1);
 	if (center.y - R < rclient.top) direction.y *= (-1);
@@ -65,34 +65,34 @@ void CCircle1::Update()
 
 }
 
-void CCircle0::Collision(RECT rclient, CCircle0 &other) 
+void CCircle1::Collision(RECT rclient, CCircle0 &other) 
 {
 	//Ãæµ¹
 	if (center.x - R < rclient.left) 
 	{
 		Vector2D p(1, 0);
-		Vector2D n(other.center.x,other.center.y);
+		Vector2D n(other.getCenter().x,other.getCenter().y);
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
 	}
 	if (center.y - R < rclient.top) 
 	{
 		Vector2D p(0, 1);
-		Vector2D n(other.center.x, other.center.y);
+		Vector2D n(other.getCenter().x, other.getCenter().y);
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
 	}
 	if (center.x + R > rclient.right) 
 	{
 		Vector2D p(-1, 0);
-		Vector2D n(other.center.x, other.center.y);
+		Vector2D n(other.getCenter().x, other.getCenter().y);
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
 	}
 	if (center.y + R > rclient.bottom) 
 	{
 		Vector2D p(0, -1);
-		Vector2D n(other.center.x, other.center.y);
+		Vector2D n(other.getCenter().x, other.getCenter().y);
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
 	}
