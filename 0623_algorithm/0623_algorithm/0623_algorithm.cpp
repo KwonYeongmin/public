@@ -9,15 +9,20 @@ using namespace std;
 int main()
 {
 	//기존
+	/*
 	mystruct *node1 = new mystruct;
 	node1->no = 4;
 	node1->name = "strawberry";
+	node1->next = NULL;
 
 	mystruct *node2 = new mystruct;
 	node1->next = node2;
 	node2->no = 2;
 	node2->name = "banana";
 	node2->next = NULL;
+	MyList list(node1);
+	list.Print();
+	return 0;
 
 	// 새로운 노드
 	mystruct *node3 = new mystruct;
@@ -29,29 +34,34 @@ int main()
 	node4->no = 1;
 	node4->name = "pineApple";
 
-	MyList list(node1);
-	
-	
+
+
+
 	list.addBack(node4);
 	list.Print();
 	cout << "node3 추가"<<endl;
 	list.addMiddle(node3,node1);
-	list.Print();
+	list.Print();*/
 	/*
 	cout << node2->name<<" node2 삭제" << endl;
 	list.deleteMiddle(node2);
 	list.Print();*/
-	cout << "<sorting>" << endl;
-	list.sorting();
-	list.Print();
+	//cout << "<sorting>" << endl;
+	//list.sorting();
+	//list.Print();
 
 	//cout << "정렬후" << endl;
 	//list.Print();
-	
-	return 0;
+
+
+
+	mystruct *node = new mystruct[10];
+	MyList list(node);
+	int count = 0;
 	int menu;
 	int submenu;
-	mystruct *node = new mystruct;
+	string name;
+	int no;
 	while (1)
 	{
 		cout << "< 메뉴 선택 > " << endl;
@@ -61,52 +71,92 @@ int main()
 		switch (menu)
 		{
 		case 1:
-		{	
+		{
+			mystruct temp;
+			cout << " <학생 추가> " << endl;
+			cout << "이름 입력: ";
+			cin >> temp.name;
+			cout << "번호 입력: ";
+			cin >> temp.no;
+			//list.addFront(temp);
+			//list.addBack(temp);
+			//list.addBack(temp);
+			list.addMiddle_(temp,1);
+			list.Print();
+		}
+		break;
+		case 2:
+		{
+		}
+		break;
+		case 3:
+		{
+			list.Print();
+		}
+		break;
+		}
+		/*
+		switch (menu)
+		{
+		case 1:
+		{
 			std::cout << "1.앞에 추가 2. 중간 추가 3. 뒤에 추가 4. 종료 \n";
 			cin >> submenu;
-			if (submenu == 1) 
+			if (submenu == 1)
 			{
 				std::cout << "데이터 입력 >> " << std::endl;
 				std::cout << "인덱스 입력: ";
+				//cin >> node[count]->no;
 				cin >> node->no;
 				std::cout << "이름 입력: ";
+				//cin >> node[count]->name;
 				cin >> node->name;
-				list.addFront(node);
+				//list.addFront(node[count]);
+				//list.addFront(node);
+				count++;
 				break;
 			}
-			else if (submenu == 2) 
+			else if (submenu == 2)
 			{
 				int num;
 				std::cout << "추가하고 싶은 순서 입력: ";
 				cin >> num;
 				std::cout << "데이터 입력 >> " << std::endl;
 				std::cout << "인덱스 입력: ";
+				//cin >> node[count]->no;
 				cin >> node->no;
 				std::cout << "이름 입력: ";
+				//cin >> node[count]->name;
 				cin >> node->name;
-				list.addMiddle(node, node2);
+				//list.addMiddle(node[count], node[count-1]);
+				//list.addMiddle(node, node);
+				count++;
 				break;
 			}
-			else if (submenu == 3) 
+			else if (submenu == 3)
 			{
 				std::cout << "데이터 입력 >> " << std::endl;
 				std::cout << "인덱스 입력: ";
+				//cin >> node[count]->no;
 				cin >> node->no;
 				std::cout << "이름 입력: ";
+				//cin >> node[count]->name;
 				cin >> node->name;
-				list.addBack(node);
+				//list.addBack(node[count]);
+				//list.addBack(node);
+				count++;
 				break;
 			}
 			else if (submenu == 4) { break; }
 		}
-		
-		case 2: 
+
+		case 2:
 		{
 			std::cout << "1.맨앞 삭제 2. 중간 삭제 3. 뒤 삭제 4. 종료 \n";
 			cin >> submenu;
 			if (submenu == 1)
 			{
-				list.deleteFront();
+				//list.deleteFront();
 				break;
 			}
 			else if (submenu == 2)
@@ -114,27 +164,34 @@ int main()
 				int num;
 				std::cout << "삭제하고 싶은 자료 순서 입력: ";
 				cin >> num;
-				 list.deleteMiddle(node2);
+				//list.deleteMiddle(node[count - 1]);
+				//list.deleteMiddle(node);
 				break;
 			}
 			else if (submenu == 3)
 			{
-				list.deleteBack();
-				list.Print();
+				//list.deleteBack();
+				//list.Print();
 				break;
 			}
 			else if (submenu == 4) { break; }
 		}
-		
+
 		case 3:
-			list.Print();
+			//list.Print();
 			break;
 		}
+
+	}
+	delete node;
+	for (int i = 0; i < count; i++)
+	{
+		//delete node[i];
+	}*/
 		
 	}
-	free(node);
 	return 0;
-
+}
 
 /*
 
@@ -166,6 +223,5 @@ list.Print();
 */
 
 
-}
 
 

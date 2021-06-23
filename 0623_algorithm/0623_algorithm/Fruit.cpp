@@ -6,33 +6,58 @@ using namespace std;
 MyList::MyList(mystruct *h)
 {
 	//구조체 초기화
-	head = h;
-	tail = h;
-
-	while (1)
+	head = NULL;
+	tail = NULL;
+	/*
+	while (tail!=NULL)
 	{
-		if (tail->next == NULL) break; 
+		//if (tail->next == NULL) break; 
 		tail = tail->next;
-	}
-	
+	}*/
+
+}
+MyList::~MyList( ) 
+{
+	delete head;
+	delete tail;
 }
 
-
 //노드 추가
-int MyList::addFront(mystruct *n)
+int MyList::addFront(mystruct t)
 {
-	if (head == NULL) return -1;
+	mystruct *n = new mystruct;
+	n->name = t.name;
+	n->no = t.no;
+	if (head == NULL) 
+	{
+		n->next = NULL;
+		head = n;
+		tail = n;
+	}
 	else 
 	{
 		n->next = head;
 		head = n;
-		return 1;
-	}	
+	}
+	tail->next = NULL;
+	cout << "헤드 " << head->no << " , " << head->name << endl;
+	cout << "꼬리 " << tail->no << " , " << tail->name << endl;
+	
+	return 1;
+		
 }
 
-int MyList::addBack(mystruct *n)
+int MyList::addBack(mystruct t)
 {
-	if (head == NULL) return -1;
+	mystruct *n = new mystruct;
+	n->name = t.name;
+	n->no = t.no;
+	if (head == NULL) 
+	{
+		n->next = NULL;
+		tail = n;
+		head = n;
+	}
 	else
 	{
 		mystruct *index = head;
@@ -77,8 +102,27 @@ int MyList::addMiddle(mystruct *n, mystruct *prev)//int index)
 		return 1;
 	}
 }
+int MyList::addMiddle_(mystruct t, int index)
+{
+	mystruct *n = new mystruct;
+	n->name = t.name;
+	n->no = t.no;
+	if (head == NULL) return -1;
+	else
+	{
+		mystruct *prev = head;
+		for (int i = 0; i < index - 2; i++)
+		{
+			prev = prev->next;
+		}
+
+		n->next = prev->next;
+		prev->next = n;
 
 
+		return 1;
+	}
+}
 int MyList::deleteFront()
 {
 	if (head == NULL) return -1;
@@ -198,4 +242,10 @@ void MyList:: sorting()
 	delete index;
 	delete min;
 
+}
+
+int MyList::isEmpty(mystruct *s) 
+{
+	if (head == NULL) return -1;
+	else return 1;
 }

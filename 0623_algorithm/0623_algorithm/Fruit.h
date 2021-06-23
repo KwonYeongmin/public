@@ -21,10 +21,13 @@ private:
 public:
 	//리스트 초기화
 	MyList(mystruct *h);
+	~MyList();
 	//노드 추가
-	int addFront(mystruct *n);
-	int addBack(mystruct *n);
+	int addFront(mystruct t);
+	int addBack(mystruct t);
 	int addMiddle(mystruct *n, mystruct *prev);
+	int addMiddle_(mystruct n, int index);
+
 	//노드 삭제
 	int deleteFront();
 	int deleteBack();
@@ -37,6 +40,8 @@ public:
 	int getNo() { return tail->no; }
 	//정렬
 	void sorting();// {}
+	//
+	int isEmpty(mystruct *s);
 };
 
 /*
