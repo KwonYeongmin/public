@@ -24,11 +24,11 @@ public:
 	//노드 추가
 	int addFront(mystruct *n);
 	int addBack(mystruct *n);
-	int addMiddle(mystruct *n, int index);
+	int addMiddle(mystruct *n, mystruct *prev);
 	//노드 삭제
 	int deleteFront();
 	int deleteBack();
-	int deleteMiddle(int index);
+	int deleteMiddle(mystruct *n);
 	//검색
 	std::string search();
 	//리스트 출력

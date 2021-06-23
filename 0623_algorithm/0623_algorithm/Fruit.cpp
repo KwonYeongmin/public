@@ -50,13 +50,14 @@ int MyList::addBack(mystruct *n)
 	}
 	
 }
-
-int MyList::addMiddle(mystruct *n,int index)
+//
+int MyList::addMiddle(mystruct *n, mystruct *prev)//int index)
 {
+	/*
 	if (head == NULL) return -1;
 	else
 	{
-		mystruct *prev = head;
+		//mystruct *prev = head;
 		for (int i = 0; i < index-2;i++) 
 		{
 			prev = prev->next;
@@ -67,8 +68,14 @@ int MyList::addMiddle(mystruct *n,int index)
 
 		
 		return 1;
+	}*/
+	if (head == NULL) return -1;
+	else
+	{
+		n->next = prev->next;
+		prev->next=n;
+		return 1;
 	}
-
 }
 
 
@@ -106,8 +113,10 @@ int MyList::deleteBack()
 	}
 }
 
-int MyList::deleteMiddle(int index)
+int MyList::deleteMiddle(mystruct *n)
 {
+	//인덱스로 삭제
+	/*
 	if (head == NULL) return -1;
 	else
 	{
@@ -123,8 +132,19 @@ int MyList::deleteMiddle(int index)
 
 	
 		return 1;
+	}*/
+	if (head == NULL) return -1;
+	else
+	{
+		mystruct *prev = head;
+		while (1) 
+		{
+			prev = prev->next;
+			if (prev != n)break;
+		}
+		prev->next=n->next;	
+		return 1;
 	}
-
 }
 
 //검색
@@ -144,9 +164,7 @@ void MyList::Print()
 	{
 		cout<<index->no << ": " << index->name << std::endl;
 		index = index->next;
-	}
-	//cout << "끝" << endl;
-	
+	}	
 	delete index;
 }
 
@@ -158,19 +176,19 @@ void MyList:: sorting()
 	index = head->next;
 	mystruct *min;
 	min = head;
-	
+	mystruct *temp;
 	while (index!=NULL)
 	{
 		if (min_index > index->no)
 		{
 			min_index = index->no;
-			min = index;
-			index->next = min;
-			index = min;
+			
+			//index와 min바꿔주기
+			min->next= index->next;
+			cout<< index->name <<" , "<<index->next->name<<endl;
+			min->next = index;
+			//index->next = min;
 			Print();
-			
-			
-			//cout<< min->no<<" : " <<min->name << endl;
 			cout << "-------" << endl;
 		}
 		index = index->next;

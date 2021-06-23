@@ -31,13 +31,19 @@ int main()
 
 	MyList list(node1);
 	
-	list.addBack(node3); 
-	list.addBack(node4);
 	
+	list.addBack(node4);
 	list.Print();
+	cout << "node3 추가"<<endl;
+	list.addMiddle(node3,node1);
+	list.Print();
+	/*
+	cout << node2->name<<" node2 삭제" << endl;
+	list.deleteMiddle(node2);
+	list.Print();*/
 	cout << "<sorting>" << endl;
 	list.sorting();
-	//list.Print();
+	list.Print();
 
 	//cout << "정렬후" << endl;
 	//list.Print();
@@ -78,7 +84,7 @@ int main()
 				cin >> node->no;
 				std::cout << "이름 입력: ";
 				cin >> node->name;
-				list.addMiddle(node, num);
+				list.addMiddle(node, node2);
 				break;
 			}
 			else if (submenu == 3) 
@@ -108,7 +114,7 @@ int main()
 				int num;
 				std::cout << "삭제하고 싶은 자료 순서 입력: ";
 				cin >> num;
-				 list.deleteMiddle(num);
+				 list.deleteMiddle(node2);
 				break;
 			}
 			else if (submenu == 3)
