@@ -127,112 +127,132 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	
-	static int R;
+	//공통
 	static RECT rclient;
+	static int speed = 50;
+
+	//원
+	static int CR = 50;
 	static POINT circleP;
-	static int speed;
-	static POINT dir;
+
+	//circle을 저장할 리스트
 	static std::list<CCircle0*> basket;
 	static CCircle0 *circle;
-	/*
-	static int r;
-	static RECT rect;
-	static POINT circle2P;
-	static POINT direct;*/
-	//circle을 저장할 리스트
-	
-	
-    switch (message)
-    {
-    case WM_COMMAND:
-        {
-            int wmId = LOWORD(wParam);
-            // 메뉴 선택을 구문 분석합니다:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
-        }
-        break;
-	case WM_CREATE:
+
+	//사각형
+	static int RR = 50;
+	static POINT rectP;
+
+	//rect을 저장할 리스트
+	static std::list<CRectangle*> basket2;
+	static CRectangle *rect;
+
+	switch (message)
+	{
+	case WM_COMMAND:
+	{
+		int wmId = LOWORD(wParam);
+		// 메뉴 선택을 구문 분석합니다:
+		switch (wmId)
 		{
-		srand((unsigned)time(NULL));
-		R = 50;
-		speed = 50;
-		SetTimer(hWnd, 1, 100, NULL);
-		SetTimer(hWnd, 2, 100, NULL);
-		
+		case IDM_ABOUT:
+			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+			break;
+		case IDM_EXIT:
+			DestroyWindow(hWnd);
+			break;
+		default:
+			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
-		break;
+	}
+	break;
+	case WM_CREATE:
+	{
+		SetTimer(hWnd, 1, 100, NULL);
+	}
+	break;
 	case WM_SIZE:
 		GetClientRect(hWnd, &rclient);
 		break;
-	case WM_LBUTTONDOWN: 
+	case WM_LBUTTONDOWN:
 	{
-		dir.x = rand() % 2 * 2 - 1;
-		dir.y = rand() % 2 * 2 - 1;
 		circleP.x = LOWORD(lParam);
 		circleP.y = HIWORD(lParam);
-
 		//리스트에 추가
-		circle = new CCircle0({ circleP.x,circleP.y }, R,speed, dir);
-		
+		circle = new CCircle0({ circleP.x,circleP.y }, CR, speed);
 		basket.push_back(circle);
-		InvalidateRect(hWnd,NULL,true);
+		InvalidateRect(hWnd, NULL, true);
 	}break;
-	
-	case WM_TIMER: 
+	case WM_RBUTTONDOWN:
 	{
-		switch (wParam) 
-		{
-		case 1:
-			//리스트에 있는 것들 업데이트
-			for (std::list<CCircle0*>::iterator it=basket.begin(); it!=basket.end();it++)
-			{
-				CCircle0 *pc = *it;
-				pc->Update();
-				pc->Collision(rclient,*pc);
-			}
-			break;
-		}	
+
+		rectP.x = LOWORD(lParam);
+		rectP.y = HIWORD(lParam);
+		//리스트에 추가
+		rect = new CRectangle({ rectP.x,rectP.y }, RR * 2, speed);
+		basket2.push_back(rect);
 		InvalidateRect(hWnd, NULL, true);
 	}
 	break;
-	case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-     
-			//충돌하는 원
-			//리스트에 있는 것들 S
-
+	case WM_TIMER:
+	{
+		switch (wParam)
+		{
+		case 1:
+			//원
+		{		
 			for (std::list<CCircle0*>::iterator it = basket.begin(); it != basket.end(); it++)
 			{
 				CCircle0 *pc = *it;
-				pc->Draw(hdc);
+				pc->Update();
+				pc->Collision(rclient, *pc);
 			}
+			for (std::list<CRectangle*>::iterator ip = basket2.begin(); ip != basket2.end(); ip++)
+			{
+				CRectangle *pd = *ip;
+				pd->Update();
+				pd->Collision(rclient);
+			}
+		}InvalidateRect(hWnd, NULL, true);
+		}
+		break;
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hWnd, &ps);
 
-            EndPaint(hWnd, &ps);
-        }
-        break;
-    case WM_DESTROY:
+		HBRUSH hBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+		HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+		//충돌하는 원
+		//리스트에 있는 것들 S
+
+		for (std::list<CCircle0*>::iterator it = basket.begin(); it != basket.end(); it++)
+		{
+			CCircle0 *pc = *it;
+			pc->Draw(hdc);
+		}
+
+		for (std::list<CRectangle*>::iterator it = basket2.begin(); it != basket2.end(); it++)
+		{
+			CRectangle *pc = *it;
+			pc->Draw(hdc);
+		}
+		SelectObject(hdc, oldBrush);
+		DeleteObject(hBrush);
+		EndPaint(hWnd, &ps);
+	}
+	break;
+	case WM_DESTROY:
 		delete[] circle;
 		//타이머 지우기
 		KillTimer(hWnd, 1);
-        PostQuitMessage(0);
-        break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
-    }
-    return 0;
+		PostQuitMessage(0);
+		break;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+	return 0;
+	}
 }
 
 // 정보 대화 상자의 메시지 처리기입니다.

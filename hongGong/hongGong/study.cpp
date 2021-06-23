@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-
+#include <string>
 /*
 
 void swapr(int &a, int &b) 
@@ -95,9 +95,18 @@ int main()
 	return 0;
 }*/
 
+template <class T>
+T sum(T a, T b) 
+{
+	return a + b;
+}
+
+
 int main() 
 {
 	using namespace std;
+	cout << sum(2,5);
+	return 0;
 	/*
 	cout.fill('*');
 	const char * staff[2] = { "윤성일","박순용" };
@@ -108,14 +117,14 @@ int main()
 		cout.width(7);
 		cout << bonus[i] << "\n";
 	}*/
-	cout.fill('♡');
+	
 	const char * staff[2] = { "이제노","정재현" };
 	string me = "권영민";
 	for (int i = 0; i < 2; i++)
 	{
 		cout << staff[i];
-		cout.width(4);
-		cout << me<<"\n";
+		cout.width(8); cout.fill('ㅎ');
+		cout << me<<endl;
 	}
 
 	return 0;
