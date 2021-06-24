@@ -152,10 +152,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="0623_algorithm.cpp" />
-    <ClCompile Include="Fruit.cpp" />
+    <ClCompile Include="doubleLinkedList.cpp" />
+    <ClCompile Include="singleLinkedList.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Fruit.h" />
+    <ClInclude Include="doubleLinkedList.h" />
+    <ClInclude Include="singleLinkedList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

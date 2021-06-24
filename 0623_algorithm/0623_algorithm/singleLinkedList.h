@@ -11,13 +11,11 @@ typedef struct MyStruct
 
 class MyList
 {
-
 private:
 	int no;
 	std::string name;
 	mystruct *head;
 	mystruct *tail;
-	int size;
 public:
 	//리스트 초기화
 	MyList(mystruct *h);
@@ -26,22 +24,22 @@ public:
 	int addFront(mystruct t);
 	int addBack(mystruct t);
 	int addMiddle(mystruct *n, mystruct *prev);
-	int addMiddle_(mystruct n, int index);
+	int addSort(mystruct t); //index를 내보냄
+	int addMiddle_index(mystruct t, int index);
 
 	//노드 삭제
 	int deleteFront();
 	int deleteBack();
 	int deleteMiddle(mystruct *n);
+	int deleteMiddle_index(int index);
 	//검색
-	std::string search();
+	std::string search_index(int num);
+	int search_name(std::string str);
 	//리스트 출력
 	void Print();
+	/*
 	std::string getName() { return tail->name; }
-	int getNo() { return tail->no; }
-	//정렬
-	void sorting();// {}
-	//
-	int isEmpty(mystruct *s);
+	int getNo() { return tail->no; }*/
 };
 
 /*
