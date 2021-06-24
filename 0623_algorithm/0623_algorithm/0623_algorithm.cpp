@@ -6,7 +6,7 @@
 #include <iostream>
 
 using namespace std;
-void doubleLinkedList()
+int doubleLinkedList()
 {
 	DList *node = new DList[10];
 	doubleList list(node);
@@ -20,27 +20,27 @@ void doubleLinkedList()
 		cout << "< 메뉴 선택 > " << endl;
 		cout << "(1). 학생 추가 (2). 학생 삭제 (3). 전체 출력 (4). 검색 (5).종료 \n";
 		cin >> menu;
-		if (menu == 5) break;
+		if (menu == 5) { return 0; }
 		switch (menu)
 		{
 		case 1:
 		{
 			
-			cout << " <학생 추가> " << endl;
+			/*cout << " <학생 추가> " << endl;
 			cout << "이름 입력: ";
 			cin >> node[count].name;
 			cout << "번호 입력: ";
 			cin >> node[count].no;
 			list.addMiddle(node[count]);
-			count++;
-			/*
+			count++;*/
+			
 			DList temp;
 			cout << " <학생 추가> " << endl;
 			cout << "이름 입력: ";
 			cin >> temp.name;
 			cout << "번호 입력: ";
 			cin >> temp.no;
-			list.addMiddle(temp);*/
+			list.addMiddle(temp);
 		}
 		break;
 		case 2:
@@ -91,7 +91,7 @@ void doubleLinkedList()
 
 	}
 	delete node;
-
+	return 1;
 }
 void singleLinkedList()
 {
@@ -173,15 +173,7 @@ void singleLinkedList()
 
 int main()
 {
-	//doubleLinkedList();
-	DList *node = new DList[10];
-	doubleList list(node);
-	DList node1 = { 2,"apple" };
-	DList node2 = { 1,"banana" };
-	list.addMiddle(node1);
-	list.addMiddle(node2);
-	list.Print();
-
+	doubleLinkedList();
 	return 0;
 }
 

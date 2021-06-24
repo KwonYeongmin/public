@@ -60,37 +60,34 @@ void doubleList::addBack(DList t)
 	tail->next = NULL;
 }
 
-
-void doubleList::addMiddle(DList t) 
+//이상함 ㅜ
+void doubleList::addMiddle(DList t)
 {
 	DList *n = new DList;
 	n->name = t.name;
 	n->no = t.no;
-	
-	DList *p = new DList;
+
+	DList *p = NULL;
+	DList *pre = new DList;
 	p = head;
-	
-	if (head == NULL) { addFront(t); }
+
+	while (p != NULL && p->no < n->no)
+	{
+		pre = p;
+		p = p->next;
+	}
+	if (pre == NULL) addFront(t);
+	else if (p == NULL) { addBack(t); }
 	else
 	{
-		while (1)
-		{
-			if (p->no<t.no) 
-			{
-				p = p->next;
-			}
-			else
-			{
-				n->next = p;
-				//p = n;
-				//n->next->prev = n;
-				break;
-			}
-			if (p->next == NULL) { addBack(t); }
-		}
+		n->prev = pre;
+		n->next = p;
+		pre->next = n;
+		p->prev = n;
 	}
-
 }
+
+
 /*
 void doubleList::addMiddle_index(DList t, int no) //숫자 no 뒤에 넣기
 {

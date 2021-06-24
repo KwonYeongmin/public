@@ -111,10 +111,6 @@ public:
 		center.y = CObject::getCenter().y;
 	}
 	virtual void Collision(RECT rclient, CCircle0 &other);
-	/*
-	
-	
-	virtual void Draw(HDC hdc);
-	void Update();*/
+
 };
 

@@ -47,48 +47,81 @@ void CCircle0::Update()
 //∫Æ¿Ã∂˚ √Êµπ
 void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«√∏¥¿∏∑Œ πŸ≤Ÿ±‚
 {
+	//π˝º±∫§≈Õ¿ÃøÎ
+	/*
 	//∫Æ¿Ã∂˚ √Êµπ«“ ∂ß
-	Vector2D n(center.x, center.y);
+	
 	if (center.x - R < rclient.left)
 	{
-		Vector2D p(1, 0);
+		Vector2D n(1, 0); //¥‹¿ß∫§≈Õ	
+		Vector2D p(¿‘ªÁ∫§≈Õ); //ø©±‚ø° ¿‘ªÁ ∫§≈Õ
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
 	}
 	if (center.y - R < rclient.top)
 	{
-		Vector2D p(0, 1);
+		Vector2D n(0, 1); //¥‹¿ß∫§≈Õ
+		Vector2D p();
 		//Vector2D n(other.getCenter().x, other.getCenter().y);
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
 	}
 	if (center.x + R > rclient.right)
 	{
-		Vector2D p(-1, 0);
+		Vector2D n(-1, 0); //¥‹¿ß∫§≈Õ
+		Vector2D p();
 		//Vector2D n(other.getCenter().x, other.getCenter().y);
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
 	}
 	if (center.y + R > rclient.bottom)
 	{
-		Vector2D p(0, -1);
+		Vector2D n(0, -1); //¥‹¿ß∫§≈Õ
+		Vector2D p();
 		//Vector2D n(other.getCenter().x, other.getCenter().y);
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
 	}
-
-
-	/*
-	if (center.x + R > rclient.right) direction.x *= (-1); 
+	*/
+	
+	if (center.x + R > rclient.right) 
+	{
+		direction.x *= (-1);
+	}
 	if (center.y + R > rclient.bottom)direction.y *= (-1);
 	if (center.x - R < rclient.left) direction.x *= (-1); 
-	if (center.y - R < rclient.top)direction.y *= (-1);
+	if (center.y - R < rclient.top) direction.y *= (-1);
 
 	const double dis = sqrt(pow(other.getCenter().x - center.x, 2) + pow(other.getCenter().y - center.y, 2));
 	
 	//ø¯≥¢∏Æ √Êµπ«“ ∂ß
 	if (dis <= 2 * R)
 	{
+		/*
+		case VK_RIGHT:
+			ptCircle.x += moveSpeed;
+			if (ptCircle.x + r > rclient.right)
+				ptCircle.x = rclient.right - r;
+			break;
+		case VK_LEFT:
+			ptCircle.x -= moveSpeed;
+			if (ptCircle.x - r < rclient.left)
+				ptCircle.x = rclient.left + r;
+			break;
+		case VK_UP:
+			ptCircle.y -= moveSpeed;
+			if (ptCircle.y - r < rclient.top)
+				ptCircle.y = rclient.top + r;
+			break;
+		case VK_DOWN:
+			ptCircle.y += moveSpeed;
+			if (ptCircle.y + r > rclient.bottom)
+				ptCircle.y = rclient.bottom - r;
+			break;
+			*/
+
+
+		
 		//π›¥ÎπÊ«‚ø°º≠ ø√ ∂ß
 		if (other.getDirection().x*direction.x < 0 && other.getDirection().y*direction.y < 0)
 		{
@@ -104,12 +137,11 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«
 		{
 			direction.y *= (-1);
 		}
-	}*/
+	}
 }
 
 
 //ªÁ∞¢«¸
-
 void CRectangle::setCenter()
 {
 	center.x = CObject::getCenter().x;
