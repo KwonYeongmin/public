@@ -60,17 +60,58 @@ void doubleList::addBack(DList t)
 	tail->next = NULL;
 }
 
-//이상함 ㅜ
+
 void doubleList::addMiddle(DList t)
 {
 	DList *n = new DList;
 	n->name = t.name;
 	n->no = t.no;
 
-	DList *p = NULL;
-	DList *pre = new DList;
-	p = head;
+	DList *p =head;
+	
+	if (head == NULL) addFront(t);
+	else 
+	{
+		//모르겠음 ...
+		cout << p->no << "," << n->no<<endl;
+		while (p->no < n->no && p->next!=NULL)
+		{
+			p = p->next;
+		}
+		cout << p->no << endl;
 
+		if (p->next == NULL) 
+		{
+			if (p->prev == NULL) 
+			{
+				p->prev->next = n;
+				n->next = p;
+				n->prev = p->prev;
+				n->next = p;
+			
+			}
+			else 
+			{
+				n->prev = p->prev;
+				p->prev->next = n;
+				p->prev = n;
+				n->next = p;
+			}
+			
+		}
+		else 
+		{
+			if (p->prev == NULL) addFront(t);
+			else 
+			{
+				p->prev->next = n;
+				n->next = p;
+				n->prev = p->prev;
+				n->next = p;
+			}
+		}	
+	}
+	/*
 	while (p != NULL && p->no < n->no)
 	{
 		pre = p;
@@ -84,7 +125,7 @@ void doubleList::addMiddle(DList t)
 		n->next = p;
 		pre->next = n;
 		p->prev = n;
-	}
+	}*/
 }
 
 

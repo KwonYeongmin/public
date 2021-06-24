@@ -40,6 +40,7 @@ void CCircle0::Draw(HDC hdc)
 
 void CCircle0::Update()
 {
+
 	center.x += direction.x * movespeed.x;
 	center.y += direction.y * movespeed.y;
 }
@@ -48,20 +49,22 @@ void CCircle0::Update()
 void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«√∏¥¿∏∑Œ πŸ≤Ÿ±‚
 {
 	//π˝º±∫§≈Õ¿ÃøÎ
-	/*
-	//∫Æ¿Ã∂˚ √Êµπ«“ ∂ß
 	
+	//∫Æ¿Ã∂˚ √Êµπ«“ ∂ß
+	int x = center.x - direction.x * movespeed.x;
+	int y =center.y- direction.y * movespeed.y;
+	Vector2D p(direction.x * movespeed.x, direction.y * movespeed.y);
 	if (center.x - R < rclient.left)
 	{
 		Vector2D n(1, 0); //¥‹¿ß∫§≈Õ	
-		Vector2D p(¿‘ªÁ∫§≈Õ); //ø©±‚ø° ¿‘ªÁ ∫§≈Õ
+		 //ø©±‚ø° ¿‘ªÁ ∫§≈Õ
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
 	}
 	if (center.y - R < rclient.top)
 	{
 		Vector2D n(0, 1); //¥‹¿ß∫§≈Õ
-		Vector2D p();
+		//Vector2D p();
 		//Vector2D n(other.getCenter().x, other.getCenter().y);
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
@@ -69,7 +72,7 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«
 	if (center.x + R > rclient.right)
 	{
 		Vector2D n(-1, 0); //¥‹¿ß∫§≈Õ
-		Vector2D p();
+		//Vector2D p();
 		//Vector2D n(other.getCenter().x, other.getCenter().y);
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
@@ -77,13 +80,13 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«
 	if (center.y + R > rclient.bottom)
 	{
 		Vector2D n(0, -1); //¥‹¿ß∫§≈Õ
-		Vector2D p();
+		//Vector2D p();
 		//Vector2D n(other.getCenter().x, other.getCenter().y);
 		center.x = p.reflection(n).GetX();
 		center.y = p.reflection(n).GetY();
 	}
-	*/
 	
+	/*
 	if (center.x + R > rclient.right) 
 	{
 		direction.x *= (-1);
@@ -91,13 +94,14 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«
 	if (center.y + R > rclient.bottom)direction.y *= (-1);
 	if (center.x - R < rclient.left) direction.x *= (-1); 
 	if (center.y - R < rclient.top) direction.y *= (-1);
-
+*/
+	/*
 	const double dis = sqrt(pow(other.getCenter().x - center.x, 2) + pow(other.getCenter().y - center.y, 2));
 	
 	//ø¯≥¢∏Æ √Êµπ«“ ∂ß
 	if (dis <= 2 * R)
 	{
-		/*
+		
 		case VK_RIGHT:
 			ptCircle.x += moveSpeed;
 			if (ptCircle.x + r > rclient.right)
@@ -118,7 +122,7 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«
 			if (ptCircle.y + r > rclient.bottom)
 				ptCircle.y = rclient.bottom - r;
 			break;
-			*/
+			
 
 
 		
@@ -137,7 +141,7 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«
 		{
 			direction.y *= (-1);
 		}
-	}
+	}*/
 }
 
 

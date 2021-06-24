@@ -173,7 +173,35 @@ void singleLinkedList()
 
 int main()
 {
-	doubleLinkedList();
+
+	DList *node = new DList[10];
+	doubleList list(node);
+	DList node1 = { 1,"a" };
+	DList node2 = { 2,"b" };
+	DList node3 = { 3,"c" };
+	DList node4 = { 4,"d" };
+	DList node5 = { 5,"f" };
+	
+	list.addMiddle(node1);
+	list.Print();
+	cout << "-------\n";
+	list.addMiddle(node2);
+	list.Print();
+	cout << "-------\n";
+	list.addMiddle(node5);
+	list.Print();
+	cout << "-------\n";
+
+	list.Print();
+	cout << "-------\n"; 
+	list.addMiddle(node3);
+	list.Print();
+	
+	cout << "-------\n";
+	list.addMiddle(node4);
+	list.Print();
+
+	//doubleLinkedList();
 	return 0;
 }
 
