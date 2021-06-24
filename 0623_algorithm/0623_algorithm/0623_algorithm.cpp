@@ -183,7 +183,11 @@ int main()
 	DList node5 = { 5,"f" };
 	
 	list.addMiddle(node1);
+	list.addFront(node2);
+	list.addFront(node3);
 	list.Print();
+	//list.Print();
+	/*
 	cout << "-------\n";
 	list.addMiddle(node2);
 	list.Print();
@@ -199,7 +203,7 @@ int main()
 	
 	cout << "-------\n";
 	list.addMiddle(node4);
-	list.Print();
+	list.Print();*/
 
 	//doubleLinkedList();
 	return 0;

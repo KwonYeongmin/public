@@ -132,7 +132,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	static int speed = 50;
 
 	//원
-	static int CR = 50;
+	static int CR = 100;
 	static POINT circleP;
 
 	//circle을 저장할 리스트

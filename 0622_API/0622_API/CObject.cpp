@@ -40,7 +40,6 @@ void CCircle0::Draw(HDC hdc)
 
 void CCircle0::Update()
 {
-
 	center.x += direction.x * movespeed.x;
 	center.y += direction.y * movespeed.y;
 }
@@ -52,8 +51,8 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«
 	
 	//∫Æ¿Ã∂˚ √Êµπ«“ ∂ß
 	int x = center.x - direction.x * movespeed.x;
-	int y =center.y- direction.y * movespeed.y;
-	Vector2D p(direction.x * movespeed.x, direction.y * movespeed.y);
+	int y = center.y- direction.y * movespeed.y;
+	Vector2D p(direction.x * movespeed.x,direction.y * movespeed.y);
 	if (center.x - R < rclient.left)
 	{
 		Vector2D n(1, 0); //¥‹¿ß∫§≈Õ	

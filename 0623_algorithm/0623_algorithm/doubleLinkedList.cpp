@@ -72,44 +72,23 @@ void doubleList::addMiddle(DList t)
 	if (head == NULL) addFront(t);
 	else 
 	{
-		//모르겠음 ...
 		cout << p->no << "," << n->no<<endl;
+		//125
 		while (p->no < n->no && p->next!=NULL)
 		{
 			p = p->next;
 		}
 		cout << p->no << endl;
-
-		if (p->next == NULL) 
+		
+		if (p->next == NULL && p->no > t.no) addBack(t);
+		else if (p->prev == NULL ) { addFront(t); }	
+		else// if (p->next != NULL && p->prev != NULL)
 		{
-			if (p->prev == NULL) 
-			{
-				p->prev->next = n;
-				n->next = p;
-				n->prev = p->prev;
-				n->next = p;
-			
-			}
-			else 
-			{
-				n->prev = p->prev;
-				p->prev->next = n;
-				p->prev = n;
-				n->next = p;
-			}
-			
+			n->prev = p->prev;
+			n->next = p;
+			p->prev->next = n;
+			p->prev = n;
 		}
-		else 
-		{
-			if (p->prev == NULL) addFront(t);
-			else 
-			{
-				p->prev->next = n;
-				n->next = p;
-				n->prev = p->prev;
-				n->next = p;
-			}
-		}	
 	}
 	/*
 	while (p != NULL && p->no < n->no)
