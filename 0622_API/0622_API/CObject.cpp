@@ -48,7 +48,37 @@ void CCircle0::Update()
 void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«√∏¥¿∏∑Œ πŸ≤Ÿ±‚
 {
 	//∫Æ¿Ã∂˚ √Êµπ«“ ∂ß
-	
+	Vector2D n(center.x, center.y);
+	if (center.x - R < rclient.left)
+	{
+		Vector2D p(1, 0);
+		center.x = p.reflection(n).GetX();
+		center.y = p.reflection(n).GetY();
+	}
+	if (center.y - R < rclient.top)
+	{
+		Vector2D p(0, 1);
+		//Vector2D n(other.getCenter().x, other.getCenter().y);
+		center.x = p.reflection(n).GetX();
+		center.y = p.reflection(n).GetY();
+	}
+	if (center.x + R > rclient.right)
+	{
+		Vector2D p(-1, 0);
+		//Vector2D n(other.getCenter().x, other.getCenter().y);
+		center.x = p.reflection(n).GetX();
+		center.y = p.reflection(n).GetY();
+	}
+	if (center.y + R > rclient.bottom)
+	{
+		Vector2D p(0, -1);
+		//Vector2D n(other.getCenter().x, other.getCenter().y);
+		center.x = p.reflection(n).GetX();
+		center.y = p.reflection(n).GetY();
+	}
+
+
+	/*
 	if (center.x + R > rclient.right) direction.x *= (-1); 
 	if (center.y + R > rclient.bottom)direction.y *= (-1);
 	if (center.x - R < rclient.left) direction.x *= (-1); 
@@ -74,7 +104,7 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«
 		{
 			direction.y *= (-1);
 		}
-	}
+	}*/
 }
 
 
