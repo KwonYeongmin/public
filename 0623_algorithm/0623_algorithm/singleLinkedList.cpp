@@ -52,13 +52,13 @@ int MyList::addBack(mystruct t)
 	}
 	else
 	{
-		mystruct *index = head;
+	/*	mystruct *index = head;
 
 		while (1)
 		{
-			if (index->next== NULL)break;
-			index = index->next;
-		}
+		//	if (index->next== NULL)break;
+			//index = index->next;
+		}*/
 		tail->next = n;
 		tail=n;
 		tail->next = NULL;

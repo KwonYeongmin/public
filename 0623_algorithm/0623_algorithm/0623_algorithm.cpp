@@ -25,14 +25,22 @@ void doubleLinkedList()
 		{
 		case 1:
 		{
+			
+			cout << " <학생 추가> " << endl;
+			cout << "이름 입력: ";
+			cin >> node[count].name;
+			cout << "번호 입력: ";
+			cin >> node[count].no;
+			list.addMiddle(node[count]);
+			count++;
+			/*
 			DList temp;
 			cout << " <학생 추가> " << endl;
 			cout << "이름 입력: ";
 			cin >> temp.name;
 			cout << "번호 입력: ";
 			cin >> temp.no;
-			list.addFront(temp);
-			//list.addSort(temp);
+			list.addMiddle(temp);*/
 		}
 		break;
 		case 2:
@@ -166,16 +174,13 @@ void singleLinkedList()
 int main()
 {
 	//doubleLinkedList();
-	//DList *node = new DList[10];
-	
-	DList node1 = {1,"apple"};
-	DList node2= { 2,"banana" };
-
-	node2.prev = &node1;
-	doubleList list(&node1);
-	cout << node2.prev->no << " : " << node2.prev->name << endl;
-	cout<< node1.next->no<<" : "<<node1.next->name<<endl;
-	//list.Print();
+	DList *node = new DList[10];
+	doubleList list(node);
+	DList node1 = { 2,"apple" };
+	DList node2 = { 1,"banana" };
+	list.addMiddle(node1);
+	list.addMiddle(node2);
+	list.Print();
 
 	return 0;
 }
