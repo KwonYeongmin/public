@@ -27,6 +27,8 @@ void CObject::Update()
 	center.x += direction.x * movespeed.x;
 	center.y += direction.y * movespeed.y;
 }
+
+
 void CCircle0::setCenter()
 {
 	center.x = CObject::getCenter().x;
@@ -40,12 +42,14 @@ void CCircle0::Draw(HDC hdc)
 
 void CCircle0::Update()
 {
-	center.x += direction.x * movespeed.x;
-	center.y += direction.y * movespeed.y;
+	//center.x += direction.x * movespeed.x;
+	center.x += var.GetX();
+	//center.y += direction.y * movespeed.y;
+	center.y += var.GetY();
 }
 
 //∫Æ¿Ã∂˚ √Êµπ
-void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«√∏¥¿∏∑Œ πŸ≤Ÿ±‚
+void CCircle0::Collision(RECT rclient, CObject &other)//CCircle0 &other¿Ã∞≈ ≈€«√∏¥¿∏∑Œ πŸ≤Ÿ±‚
 {
 	//π˝º±∫§≈Õ¿ÃøÎ
 	
@@ -55,35 +59,73 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«
 	{
 		Vector2D n(1, 0); //¥‹¿ß∫§≈Õ	
 		 //ø©±‚ø° ¿‘ªÁ ∫§≈Õ
-		center.x = p.reflection(n).GetX();
-		center.y = p.reflection(n).GetY();
+		center.x += p.reflection(n).GetX();
+		center.y += p.reflection(n).GetY();
 	}
+	
 	if (center.y - R < rclient.top)
 	{
 		Vector2D n(0, 1); //¥‹¿ß∫§≈Õ
-		//Vector2D p();
-		//Vector2D n(other.getCenter().x, other.getCenter().y);
-		center.x = p.reflection(n).GetX();
-		center.y = p.reflection(n).GetY();
+		center.x += p.reflection(n).GetX();
+		center.y += p.reflection(n).GetY();
 	}
 	if (center.x + R > rclient.right)
 	{
 		Vector2D n(-1, 0); //¥‹¿ß∫§≈Õ
-		//Vector2D p();
-		//Vector2D n(other.getCenter().x, other.getCenter().y);
-		center.x = p.reflection(n).GetX();
-		center.y = p.reflection(n).GetY();
+		center.x += p.reflection(n).GetX();
+		center.y += p.reflection(n).GetY();
 	}
 	if (center.y + R > rclient.bottom)
 	{
 		Vector2D n(0, -1); //¥‹¿ß∫§≈Õ
-		//Vector2D p();
-		//Vector2D n(other.getCenter().x, other.getCenter().y);
-		center.x = p.reflection(n).GetX();
-		center.y = p.reflection(n).GetY();
+		center.x += p.reflection(n).GetX();
+		center.y += p.reflection(n).GetY();
 	}
-	
-	/*
+}
+
+
+//ªÁ∞¢«¸
+void CRectangle::setCenter()
+{
+	center.x = CObject::getCenter().x;
+	center.y = CObject::getCenter().y;
+}
+
+void CRectangle::Draw(HDC hdc)
+{
+	Rectangle(hdc, center.x - (width / 2.0), center.y - (width / 2.0), center.x + (width / 2.0), center.y + (width / 2.0));
+}
+
+void CRectangle::Update()
+{
+	center.x +=  direction.x * movespeed.x;
+	center.y += direction.y * movespeed.y;
+}
+
+
+void CRectangle::Collision(RECT rclient)
+{
+	if (center.x + R > rclient.right) direction.x *= (-1);
+	if (center.y + R > rclient.bottom) direction.y *= (-1);
+	if (center.x - R < rclient.left)direction.x *= (-1);
+	if (center.y - R < rclient.top) direction.y *= (-1);
+}
+
+
+	//CCircle1
+/*
+void CCircle1::Update()
+{
+	//center.x += direction.x * movespeed.x;
+	center.x += var.GetX();
+	//center.y += direction.y * movespeed.y;
+	center.y += var.GetY();
+}
+
+}
+
+void CCircle1::Collision(RECT rclient, CCircle0 &other) 
+{
 	if (center.x + R > rclient.right) 
 	{
 		direction.x *= (-1);
@@ -91,8 +133,8 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«
 	if (center.y + R > rclient.bottom)direction.y *= (-1);
 	if (center.x - R < rclient.left) direction.x *= (-1); 
 	if (center.y - R < rclient.top) direction.y *= (-1);
-*/
-	/*
+
+
 	const double dis = sqrt(pow(other.getCenter().x - center.x, 2) + pow(other.getCenter().y - center.y, 2));
 	
 	//ø¯≥¢∏Æ √Êµπ«“ ∂ß
@@ -138,87 +180,7 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &other¿Ã∞≈ ≈€«
 		{
 			direction.y *= (-1);
 		}
-	}*/
 }
-
-
-//ªÁ∞¢«¸
-void CRectangle::setCenter()
-{
-	center.x = CObject::getCenter().x;
-	center.y = CObject::getCenter().y;
-}
-
-void CRectangle::Draw(HDC hdc)
-{
-	Rectangle(hdc, center.x - (width / 2.0), center.y - (width / 2.0), center.x + (width / 2.0), center.y + (width / 2.0));
-}
-
-void CRectangle::Update()
-{
-	center.x +=  direction.x * movespeed.x;
-	center.y += direction.y * movespeed.y;
-}
-
-
-void CRectangle::Collision(RECT rclient)
-{
-	if (center.x + R > rclient.right) direction.x *= (-1);
-	if (center.y + R > rclient.bottom) direction.y *= (-1);
-	if (center.x - R < rclient.left)direction.x *= (-1);
-	if (center.y - R < rclient.top) direction.y *= (-1);
-}
-
-
-	//CCircle1
-/*
-void CCircle1::setCenter()
-{
-	center.x = CObject::getCenter().x;
-	center.y = CObject::getCenter().y;
-}
-void CCircle1::Update() 
-{
-
-}*/
-
-void CCircle1::Collision(RECT rclient, CCircle0 &other) 
-{
-	//√Êµπ
-	if (center.x - R < rclient.left) 
-	{
-		Vector2D p(1, 0);
-		// other.getCenter().x,other.getCenter().y
-		// 
-		Vector2D n(other.getCenter().x,other.getCenter().y);
-		center.x = p.reflection(n).GetX();
-		center.y = p.reflection(n).GetY();
-	}
-	if (center.y - R < rclient.top) 
-	{
-		Vector2D p(0, 1);
-		Vector2D n(other.getCenter().x, other.getCenter().y);
-		center.x = p.reflection(n).GetX();
-		center.y = p.reflection(n).GetY();
-	}
-	if (center.x + R > rclient.right) 
-	{
-		Vector2D p(-1, 0);
-		Vector2D n(other.getCenter().x, other.getCenter().y);
-		center.x = p.reflection(n).GetX();
-		center.y = p.reflection(n).GetY();
-	}
-	if (center.y + R > rclient.bottom) 
-	{
-		Vector2D p(0, -1);
-		Vector2D n(other.getCenter().x, other.getCenter().y);
-		center.x = p.reflection(n).GetX();
-		center.y = p.reflection(n).GetY();
-	}
-}
-
-
-/*
 void CCircle1::Draw(HDC hdc)
 {
 	Ellipse(hdc, center.x - R, center.y - R, center.x + R, center.y + R);

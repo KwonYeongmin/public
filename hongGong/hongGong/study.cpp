@@ -101,11 +101,31 @@ T sum(T a, T b)
 	return a + b;
 }
 
+class A 
+{
+private: double x; double y;
+public:
+	A(double x_,double y_):x(x_),y(y_)
+	{
+		std::cout << x + y << std::endl;
+	}
+};
 
+class B :public A
+{
+private: 
+	double x; double y;
+public:
+	B(double x_, double y_) :A(x_, y_) { x = x_; y = y_; std::cout << (x - y) << std::endl; }
+};
 int main() 
 {
 	using namespace std;
-	cout << sum(2,5);
+	//cout << sum(2,5);
+	
+	
+	//A(5,3);
+	B(5, 3);
 	return 0;
 	/*
 	cout.fill('*');

@@ -9,124 +9,98 @@ BinTree::BinTree(level *n)
 //소멸자
 BinTree::~BinTree() { delete[] head; delete[]tail; }
 
-//삽입 -> 꽉찼다는거알려주기
 /*
-void BinTree::addFront(level t) 
+level *Search(level *t, const int *num) 
 {
-	level *n = new level;
-	n->name = t.name;
-	n->no = t.no;
-	if (head == NULL) 
+	int p;
+	int x;
+	if (&t->no < num) x = 0;
+	else  x = 1;
+
+	if (p == NULL) 
 	{
-		n->right = NULL;
-		head = n;
-		tail = n;
+		return NULL;
 	}
-	else 
-	{
-		n->right = head;
-		head = n;
-		n->right->left = n;
-	}
-	head->left = NULL;
+	else if (x == 0)return t;
+	else if (x < 0)Search(t->left,num);
+	else Search(t->right, num);
 }
 
-void BinTree::addBack(level t) 
+level *addData(level *t, const int *num) 
 {
-	level *n = new level;
-	n->name = t.name;
-	n->no = t.no;
-	if (head == NULL)
-	{
-		n->right = NULL;
-		head = n;
-		tail = n;
-	}
-	else
-	{
-		tail->right = n;
-		n->left = tail;
-		tail = n;
 
-	}
-	tail->right = NULL;
 }
-*/
 
+int deleteData(level **root, const int *num) 
+{
+
+}
+
+void Print(const level *t) 
+{
+
+}*/
+
+
+//삽입
 void BinTree::addData(level t)
 {
-	level *n = new level;
-	level *pl = NULL;
-	level *pr = NULL;
+	//level *pl = NULL;
+	//level *pr = NULL;
 	level *p =head;
+
+	level *n = new level;
 	n->name = t.name;
 	n->no = t.no;
 
-	//맨처음에 들어오는 데이터 -> 레벨0
+	//맨처음에 들어오는 데이터 
 	if (head == NULL) 
 	{
 		n->right = NULL; n->left = NULL;
 		head = n;
 		tail = n;
-		n->up = NULL;
 	}
 	else 
-	{
-		//cout << p->no << endl;
-		//레벨 이동
-		while (p->left != NULL || p->right!=NULL)
+	{		
+		while (p->left != NULL ||  p->right != NULL)
 		{
-	
-			if (p->no > n->no) 
+			cout<<"p->no: " << p->no << endl;
+			if (p->no > n->no && p != NULL) 
 			{
-				//p->left = NULL;
 				p = p->left;
 			}
-			else if (p->no < n->no) 
+			else if (p->no < n->no && p != NULL) 
 			{
-				//p->right = NULL;
 				p = p->right;
 			}
-			
 		}
-		if (p->no > n->no) 
+		cout << "ck !! p: " ;
+		cout << p->no << endl;
+		if (p->no > n->no)
 		{
+			//왼쪽
 			p->left = n;
 			n->up = p;
 		}
-		else if(p->no < n->no)
+		else if (p->no < n->no) 
 		{
+		//오른쪽
 			p->right = n;
 			n->up = p;
 		}
-
-		cout << p->no << endl; //11
+		cout << "p: " << p->no;
+		cout << ", n: " << n->no;
+		if (p->left != NULL) { cout << " , p-<left: " << p->left->no; }
+		if (p->right != NULL) { cout << " ,p->right: " << p->right->no; }
+		 cout << endl;
 	}
+	//cout << n->no << endl;
 	n->left = NULL;
 	n->right = NULL;
 	setEdge(t);
 }
 
 
-//삭제 -> 삭제할 데이터 없다는 거 알려주기 
-/*
-void BinTree::deleteFront(level t)
-{
-	if (head != NULL)
-	{
-		head = head->right;
-		head->right->left = head;
-	}
-}
-
-void BinTree::deleteBack(level t) 
-{
-	if (head != NULL)
-	{
-		tail = tail->left;
-	}
-	tail->right = NULL;
-}*/
 
 void BinTree::setEdge(level t)
 {
@@ -148,11 +122,11 @@ void BinTree::deleteData(int index)
 	
 	}
 
-	// setEdge(t);
+//	 setEdge(t);
 }
 
 //검색 -> 번호 들어오고 레벨 번호 출력 
-int BinTree::search(int *num, string *str, int mode)
+int BinTree::Search(int *num, string *str, int mode)
 {
 	int index = 0;
 	level *p = head;
@@ -169,11 +143,7 @@ int BinTree::search(int *num, string *str, int mode)
 			while (1)
 			{
 				cout << p->no << " , " << p->name << endl;
-				if (p->no > *num) 
-				{
-					p = p->left;
-					
-				} 
+				if (p->no > *num) p = p->left;
 				else if (p->no < *num) p = p->right;
 				if (p == NULL) break;
 				index++;
@@ -206,5 +176,49 @@ std::string BinTree::search_no(int no)
 //전체 출력
 void BinTree::Print() 
 {
+	level *p = new  level;
+	level *hh = head;
+	int dir = 1;
+	p = min;
 
+	while (p!=max)
+	{
+		if (dir==1)  //출력하면서 내려가거나 올라감
+		{
+			cout << p->no << " : " << p->name << endl;
+
+			//올라감
+			if (p->no < p->up->no) 
+			{
+				p = p->up;
+			}
+			//내려감
+			else 
+			{
+			
+			}
+			
+			
+		}
+		else //그냥 내려가거나 올라감 //dir=-1
+		{
+			if (1)
+			{
+
+			}
+			//올라감
+			else
+			{
+
+			}
+		}
+		if (1) 
+		{
+			hh = p;
+			if (1) {}
+		}
+
+		
+		
+	}
 }

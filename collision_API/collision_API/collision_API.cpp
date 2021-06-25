@@ -1,11 +1,9 @@
-﻿// 0622_API.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+﻿// collision_API.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
 #include "framework.h"
-#include "0622_API.h"
-#include "Cobject.h"
-#include "Vector2D.h"
-
+#include "collision_API.h"
+#include "CObject.h"
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -13,10 +11,7 @@ HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
-
-
-
-	// 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
+// 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -34,7 +29,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_MY0622API, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_COLLISIONAPI, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -43,7 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MY0622API));
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_COLLISIONAPI));
 
     MSG msg;
 
@@ -59,6 +54,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     return (int) msg.wParam;
 }
+
 
 
 //
@@ -77,10 +73,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MY0622API));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_COLLISIONAPI));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_MY0622API);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_COLLISIONAPI);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -127,133 +123,61 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//공통
-	static RECT rclient;
-	static int speed = 50;
+	RECT rcircle;
 
-	//원
-	static int CR = 50;
-	static POINT circleP;
-
-	//circle을 저장할 리스트
-	static std::list<CCircle0*> basket;
-	static CCircle0 *circle;
-
-	//사각형
-	static int RR = 50;
-	static POINT rectP;
-
-	//rect을 저장할 리스트
-	static std::list<CRectangle*> basket2;
-	static CRectangle *rect;
-
-	switch (message)
-	{
-	case WM_COMMAND:
-	{
-		int wmId = LOWORD(wParam);
-		// 메뉴 선택을 구문 분석합니다:
-		switch (wmId)
+    switch (message)
+    {
+    case WM_COMMAND:
+        {
+            int wmId = LOWORD(wParam);
+            // 메뉴 선택을 구문 분석합니다:
+            switch (wmId)
+            {
+            case IDM_ABOUT:
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+                break;
+            case IDM_EXIT:
+                DestroyWindow(hWnd);
+                break;
+            default:
+                return DefWindowProc(hWnd, message, wParam, lParam);
+            }
+        }
+        break;
+	case WM_CREATE: 
 		{
-		case IDM_ABOUT:
-			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-			break;
-		case IDM_EXIT:
-			DestroyWindow(hWnd);
-			break;
-		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
+			SetTimer(hWnd, 1, 100, NULL);
 		}
-	}
-	break;
-	case WM_CREATE:
-	{
-		SetTimer(hWnd, 1, 100, NULL);
-	}
-	break;
-	case WM_SIZE:
-		GetClientRect(hWnd, &rclient);
 		break;
-	case WM_LBUTTONDOWN:
-	{
-		circleP.x = LOWORD(lParam);
-		circleP.y = HIWORD(lParam);
-		//리스트에 추가
-		circle = new CCircle0({ circleP.x,circleP.y }, CR, speed);
-		basket.push_back(circle);
-		InvalidateRect(hWnd, NULL, true);
-	}break;
-	case WM_RBUTTONDOWN:
-	{
-
-		rectP.x = LOWORD(lParam);
-		rectP.y = HIWORD(lParam);
-		//리스트에 추가
-		rect = new CRectangle({ rectP.x,rectP.y }, RR * 2, speed);
-		basket2.push_back(rect);
-		InvalidateRect(hWnd, NULL, true);
-	}
-	break;
-	case WM_TIMER:
-	{
-		switch (wParam)
+	case WM_TIMER: 
 		{
-		case 1:
-			//원
-		{		
-			for (std::list<CCircle0*>::iterator it = basket.begin(); it != basket.end(); it++)
+		switch (wParam) 
+		{
+		case 1: 
 			{
-				CCircle0 *pc = *it;
-				//pc->Update();
-				pc->Update();
-				pc->Collision(rclient, *pc);
 			}
-			for (std::list<CRectangle*>::iterator ip = basket2.begin(); ip != basket2.end(); ip++)
-			{
-				CRectangle *pd = *ip;
-				pd->Update();
-				pd->Collision(rclient);
-			}
-		}InvalidateRect(hWnd, NULL, true);
+			break;
+		}
 		}
 		break;
-	case WM_PAINT:
-	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
-
-		HBRUSH hBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
-		HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
-		//충돌하는 원
-		//리스트에 있는 것들 S
-
-		for (std::list<CCircle0*>::iterator it = basket.begin(); it != basket.end(); it++)
+	case WM_RBUTTONDOWN: 
 		{
-			CCircle0 *pc = *it;
-			pc->Draw(hdc);
 		}
-
-		for (std::list<CRectangle*>::iterator it = basket2.begin(); it != basket2.end(); it++)
-		{
-			CRectangle *pc = *it;
-			pc->Draw(hdc);
-		}
-		SelectObject(hdc, oldBrush);
-		DeleteObject(hBrush);
-		EndPaint(hWnd, &ps);
-	}
-	break;
-	case WM_DESTROY:
-		delete[] circle;
-		//타이머 지우기
-		KillTimer(hWnd, 1);
-		PostQuitMessage(0);
 		break;
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
-	}
-	return 0;
-	}
+    case WM_PAINT:
+        {
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hWnd, &ps);
+            EndPaint(hWnd, &ps);
+        }
+        break;
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+    default:
+        return DefWindowProc(hWnd, message, wParam, lParam);
+    }
+    return 0;
 }
 
 // 정보 대화 상자의 메시지 처리기입니다.
@@ -275,5 +199,3 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return (INT_PTR)FALSE;
 }
-
-

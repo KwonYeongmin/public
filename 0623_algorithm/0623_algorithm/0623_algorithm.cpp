@@ -64,13 +64,13 @@ int binTrees()
 			{
 				cout << "번호 입력 >> ";
 				cin >> num;
-				trees.search(&num,&str,0);
+				trees.Search(&num,&str,0);
 			}
 			else if(num==2)
 			{
 				cout << "이름 입력 >> ";
 				cin >> str;
-				trees.search(&num, &str, 1);
+				trees.Search(&num, &str, 1);
 			}
 			cout<<"[[DATA]] >> " << num << " : " << str << endl;
 		}
@@ -95,10 +95,10 @@ int main()
 	
 	level *lev = new level[12]; 
 	BinTree trees(lev);
-	level node1 = { 11,"apple" };
+	level node1 = { 11,"11" };
 	level node2 = { 5,"5" };
 	level node3 = { 4,"4" };
-	level node4 = { 1,"1" };
+	level node4 = { 8,"8" };
 	level node5 = { 7,"7" };
 	level node6 = { 6,"6" };
 	level node7 = { 9,"9" };
@@ -108,7 +108,17 @@ int main()
 	level node11 = { 18,"18" };
 	level node12 = { 14,"14" };
 	trees.addData(node1);
+	trees.addData(node2);
+	trees.addData(node3); 
+	trees.addData(node5);
+	trees.addData(node4);
+	/*
+	trees.addData(node5);
+	trees.addData(node6);
+	trees.addData(node7);*/
 	
+	return 0;
+	binTrees();
 	return 0;
 }
 

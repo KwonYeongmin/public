@@ -18,8 +18,8 @@ public:
 		center.x = p.x; center.y = p.y;
 		
 	}
-	//virtual void Collision(RECT rclient);
-	//virtual void Draw(HDC hdc);
+	virtual void Collision(RECT rclient);
+	virtual void Draw(HDC hdc);
 	virtual void Update();
 	POINT getCenter() { return center; }
 	POINT getDirection() { return direction; }
@@ -35,12 +35,15 @@ class CCircle0 : public CObject
 private:
 	int R;
 	POINT center;
+	//Vector2D center(double x, double y);
 	POINT movespeed;
 	POINT direction;
 	//POINT var;
+	Vector2D var;
 public:
 	CCircle0(POINT p, int r, int speed) : CObject(p, speed)
 	{
+		
 		srand((unsigned)time(NULL));
 		setCenter();
 		direction.x = rand() % 2 * 2 - 1;
@@ -50,7 +53,7 @@ public:
 		R = r;
 	}
 	void setCenter();
-	virtual void Collision(RECT rclient, CCircle0 &other);
+	virtual void Collision(RECT rclient, CObject &other);
 	virtual void Draw(HDC hdc);
 	virtual void Update();
 };
@@ -67,6 +70,7 @@ private:
 	int bottom;
 	int right;
 	int left;
+	
 public:
 	CRectangle(POINT p, int w, int speed) : CObject(p, speed)
 	{
@@ -84,6 +88,7 @@ public:
 	virtual void Collision(RECT rclient);
 	virtual void Draw(HDC hdc);
 	virtual void Update();
+	
 };
 
 //movespeed를 랜덤으로 주기
