@@ -50,8 +50,6 @@ void CCircle0::Collision(RECT rclient, CCircle0 &other)//CCircle0 &otherÀÌ°Å ÅÛÇ
 	//¹ı¼±º¤ÅÍÀÌ¿ë
 	
 	//º®ÀÌ¶û Ãæµ¹ÇÒ ¶§
-	int x = center.x - direction.x * movespeed.x;
-	int y = center.y- direction.y * movespeed.y;
 	Vector2D p(direction.x * movespeed.x,direction.y * movespeed.y);
 	if (center.x - R < rclient.left)
 	{

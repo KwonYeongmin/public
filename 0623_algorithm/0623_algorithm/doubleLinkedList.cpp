@@ -67,12 +67,13 @@ void doubleList::addMiddle(DList t)
 	n->name = t.name;
 	n->no = t.no;
 
-	DList *p =head;
+	DList *p = head;
+	DList *pre =NULL;
 	
 	if (head == NULL) addFront(t);
 	else 
 	{
-		cout << p->no << "," << n->no<<endl;
+		/*cout << p->no << "," << n->no<<endl;
 		//125
 		while (p->no < n->no && p->next!=NULL)
 		{
@@ -88,9 +89,9 @@ void doubleList::addMiddle(DList t)
 			n->next = p;
 			p->prev->next = n;
 			p->prev = n;
-		}
-	}
-	/*
+		}*/
+	
+	
 	while (p != NULL && p->no < n->no)
 	{
 		pre = p;
@@ -104,7 +105,8 @@ void doubleList::addMiddle(DList t)
 		n->next = p;
 		pre->next = n;
 		p->prev = n;
-	}*/
+	}
+	}
 }
 
 

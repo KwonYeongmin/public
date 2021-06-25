@@ -3,9 +3,117 @@
 
 #include "singleLinkedList.h"
 #include"doubleLinkedList.h"
+#include "Bintree.h"
 #include <iostream>
 
 using namespace std;
+
+int doubleLinkedList();
+void singleLinkedList();
+
+int binTrees()
+{
+	int size=15;
+	//level *trees = (level*)calloc(size,sizeof(level));int count=0;
+	level *lev = new level[size]; // [10]안쓰면 무한대로 증가 가능..?
+	BinTree trees(lev);
+
+	int menu; 
+	int num=0; string str= "none";
+	
+	while (1)
+	{
+		cout << "(1).삽입 (2).삭제 (3).검색 (4).출력 (0).종료: " << endl;
+		cin >> menu;
+		if (menu == 0)
+		{
+			cout << "종료" << endl;
+			return 0;
+		}
+		switch (menu)
+		{
+		case 1:
+		{
+			level temp;
+			cout << "< 삽입 >" << endl;
+			cout << "삽입하려는 데이터를 입력하세요. "<<endl;
+			cout << "번호>> ";
+			cin >> temp.no;
+			cout << "이름>> ";
+			cin >> temp.name;
+			trees.addData(temp);
+			//count++;if (count>=4) { trees = (level*)malloc(sizeof(level)*5); }
+			
+		}
+		break;
+
+		case 2:
+		{
+			cout << "< 삭제 >" << endl;
+			cout << "번호 입력 >> ";
+			cin >> num;
+			trees.deleteData(num);
+		}
+		break;
+
+		case 3:
+		{
+			cout << "< 검색 > :  (1). 번호로 검색 (2). 이름으로 검색 : " << endl;
+			cin >> num;
+			if (num == 1) 
+			{
+				cout << "번호 입력 >> ";
+				cin >> num;
+				trees.search(&num,&str,0);
+			}
+			else if(num==2)
+			{
+				cout << "이름 입력 >> ";
+				cin >> str;
+				trees.search(&num, &str, 1);
+			}
+			cout<<"[[DATA]] >> " << num << " : " << str << endl;
+		}
+		break;
+
+		case 4:
+		{
+			cout << "< 출력 >" << endl;
+			trees.Print();
+		}
+		break;
+		}
+	}
+
+	delete[] lev;
+	return 1;
+}
+
+
+int main()
+{
+	
+	level *lev = new level[12]; 
+	BinTree trees(lev);
+	level node1 = { 11,"apple" };
+	level node2 = { 5,"5" };
+	level node3 = { 4,"4" };
+	level node4 = { 1,"1" };
+	level node5 = { 7,"7" };
+	level node6 = { 6,"6" };
+	level node7 = { 9,"9" };
+	level node8 = { 15,"15" };
+	level node9 = { 13,"13" };
+	level node10 = { 12,"12" };
+	level node11 = { 18,"18" };
+	level node12 = { 14,"14" };
+	trees.addData(node1);
+	
+	return 0;
+}
+
+
+
 int doubleLinkedList()
 {
 	DList *node = new DList[10];
@@ -25,15 +133,6 @@ int doubleLinkedList()
 		{
 		case 1:
 		{
-			
-			/*cout << " <학생 추가> " << endl;
-			cout << "이름 입력: ";
-			cin >> node[count].name;
-			cout << "번호 입력: ";
-			cin >> node[count].no;
-			list.addMiddle(node[count]);
-			count++;*/
-			
 			DList temp;
 			cout << " <학생 추가> " << endl;
 			cout << "이름 입력: ";
@@ -144,8 +243,8 @@ void singleLinkedList()
 			{
 				cout << "번호로 검색 :: " << endl;
 				cin >> no;
-				if(list.search_index(no)=="-1") cout<<"자료가 없습니다.";
-				else 
+				if (list.search_index(no) == "-1") cout << "자료가 없습니다.";
+				else
 				{
 					cout << no << " : " << list.search_index(no) << endl;
 				}
@@ -168,48 +267,6 @@ void singleLinkedList()
 	}
 	delete node;
 }
-
-
-
-int main()
-{
-
-	DList *node = new DList[10];
-	doubleList list(node);
-	DList node1 = { 1,"a" };
-	DList node2 = { 2,"b" };
-	DList node3 = { 3,"c" };
-	DList node4 = { 4,"d" };
-	DList node5 = { 5,"f" };
-	
-	list.addMiddle(node1);
-	list.addFront(node2);
-	list.addFront(node3);
-	list.Print();
-	//list.Print();
-	/*
-	cout << "-------\n";
-	list.addMiddle(node2);
-	list.Print();
-	cout << "-------\n";
-	list.addMiddle(node5);
-	list.Print();
-	cout << "-------\n";
-
-	list.Print();
-	cout << "-------\n"; 
-	list.addMiddle(node3);
-	list.Print();
-	
-	cout << "-------\n";
-	list.addMiddle(node4);
-	list.Print();*/
-
-	//doubleLinkedList();
-	return 0;
-}
-
-
 
 
 

@@ -37,7 +37,7 @@ private:
 	POINT center;
 	POINT movespeed;
 	POINT direction;
-	POINT var;
+	//POINT var;
 public:
 	CCircle0(POINT p, int r, int speed) : CObject(p, speed)
 	{
