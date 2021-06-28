@@ -202,6 +202,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				//원
 		{		
 			// 윈도우창 충돌체크
+			for (CObject *o : basket)
+			{
+				o->Collision();
+				o->Update();
+			}
 			for (std::list<CCircle0*>::iterator it = basket.begin(); it != basket.end(); it++)
 			{
 				CCircle0 *pc = *it;
@@ -210,7 +215,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				pc->Collision(rclient, *pc);
 			}
 			//객체와의 충돌 체크
-
+			for (int i = 0; i > basket.size(); i++) 
+			{
+				for (int j = 0; j < basket.size(); j++) 
+				{
+					basket[i]->collision(basket[j]);
+				}
+			}
 				//사각형
 			for (std::list<CRectangle*>::iterator ip = basket2.begin(); ip != basket2.end(); ip++)
 			{
