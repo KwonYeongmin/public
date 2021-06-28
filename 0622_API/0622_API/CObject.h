@@ -7,7 +7,7 @@
 class CObject
 {
 public:
-	CObject(POINT p,int speed)
+	CObject(POINT p, int speed) : center{p.x,p.y}
 	{
 		srand((unsigned)time(NULL));
 		//스피드 랜덤으로 주기
@@ -15,11 +15,9 @@ public:
 		direction.y = rand() % 2 * 2 - 1;
 		movespeed.x = rand() % 5 + speed;
 		movespeed.y = rand() % 5 + speed;
-		center.x = p.x; center.y = p.y;
-		
 	}
-	virtual void Collision(RECT rclient);
-	virtual void Draw(HDC hdc);
+	virtual void Collision(RECT rclient) {}
+	virtual void Draw(HDC hdc) {}
 	virtual void Update();
 	POINT getCenter() { return center; }
 	POINT getDirection() { return direction; }

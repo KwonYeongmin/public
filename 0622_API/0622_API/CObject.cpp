@@ -42,15 +42,22 @@ void CCircle0::Draw(HDC hdc)
 
 void CCircle0::Update()
 {
-	//center.x += direction.x * movespeed.x;
-	center.x += var.GetX();
-	//center.y += direction.y * movespeed.y;
-	center.y += var.GetY();
+	center.x += direction.x * movespeed.x;
+	//center.x += var.GetX();
+	center.y += direction.y * movespeed.y;
+	//center.y += var.GetY();
 }
 
 //벽이랑 충돌
 void CCircle0::Collision(RECT rclient, CObject &other)//CCircle0 &other이거 템플릿으로 바꾸기
 {
+	if (center.x + R > rclient.right) direction.x *= (-1);
+	if (center.y + R > rclient.bottom)direction.y *= (-1);
+	if (center.x - R < rclient.left) direction.x *= (-1);
+	if (center.y - R < rclient.top) direction.y *= (-1);
+
+
+	/*
 	//법선벡터이용
 	
 	//벽이랑 충돌할 때
@@ -80,7 +87,7 @@ void CCircle0::Collision(RECT rclient, CObject &other)//CCircle0 &other이거 템플
 		Vector2D n(0, -1); //단위벡터
 		center.x += p.reflection(n).GetX();
 		center.y += p.reflection(n).GetY();
-	}
+	}*/
 }
 
 
@@ -126,10 +133,7 @@ void CCircle1::Update()
 
 void CCircle1::Collision(RECT rclient, CCircle0 &other) 
 {
-	if (center.x + R > rclient.right) 
-	{
-		direction.x *= (-1);
-	}
+	if (center.x + R > rclient.right) direction.x *= (-1);
 	if (center.y + R > rclient.bottom)direction.y *= (-1);
 	if (center.x - R < rclient.left) direction.x *= (-1); 
 	if (center.y - R < rclient.top) direction.y *= (-1);
