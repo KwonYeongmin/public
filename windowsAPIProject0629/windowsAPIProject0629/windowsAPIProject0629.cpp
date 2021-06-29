@@ -66,6 +66,26 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 }
 
 
+//파일에 있는 정보 가져와서 점수 비교하기
+int cprRecord(TCHAR(*name)[100], int *ss)
+{
+	//std::ofstream out("recore.txt");
+	std::ifstream fin("Record.txt", std::ios::in | std::ios::binary);
+
+	if (fin.fail())
+	{
+		std::cout << "파일을 여는데 실패했습니다.\n" << std::endl;
+		return -1;
+	}
+	//데이터 가지고 오기
+	for (int i = 0; i < 5; i++)
+	{
+		fin.read((char *)name[i], sizeof(TCHAR) * 100);
+		fin.read((char *)&ss[i], sizeof(int));
+	}
+	fin.close();
+	return 1;
+}
 int fileOpen(int index) 
 {
 	std::ofstream out("recore.txt");
@@ -93,6 +113,11 @@ int fileOpen(int index)
 	
 	out.close();
 	return 1;
+}
+//파일을 읽기
+int readRecord() 
+{
+
 }
 
 void saveRecord (TCHAR(*name)[100], int *s)
