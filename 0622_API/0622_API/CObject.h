@@ -51,7 +51,7 @@ public:
 		R = r;
 	}
 	void setCenter();
-	virtual void Collision(RECT rclient, CObject &other);
+	virtual void Collision(RECT rclient, std::list<CCircle0*> b);
 	virtual void Draw(HDC hdc);
 	virtual void Update();
 };

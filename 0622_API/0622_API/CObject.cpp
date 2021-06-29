@@ -49,7 +49,7 @@ void CCircle0::Update()
 }
 
 //벽이랑 충돌
-void CCircle0::Collision(RECT rclient, CObject &other)//CCircle0 &other이거 템플릿으로 바꾸기
+void CCircle0::Collision(RECT rclient, std::list<CCircle0*> b)//CCircle0 &other이거 템플릿으로 바꾸기
 {
 	if (center.x + R > rclient.right) direction.x *= (-1);
 	if (center.y + R > rclient.bottom)direction.y *= (-1);
