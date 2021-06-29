@@ -95,41 +95,38 @@ int fileOpen(int index)
 	return 1;
 }
 
-void saveRecord (TCHAR(*name)[100], int *score)
+void saveRecord (TCHAR(*name)[100], int *s)
 {
-	
-	
-		std::ifstream fin("Record.txt", std::ios::in | std::ios::binary);
+	std::ifstream fin("Record.txt", std::ios::in | std::ios::binary);
 
+	for (int i = 0; i < 5; i++)
+	{
+		fin.read((char *)name[i], sizeof(TCHAR) * 15);
+		fin.read((char *)&s[i], sizeof(int));
+	}
+	fin.close();
+	TCHAR tt[15];
+	_tcscpy_s(tt, _countof(tt), id);
+	int nt = score;
 
-		for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 5; i++)
+	{
+		if (s[i] < score)
 		{
-			fin.read((char *)name[i], sizeof(TCHAR) * 15);
-			fin.read((char *)&score[i], sizeof(int));
-		}
-		fin.close();
-		TCHAR tt[15];
-		_tcscpy_s(tt, _countof(tt), ID);
-		int nt = Score;
-
-		for (int i = 0; i < 5; i++)
-		{
-			if (score[i] < Score)
-			{
-				TCHAR temp[15] = { 0 };
+		TCHAR temp[100] = { 0 };
 				_tcscpy_s(temp, _countof(temp), name[i]);
-				int int_temp = score[i];
+				int int_temp = s[i];
 
-				_tcscpy_s(name[i], _countof(name[i]), ID);
-				score[i] = Score;
+				_tcscpy_s(name[i], _countof(name[i]), id);
+				s[i] = score;
 
-				_tcscpy_s(ID, _countof(ID), temp);
-				Score = int_temp;
+				_tcscpy_s(id, _countof(id), temp);
+				score = int_temp;
 			}
 		}
 
-		_tcscpy_s(ID, _countof(ID), tt);
-		Score = nt;
+		_tcscpy_s(id, _countof(id), tt);
+		score = nt;
 
 		std::ofstream fout("Record.txt", std::ios::out | std::ios::binary);
 
@@ -137,12 +134,12 @@ void saveRecord (TCHAR(*name)[100], int *score)
 		for (int i = 0; i < 5; i++)
 		{
 			fout.write((char *)name[i], sizeof(TCHAR) * 15);
-			fout.write((char *)&score[i], sizeof(int));
+			fout.write((char *)&s[i], sizeof(int));
 		}
 
 		fout.close();
 	}
-}
+
 
 //case : ening에 넣기
 void recordScreen() 
@@ -498,8 +495,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			case Ending: 
 				{
-				fileOpen(1);
-				}break;
+				//fileOpen(1);
+				//saveRecord(&id, &s);
+			}break;
 			}
 
 			
