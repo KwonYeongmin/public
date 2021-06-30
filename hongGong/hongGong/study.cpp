@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <string>
+#include <fstream>
 /*
 
 void swapr(int &a, int &b) 
@@ -118,14 +119,37 @@ private:
 public:
 	B(double x_, double y_) :A(x_, y_) { x = x_; y = y_; std::cout << (x - y) << std::endl; }
 };
+
+
+void accept() 
+{
+	using namespace std;
+	int Index = 0;
+	//int arr[5] = { 1,5,7,9,10 };
+	std::string id[5] = { "none" ,"A","B","C","D"};
+	std::ifstream fin("test.txt");
+	if (fin.fail()) { std::cout << "실패!" << std::endl; }
+	//파일에 글쓰기
+
+
+	//파일 읽어오기
+	std::ofstream fout("test.txt");
+	for(int i=0;i<)
+	fout << id[0]<<endl;
+	/*
+	while (!fout.eof())
+	{
+		fout << "aaa bbb ccc";//id[Index];
+		//fin >> id;
+		Index++;
+	}*/
+		
+}
+
 int main() 
 {
 	using namespace std;
-	//cout << sum(2,5);
-	
-	
-	//A(5,3);
-	B(5, 3);
+	accept();
 	return 0;
 	/*
 	cout.fill('*');

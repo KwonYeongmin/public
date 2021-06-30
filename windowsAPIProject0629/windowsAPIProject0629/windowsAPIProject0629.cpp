@@ -67,7 +67,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
 //파일에 있는 정보 가져와서 점수 비교하기
-int cprRecord(TCHAR(*name)[100], int *ss)
+int cprRecord()
 {
 	//std::ofstream out("recore.txt");
 	std::ifstream fin("Record.txt", std::ios::in | std::ios::binary);
@@ -80,9 +80,15 @@ int cprRecord(TCHAR(*name)[100], int *ss)
 	//데이터 가지고 오기
 	for (int i = 0; i < 5; i++)
 	{
-		fin.read((char *)name[i], sizeof(TCHAR) * 100);
-		fin.read((char *)&ss[i], sizeof(int));
+		
 	}
+
+	for (int i = 0; i < 5; i++) 
+	{
+		//if (score > ) break;
+	}
+
+
 	fin.close();
 	return 1;
 }
@@ -114,10 +120,11 @@ int fileOpen(int index)
 	out.close();
 	return 1;
 }
+
 //파일을 읽기
 int readRecord() 
 {
-
+	return 1;
 }
 
 void saveRecord (TCHAR(*name)[100], int *s)
@@ -131,7 +138,7 @@ void saveRecord (TCHAR(*name)[100], int *s)
 	}
 	fin.close();
 	TCHAR tt[15];
-	_tcscpy_s(tt, _countof(tt), id);
+	_tcscpy_s(tt, _countof(tt), id);//sizeof(array) / sizeof(array[0])
 	int nt = score;
 
 	for (int i = 0; i < 5; i++)
@@ -166,44 +173,8 @@ void saveRecord (TCHAR(*name)[100], int *s)
 	}
 
 
-//case : ening에 넣기
-void recordScreen() 
-{
-	/*
-	
-	TCHAR SCORE[100] = { 0 };
-	_itot_s(Score, SCORE, _countof(SCORE), 10);
-	TextOut(hdc, rectview.right / 2 - 155, rectview.bottom / 2 - 20, _T("현재 플레이어 기록"), _tcslen(_T("현재 플레이어 기록")));
-	TextOut(hdc, rectview.right / 2 - 10, rectview.bottom / 2 - 20, ID, _tcslen(ID));
-	TextOut(hdc, rectview.right / 2 + 65, rectview.bottom / 2 - 20, SCORE, _tcslen(SCORE));
 
-	memset(SCORE, 0, sizeof(SCORE));
-	_itot_s(score[0], SCORE, _countof(SCORE), 10);
-	TextOut(hdc, rectview.right / 2 - 155, rectview.bottom / 2 + 5, _T("    1위    "), _tcslen(_T("    1위    ")));
-	TextOut(hdc, rectview.right / 2 - 10, rectview.bottom / 2 + 5, name[0], _tcslen(name[0]));
-	TextOut(hdc, rectview.right / 2 + 65, rectview.bottom / 2 + 5, SCORE, _tcslen(SCORE));
-	memset(SCORE, 0, sizeof(SCORE));
-	_itot_s(score[1], SCORE, _countof(SCORE), 10);
-	TextOut(hdc, rectview.right / 2 - 155, rectview.bottom / 2 + 30, _T("    2위    "), _tcslen(_T("    2위    ")));
-	TextOut(hdc, rectview.right / 2 - 10, rectview.bottom / 2 + 30, name[1], _tcslen(name[1]));
-	TextOut(hdc, rectview.right / 2 + 65, rectview.bottom / 2 + 30, SCORE, _tcslen(SCORE));
-	memset(SCORE, 0, sizeof(SCORE));
-	_itot_s(score[2], SCORE, _countof(SCORE), 10);
-	TextOut(hdc, rectview.right / 2 - 155, rectview.bottom / 2 + 55, _T("    3위    "), _tcslen(_T("    3위    ")));
-	TextOut(hdc, rectview.right / 2 - 10, rectview.bottom / 2 + 55, name[2], _tcslen(name[2]));
-	TextOut(hdc, rectview.right / 2 + 65, rectview.bottom / 2 + 55, SCORE, _tcslen(SCORE));
-	memset(SCORE, 0, sizeof(SCORE));
-	_itot_s(score[3], SCORE, _countof(SCORE), 10);
-	TextOut(hdc, rectview.right / 2 - 155, rectview.bottom / 2 + 80, _T("    4위    "), _tcslen(_T("    4위    ")));
-	TextOut(hdc, rectview.right / 2 - 10, rectview.bottom / 2 + 80, name[3], _tcslen(name[3]));
-	TextOut(hdc, rectview.right / 2 + 65, rectview.bottom / 2 + 80, SCORE, _tcslen(SCORE));
-	memset(SCORE, 0, sizeof(SCORE));
-	_itot_s(score[4], SCORE, _countof(SCORE), 10);
-	TextOut(hdc, rectview.right / 2 - 155, rectview.bottom / 2 + 105, _T("    5위    "), _tcslen(_T("    5위    ")));
-	TextOut(hdc, rectview.right / 2 - 10, rectview.bottom / 2 + 105, name[4], _tcslen(name[4]));
-	TextOut(hdc, rectview.right / 2 + 65, rectview.bottom / 2 + 105, SCORE, _tcslen(SCORE));
-	*/
-}
+
 //
 //  함수: MyRegisterClass()
 //

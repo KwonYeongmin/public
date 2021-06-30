@@ -154,11 +154,13 @@
     <ClCompile Include="0623_algorithm.cpp" />
     <ClCompile Include="Bintree.cpp" />
     <ClCompile Include="doubleLinkedList.cpp" />
+    <ClCompile Include="Hash.cpp" />
     <ClCompile Include="singleLinkedList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bintree.h" />
     <ClInclude Include="doubleLinkedList.h" />
+    <ClInclude Include="Hash.h" />
     <ClInclude Include="singleLinkedList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

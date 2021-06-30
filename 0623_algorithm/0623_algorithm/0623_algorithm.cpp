@@ -4,12 +4,108 @@
 #include "singleLinkedList.h"
 #include"doubleLinkedList.h"
 #include "Bintree.h"
+#include "Hash.h"
 #include <iostream>
 
 using namespace std;
 
 int doubleLinkedList();
 void singleLinkedList();
+int binTrees();
+
+int hashTree() 
+{
+	//구조체
+	ChainHash hashtable;
+	hashtable.table = NULL;
+
+	Hash hash(&hashtable, 13);
+
+	int menu;
+	int num = 0; string str = "none";
+
+	while (1)
+	{
+		cout << "(1).삽입 (2).삭제 (3).검색 (4).출력 (0).종료: " << endl;
+		cin >> menu;
+		if (menu == 0)
+		{
+			cout << "종료" << endl;
+			return 0;
+		}
+		switch (menu)
+		{
+		case 1:
+		{
+			//level temp;
+			cout << "< 삽입 >" << endl;
+			cout << "삽입하려는 데이터를 입력하세요. " << endl;
+			cout << "번호>> ";
+			//cin >> temp.no;
+			cout << "이름>> ";
+			//cin >> temp.name;
+			
+			//count++;if (count>=4) { trees = (level*)malloc(sizeof(level)*5); }
+
+		}
+		break;
+
+		case 2:
+		{
+			cout << "< 삭제 >" << endl;
+			cout << "번호 입력 >> ";
+			cin >> num;
+			
+		}
+		break;
+
+		case 3:
+		{
+			cout << "< 검색 > :  (1). 번호로 검색 (2). 이름으로 검색 : " << endl;
+			cin >> num;
+			if (num == 1)
+			{
+				cout << "번호 입력 >> ";
+				cin >> num;
+				//trees.Search(&num, &str, 0);
+			}
+			else if (num == 2)
+			{
+				cout << "이름 입력 >> ";
+				cin >> str;
+				//trees.Search(&num, &str, 1);
+			}
+			cout << "[[DATA]] >> " << num << " : " << str << endl;
+		}
+		break;
+
+		case 4:
+		{
+			cout << "< 출력 >" << endl;
+			hash.Print();
+		}
+		break;
+		}
+	}
+
+
+	return 1;
+}
+
+
+int main()
+{	
+	//구조체
+	ChainHash hashtable = { 0 };
+	Hash hash(&hashtable, 13);
+
+	hash.AddData( {0,"0"});
+	hash.AddData({ 39,"39" });
+	hash.AddData({ 26,"26" });
+	//hash.Print();
+
+	return 0;
+}
 
 int binTrees()
 {
@@ -88,41 +184,6 @@ int binTrees()
 	delete[] lev;
 	return 1;
 }
-
-
-int main()
-{
-	
-	level *lev = new level[12]; 
-	BinTree trees(lev);
-	level node1 = { 11,"11" };
-	level node2 = { 5,"5" };
-	level node3 = { 4,"4" };
-	level node4 = { 8,"8" };
-	level node5 = { 7,"7" };
-	level node6 = { 6,"6" };
-	level node7 = { 9,"9" };
-	level node8 = { 15,"15" };
-	level node9 = { 13,"13" };
-	level node10 = { 12,"12" };
-	level node11 = { 18,"18" };
-	level node12 = { 14,"14" };
-	trees.addData(node1);
-	trees.addData(node2);
-	trees.addData(node3); 
-	trees.addData(node5);
-	trees.addData(node4);
-	/*
-	trees.addData(node5);
-	trees.addData(node6);
-	trees.addData(node7);*/
-	
-	return 0;
-	binTrees();
-	return 0;
-}
-
-
 
 int doubleLinkedList()
 {

@@ -18,7 +18,7 @@ int Turret::getRadius() { return r; }
 
 void Turret::update(int lcnt,int rcnt,RECT rclinent)
 {
-	angle = 60 * (lcnt-rcnt);
+	angle = 60 * (lcnt-rcnt)-330;
 	const double PI = 3.14159265358979323846;
 	X = nr * cos((angle) / PI);
 	Y = nr * sin((angle) / PI);
