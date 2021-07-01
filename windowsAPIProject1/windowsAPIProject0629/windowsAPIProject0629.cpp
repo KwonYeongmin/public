@@ -73,10 +73,58 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 */
 typedef struct recordData 
 {
-	std::string name;
+	char name[20];
 	int score;
 }data;
+void cprRecord()
+{
+	data* t = new data[5];
+	FILE* fp = fopen("test.txt", "rb");// 파일 읽기모드로 열기
+	if (fp == NULL) {
+		printf("fail to read file");
+		return;
+	}
+
+	char buffer[1001], *token;
+
+	int i = 0;
+	int idx = 0;
+	while (!feof(fp)) 
+	{
+		i = 0;//i초기화
+		fgets(buffer, 1001, fp);
+		token = strtok(buffer, " "); // 
+		while (token != NULL) {
+
+			if (i == 0) {
+				strcpy(t[idx].name, token);
+			}
+			else if (i == 1) {
+				t[idx].score = atoi(token);
+			}
+			i++;
+			token = strtok(NULL, " ");
+		}
+		idx++;
+	}
+	int min = 0;
+	idx = 0;
+	for (i = 1; i < 5; i++) 
+	{
+		if (min > t[i].score) 
+		{
+			min = i;
+		}
+	}
+	
+	//읽은 내용이 잘 저장됐는지 출력
+	for (int i = 0; i < idx; i++) {
+		//printf("%s %d\n", t[i].name, t[i].score);
+	}
+	fclose(fp); // 파일 닫기
+}
 //파일에 있는 정보 가져와서 점수 비교하기
+/*
 int cprRecord()
 {
 	//std::ofstream out("recore.txt");
@@ -107,7 +155,7 @@ int cprRecord()
 
 	fin.close();
 	return 1;
-}
+}*/
 int fileOpen(int index) 
 {
 	std::ofstream out("recore.txt");
