@@ -14,6 +14,7 @@ WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
 static int score = 0;
+static int life = 8;
 static TCHAR id[100] = _T(" ");
 enum stage
 {
@@ -65,18 +66,33 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     return (int) msg.wParam;
 }
 
-
+//파일 입출력
+/*
+1. 점수 비교
+2. 
+*/
+typedef struct recordData 
+{
+	std::string name;
+	int score;
+}data;
 //파일에 있는 정보 가져와서 점수 비교하기
 int cprRecord()
 {
 	//std::ofstream out("recore.txt");
 	std::ifstream fin("Record.txt", std::ios::in | std::ios::binary);
-
+	char buffer[1001], *token;
 	if (fin.fail())
 	{
 		std::cout << "파일을 여는데 실패했습니다.\n" << std::endl;
 		return -1;
 	}
+	//데이터가 없다면 정보 저장하기
+	if (< 5) 
+	{
+	
+	}
+
 	//데이터 가지고 오기
 	for (int i = 0; i < 5; i++)
 	{
@@ -401,6 +417,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					if (wall->collsion(*obj) == true)
 					{
 						//맞은 벽 사라지도록
+						life--;
 						it = walls.erase(it);
 					}
 				}
@@ -423,7 +440,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			/*만약 벽의 개수가 0이라면
 			게임 종료*/
-			//if (walls.size() == 0)
+			//if (life <= 0) stageNum == Ending;
 			if (score == 10)
 			{
 				stageNum == Ending;
@@ -464,6 +481,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				TCHAR out[100];
 				wsprintf(out, _T("score : %d"), score);
 				TextOut(hdc, 300, 20, out, lstrlen(out));
+				//라이프
+				TCHAR lifee[100];
+				wsprintf(lifee, _T("Life : %d"), life);
+				TextOut(hdc, 500, 20, lifee, lstrlen(lifee));
 				turrent.draw(hdc);
 
 				for (std::list<Bullet*>::iterator it = basket.begin(); it != basket.end(); it++)
