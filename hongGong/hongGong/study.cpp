@@ -1,6 +1,8 @@
-﻿#include <iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
 #include <string>
 #include <fstream>
+#include <cstdlib>
 /*
 
 void swapr(int &a, int &b) 
@@ -124,17 +126,19 @@ public:
 void accept() 
 {
 	using namespace std;
+
 	int Index = 0;
 	//int arr[5] = { 1,5,7,9,10 };
 	std::string id[5] = { "none" ,"A","B","C","D"};
 	std::ifstream fin("test.txt");
 	if (fin.fail()) { std::cout << "실패!" << std::endl; }
+	else { cout << "성공"; }
 	//파일에 글쓰기
 
 
 	//파일 읽어오기
 	std::ofstream fout("test.txt");
-	for(int i=0;i<)
+	//for(int i=0;i<)
 	fout << id[0]<<endl;
 	/*
 	while (!fout.eof())
@@ -145,11 +149,62 @@ void accept()
 	}*/
 		
 }
+typedef struct test 
+{
+	int score;
+	char name[20];
+}tt;
+
+
+//파일 읽기
+void readFile() 
+{
+	tt* t = new tt[5];
+	FILE* fp = fopen("test.txt", "rb");// 파일 읽기모드로 열기
+	if (fp == NULL) {
+		printf("fail to read file");
+		return;
+	}
+	
+	char buffer[1001], *token;
+
+	int i = 0;
+	int idx = 0;
+	while (!feof(fp)) {
+		i = 0;//i초기화
+		fgets(buffer, 1001, fp);
+		token = strtok(buffer, " "); // 
+		while (token != NULL) {
+
+			if (i == 0) {
+				strcpy(t[idx].name, token);
+			}
+			else if (i == 1) {
+				t[idx].score = atoi(token);
+			}
+			i++;
+			token = strtok(NULL, " ");
+		}
+		idx++;
+	}
+	//읽은 내용이 잘 저장됐는지 출력
+	for (int i = 0; i < idx; i++) {
+		printf("%s %d\n", t[i].name, t[i].score);
+	}
+	fclose(fp); // 파일 닫기
+}
+
 
 int main() 
 {
 	using namespace std;
-	accept();
+	//파일 읽기
+	
+	
+	
+
+	//tt(t, idx);
+	//accept();
 	return 0;
 	/*
 	cout.fill('*');
@@ -162,82 +217,5 @@ int main()
 		cout << bonus[i] << "\n";
 	}*/
 	
-	const char * staff[2] = { "이제노","정재현" };
-	string me = "권영민";
-	for (int i = 0; i < 2; i++)
-	{
-		cout << staff[i];
-		cout.width(8); cout.fill('ㅎ');
-		cout << me<<endl;
-	}
 
-	return 0;
-	cout.width(12);
-	cout << "hello"<<endl; 
-	cout.width(12);
-	cout << "안녕하세요" << endl;
-	cout.width(12);
-	cout << "bye" << endl;
-	cout.width(12);
-	cout << "안녕히계세요" << endl;
-	return 0;
-	int w = cout.width();
-	cout << "디폴트 필드 폭 = " << w << " : \n";
-
-	cout.width(5);
-	cout << "N" << ':';
-	cout.width(8);
-	cout << " N * N " << ":\n";
-
-	for (long i = 1; i <= 100; i *= 10) 
-	{
-		cout.width(5);
-		cout << i << ':';
-		cout.width(8);
-		cout << i * i << ":\n";
-	}
-
-	return 0;
-	cout << "하나의 정수를 입력: ";
-	int n;
-	cin >> n;
-	cout << "n		n*n \n";
-	cout << n << "		" << (unsigned long)n * n << " (10진법) \n";
-
-	cout << hex;
-	cout << n << "		";
-	cout << n*n << " (16진법)\n";
-	
-	cout << oct << n << "		" << n * n << " (8진법)\n";
-
-	dec(cout);
-	cout << n << "		" << n * n << " (10진법)\n";
-	
-	return 0;
-	
-	std::cout << "12345678901234567890\n";
-	char ch = 'k';
-	int t = 273;
-	std::cout << ch << " : \n";
-	std::cout << t << " : \n";
-	std::cout << -t << " : \n";
-
-	double f1 = 1.200;
-	std::cout << f1 << " : \n";
-	std::cout << (f1+1.0/9.0) << " : \n";
-
-	double f2 = 1.67E2;
-	std::cout << f2 << " : \n";
-	f2 += 1.0 / 9.0;
-	std::cout << f2 << " : \n";
-	std::cout<<(f2*1.0e4)<< " : \n";
-
-	double f3 = 2.3e-4;
-	std::cout << f3 << " : \n";
-	std::cout << f3/10 << " : \n";
-
-	return 0;
-	std::cout << "안녕하십니까";
-	std::cout<<std::flush;
-	std::cout << "잠시만 기다려 주십시오." << std::endl;
 }
