@@ -116,8 +116,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
    HWND hWnd = CreateWindowW(szWindowClass, _T("영민의 첫번째 윈도우"),WS_OVERLAPPEDWINDOW,//szTitle, WS_OVERLAPPEDWINDOW,
-	  CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
+	  CW_USEDEFAULT, 0, 480, 640, nullptr, nullptr, hInstance, nullptr);
+   //HWND hWnd = CreateWindowW(szWindowClass, _T("영민의 첫번째 윈도우"), WS_OVERLAPPEDWINDOW,//szTitle, WS_OVERLAPPEDWINDOW,
+	  // CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
    if (!hWnd)
    {
 	  return FALSE;
