@@ -91,20 +91,6 @@ defenseWall::defenseWall(int R, POINT p)
 }
 
 
-
-void defenseWall::Update()
-{
-
-}
-
-//바닥과 오브젝트가 부딪히면
-//사각형끼리의 충돌
-/*
-수평 충돌
-rect1.left<rect2.right && rect1.eight>rect2.left
-수직 충돌
-rect1.top<rect2.bottom&& rect1.bottom>rect2.top
-*/
 BOOL defenseWall::collsion(Object obj)
 {
 	int left = obj.getPoint()[2].x;

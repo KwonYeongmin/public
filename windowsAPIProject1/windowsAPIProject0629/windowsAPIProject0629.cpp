@@ -58,7 +58,6 @@ static defenseWall *wall;
 void gameStart(HWND hWnd);
 	//--파일 입출력 함수
 void cprRecord(HDC hdc);
-void DrawRecord(HDC hdc);
 
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
@@ -218,28 +217,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}break;
 	case WM_CHAR:
 		{
-		bool key_ck = false;
-		if (wParam == VK_BACK && count > 0) { id[--count] = NULL; }
-		
+		if(stageNum==Lobby)
+		{
+		if (wParam == VK_BACK && count > 0) { id[--count] = NULL; }	
 		else if (wParam == VK_RETURN)
 		{
-			if (key_ck == false) 
-			{
 				gameStart(hWnd);
 				stageNum = Game;
-				key_ck = true;
-			}
 		}
 		else
 		{
 			if (count <= 20) 
 			{
-				if (key_ck == false)
-				{
-					id[count++] = wParam;
-					id[count] = NULL;
-				}
+				id[count++] = wParam;
+				id[count] = NULL;
 			}
+		}
 		}
 		InvalidateRect(hWnd, NULL, true);
 		}
@@ -266,7 +259,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			} break;
 			case VK_SPACE:
 			{
-				//총알 추가
+				//--총알 추가
 				bullet = new Bullet(turrent, 20);
 				basket.push_back(bullet);
 				InvalidateRect(hWnd, NULL, true);
@@ -304,7 +297,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 						if (obj->Collision(*bullet) == true)
 						{
 							score += 5;
-							//it = objects.erase(it);
 							objects.erase(it);
 							basket.erase(ip);
 							ck2 = true;
@@ -324,7 +316,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 						{
 							//맞은 벽 사라지도록
 							life--;
-							walls.erase(it); //it = walls.erase(it);
+							walls.erase(it); 
 							objects.erase(ip);
 							ck = true;
 							break;
@@ -333,7 +325,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					if (ck == true) break;
 				}
 
-				/*만약 벽의 개수가 1개이하면 게임 종료*/
+				//--바닥벽이 1개 이하면 게임 종료
 				if (life < 1)
 				{
 					stageNum = Ending;
@@ -344,7 +336,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}break;
 	case 3:
 		{
-			//오브젝트 생성
+			//--오브젝트 생성
 			if (stageNum == Game) 
 			{
 				obj = new Object({ rand() % 1300 + 100,-90 }, 10);
@@ -369,6 +361,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			else if (stageNum == Game) 
 			{
 				HideCaret(hWnd);
+					//--UI
 				//아이디
 				TextOut(hdc, 20, 20, _T("ID : "), lstrlen(_T("ID : ")));
 				TextOut(hdc, 50, 20, id, lstrlen(id));
@@ -466,16 +459,14 @@ void cprRecord(HDC hdc)
 
 	char id_list[5][20] = { 0 };
 
-	//문자ID와 점수 읽어옴
+	//문자ID와 점수 읽어온 후 점수 구조체 저장
 	for (i = 0; i < 5; i++) fin >> id_list[i] >> arr[i].score;
 
-	//문자를 유니코드로 변환
-	for (i = 0; i < 5; i++)
-	{
-		MultiByteToWideChar(CP_ACP, 0, id_list[i], 20, arr[i].name, 20);
-	}
+	//문자를 유니코드로 변환후 구조체 저장
+	for (i = 0; i < 5; i++) MultiByteToWideChar(CP_ACP, 0, id_list[i], 20, arr[i].name, 20);
 	fin.close();
 
+	//arr[5]에 현재 플레이어 점수와 아이디 저장
 	_tcscpy(arr[5].name, id);
 	arr[5].score = score;
 	
@@ -500,19 +491,27 @@ void cprRecord(HDC hdc)
 	}
 
 	//유니코드를 문자로 변환
-	for (i = 0; i < 5; i++)
-	{
-		WideCharToMultiByte(CP_ACP, 0, arr[i].name, 20, id_list[i], 20, NULL, NULL);
-	}
+	for (i = 0; i < 5; i++) WideCharToMultiByte(CP_ACP, 0, arr[i].name, 20, id_list[i], 20, NULL, NULL);
 
+	//파일 열기
 	std::ofstream fout("record.txt", std::ios_base::out | std::ios_base::in | std::ios_base::binary);
+
+	//파일에 ID와 점수 출력
 	for (i = 0; i < 5; i++)
 	{
 		fout << id_list[i] << ' ' << arr[i].score << '\n';
 	}
+
 	fout.close();
+
 	int x = 550;
-	int y = 180;
+	int y = 200;
+	TextOut(hdc, x, y - 100, _T("your ID : "), lstrlen(_T("your ID : ")));
+	TextOut(hdc, x + 100, y - 100, id, lstrlen(id));
+	TCHAR ss[100];
+	wsprintf(ss, _T("score : %d"), score);
+	TextOut(hdc, x + 250, y - 100,  ss, lstrlen(ss));
+	//점수 화면에 출력하기
 	for (int i = 0; i < 5; i++)
 	{
 		TextOut(hdc, x, y + 80 * i, _T("ID : "), lstrlen(_T("ID : ")));

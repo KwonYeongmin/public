@@ -64,6 +64,5 @@ private: int life;
 public:
 	defenseWall(int R, POINT p);
 	BOOL collsion(Object obj);
-	void Update();
 	void Draw(HDC hdc);
 };
