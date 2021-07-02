@@ -19,7 +19,7 @@ private:
 	DList *tail;
 public:
 	//리스트 초기화
-	doubleList(DList *h);
+	doubleList();
 	~doubleList();
 	//노드 추가
 	void addFront(DList t);

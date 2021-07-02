@@ -1,0 +1,6 @@
+abc 35
+yeongmin 20
+kwon 15
+none 5
+none 4
+one 4

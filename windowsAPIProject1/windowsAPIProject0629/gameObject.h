@@ -19,10 +19,9 @@ public :
 	int getRadius();
 	void update(int cnt1, int cnt2, RECT rclinent);
 	void draw(HDC hdc);
-	
 };
 
-
+class Object;
 //ÃÑ¾Ë
 class Bullet 
 {
@@ -36,6 +35,7 @@ public:
 	Bullet(Turret t, int R);
 	POINT getCenter();
 	int getRadius();
+	BOOL Collision(Object obj);
 	void update(Turret t);
 	void draw(HDC hdc);
 };

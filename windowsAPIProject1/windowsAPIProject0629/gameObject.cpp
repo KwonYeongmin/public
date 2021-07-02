@@ -63,7 +63,22 @@ void Bullet::draw(HDC hdc)
 	Ellipse(hdc,center.x-r,center.y-r,center.x+r,center.y+r);
 }
 
+BOOL Bullet::Collision(Object obj) 
+{
+	int left = obj.getPoint()[2].x;
+	int right = obj.getPoint()[4].x;
+	int top = obj.getPoint()[0].y;
+	int bottom = obj.getPoint()[3].y;
+
+	if (top<center.y && bottom>center.y - r && left<center.x + 2 * r&&right>center.x)
+	{
+		return true;
+	}
+}
+
+
 POINT Bullet::getCenter() { return center; }
+
 int Bullet::getRadius() { return r; }
 
 
@@ -117,6 +132,7 @@ Object::Object( POINT c, int s)
 
 void Object::Update() { pos.y += speed; }
 POINT* Object::getPoint() { return p; }
+
 BOOL Object::Collision(Bullet b)
 {
 	int left = p[2].x;

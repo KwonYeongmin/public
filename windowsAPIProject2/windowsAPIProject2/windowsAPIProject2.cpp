@@ -11,6 +11,7 @@
 //--------------------변수 선언
 RECT rectView;
 HBITMAP hDoubleBufferImage; //더블 버퍼링 변수
+static POINT p;
 //--------------------객체 생성
 DrawBackImage back;
 DrawFrontImage front;
@@ -247,6 +248,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 		back.CreateBitmap();
 		SetTimer(hWnd, 123, 100, NULL);
+		SetTimer(hWnd, 123, 500, NULL);
 		GetClientRect(hWnd, &rectView);
 		}
 		break;

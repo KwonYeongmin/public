@@ -13,14 +13,53 @@ HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
-static int score = 0;
+
+
+	//---UI 변수
 static int life = 8;
-static TCHAR id[100] = _T(" ");
-enum stage
+static int score = 0;
+static TCHAR id[20] = _T(" ");
+
+//--스테이지 
+enum stage { Lobby=0,Game=1,Ending = 2};
+static int stageNum= Lobby;
+
+	//--파일 입출력
+typedef struct recordData
 {
-	Lobby=0,Game=1,Ending=2
-};
-static int stageNum=Lobby;
+	_TCHAR name[20];
+	int score;
+}data;
+static data ary[5];
+
+	//--오브젝트 관련
+//--포탄
+static RECT rclient;
+static Turret turrent;
+static int lcnt = 0;
+static int rcnt = 0;
+
+//--총알
+static std::list<Bullet*> basket;
+static Bullet *bullet;
+
+//--오브젝트
+static std::list<Object*> objects;
+static Object *obj;
+
+//--바닥
+static std::list<defenseWall*> walls;
+static defenseWall *wall;
+
+
+//----함수
+
+	//--게임 시작 셋팅함수
+void gameStart(HWND hWnd);
+	//--파일 입출력 함수
+void cprRecord(HDC hdc);
+void DrawRecord(HDC hdc);
+
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -66,175 +105,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     return (int) msg.wParam;
 }
 
-//파일 입출력
-/*
-1. 점수 비교
-2. 
-*/
-typedef struct recordData 
-{
-	char name[20];
-	int score;
-}data;
-void cprRecord()
-{
-	data* t = new data[5];
-	FILE* fp = fopen("test.txt", "rb");// 파일 읽기모드로 열기
-	if (fp == NULL) {
-		printf("fail to read file");
-		return;
-	}
-
-	char buffer[1001], *token;
-
-	int i = 0;
-	int idx = 0;
-	while (!feof(fp)) 
-	{
-		i = 0;//i초기화
-		fgets(buffer, 1001, fp);
-		token = strtok(buffer, " "); // 
-		while (token != NULL) {
-
-			if (i == 0) {
-				strcpy(t[idx].name, token);
-			}
-			else if (i == 1) {
-				t[idx].score = atoi(token);
-			}
-			i++;
-			token = strtok(NULL, " ");
-		}
-		idx++;
-	}
-	int min = 0;
-	idx = 0;
-	for (i = 1; i < 5; i++) 
-	{
-		if (min > t[i].score) 
-		{
-			min = i;
-		}
-	}
-	
-	//읽은 내용이 잘 저장됐는지 출력
-	for (int i = 0; i < idx; i++) {
-		//printf("%s %d\n", t[i].name, t[i].score);
-	}
-	fclose(fp); // 파일 닫기
-}
-//파일에 있는 정보 가져와서 점수 비교하기
-/*
-int cprRecord()
-{
-	//std::ofstream out("recore.txt");
-	std::ifstream fin("Record.txt", std::ios::in | std::ios::binary);
-	char buffer[1001], *token;
-	if (fin.fail())
-	{
-		std::cout << "파일을 여는데 실패했습니다.\n" << std::endl;
-		return -1;
-	}
-	//데이터가 없다면 정보 저장하기
-	if (< 5) 
-	{
-	
-	}
-
-	//데이터 가지고 오기
-	for (int i = 0; i < 5; i++)
-	{
-		
-	}
-
-	for (int i = 0; i < 5; i++) 
-	{
-		//if (score > ) break;
-	}
-
-
-	fin.close();
-	return 1;
-}*/
-int fileOpen(int index) 
-{
-	std::ofstream out("recore.txt");
-	
-
-	if (out.fail()) 
-	{
-		std::cout << "파일을 여는데 실패했습니다.\n" << std::endl;
-		return 1;
-	}
-
-	if (index == 0) 
-	{
-
-		out << *id << " : " << score << std::endl;
-		
-	}
-	else if (index==1) 
-	{
-		TCHAR outBuf[100];// = _T("test");
-		char temp[100];
-		WideCharToMultiByte(CP_ACP, 0, outBuf, 100, temp, 100, NULL, NULL);
-		out << temp << std::endl;
-	}
-	
-	out.close();
-	return 1;
-}
-
-//파일을 읽기
-int readRecord() 
-{
-	return 1;
-}
-
-void saveRecord (TCHAR(*name)[100], int *s)
-{
-	std::ifstream fin("Record.txt", std::ios::in | std::ios::binary);
-
-	for (int i = 0; i < 5; i++)
-	{
-		fin.read((char *)name[i], sizeof(TCHAR) * 15);
-		fin.read((char *)&s[i], sizeof(int));
-	}
-	fin.close();
-	TCHAR tt[15];
-	_tcscpy_s(tt, _countof(tt), id);//sizeof(array) / sizeof(array[0])
-	int nt = score;
-
-	for (int i = 0; i < 5; i++)
-	{
-		if (s[i] < score)
-		{
-		TCHAR temp[100] = { 0 };
-				_tcscpy_s(temp, _countof(temp), name[i]);
-				int int_temp = s[i];
-
-				_tcscpy_s(name[i], _countof(name[i]), id);
-				s[i] = score;
-
-				_tcscpy_s(id, _countof(id), temp);
-				score = int_temp;
-			}
-		}
-
-		_tcscpy_s(id, _countof(id), tt);
-		score = nt;
-
-		std::ofstream fout("Record.txt", std::ios::out | std::ios::binary);
-
-
-		for (int i = 0; i < 5; i++)
-		{
-			fout.write((char *)name[i], sizeof(TCHAR) * 15);
-			fout.write((char *)&s[i], sizeof(int));
-		}
-
-		fout.close();
-	}
 
 
 
@@ -294,6 +164,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 }
 
 
+
+
+
 //
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -306,27 +179,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//
+		//--default
 	HDC hdc;
 	static int count;
 	static SIZE size;
-	//포탄
-	static RECT rclient;
-	static Turret turrent;
-	static int lcnt = 0;
-	static int rcnt = 0;
-
-	//총알
-	static std::list<Bullet*> basket;
-	static Bullet *bullet;
-
-	//오브젝트
-	static std::list<Object*> objects;
-	static Object *obj;
-
-	//바닥
-	static std::list<defenseWall*> walls;
-	static defenseWall *wall;
 
 	switch (message)
 	{
@@ -348,179 +204,170 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 	}
 	break;
-	//파일 오픈,, 어디다가 넣어야하는지 모르겠습니다.
-	case ID_FILEOPEN: 
-	{
-	
-	}break;
 	case WM_CREATE:
 	{
-		//글자쓰기
+			//--글자쓰기
 		CreateCaret(hWnd, NULL, 5, 15);
 		ShowCaret(hWnd);
 		count = 0;
-
-		//그림 그리기
+			//--그림 그리기
 		GetClientRect(hWnd, &rclient);
-		
+			//--setTimer
 		SetTimer(hWnd, 1, 100, NULL);
-		SetTimer(hWnd, 2, 2000, NULL);
 		SetTimer(hWnd, 3, 1500, NULL);
-		//defenseWall 생성
-		for (int i = 0; i < 8; i++)
-		{
-			wall = new defenseWall(89, { 178 * i,rclient.bottom });
-			walls.push_back(wall);
-		}
-
-		//포탄
-		turrent.init({ (rclient.right - rclient.left) / 2,rclient.bottom - 120 }, 120, rclient);
-
-		InvalidateRect(hWnd, NULL, true);
 	}break;
 	case WM_CHAR:
 		{
+		bool key_ck = false;
 		if (wParam == VK_BACK && count > 0) { id[--count] = NULL; }
 		
-		else if (wParam == VK_RETURN) stageNum = Game;
+		else if (wParam == VK_RETURN)
+		{
+			if (key_ck == false) 
+			{
+				gameStart(hWnd);
+				stageNum = Game;
+				key_ck = true;
+			}
+		}
 		else
 		{
-			if (count > 100) 
+			if (count <= 20) 
 			{
-				//"입력하지 못하도록 경고 뜨기"
+				if (key_ck == false)
+				{
+					id[count++] = wParam;
+					id[count] = NULL;
+				}
 			}
-			else 
-			{
-				id[count++] = wParam;
-				id[count] = NULL;
-			}	
 		}
-		
 		InvalidateRect(hWnd, NULL, true);
-		}break;
+		}
+		break;
 	case WM_SIZE:
 		GetClientRect(hWnd, &rclient);
 		break;
 	case WM_KEYDOWN:
 	{
-		switch (wParam)
+		if (stageNum == Game) 
 		{
-		case VK_RIGHT:
-		{
-			rcnt++;
-			turrent.update(lcnt, rcnt, rclient);
-		}  break;
+			switch (wParam)
+			{
+			case VK_RIGHT:
+			{
+				rcnt++;
+				turrent.update(lcnt, rcnt, rclient);
+			}  break;
 
-		case VK_LEFT:
-		{
-			lcnt++;
-			turrent.update(lcnt, rcnt, rclient);
-		} break;
-		case VK_SPACE:
-		{
-			//총알 추가
-			bullet = new Bullet(turrent, 20);
-			basket.push_back(bullet);
-			InvalidateRect(hWnd, NULL, true);		
-		} break;
+			case VK_LEFT:
+			{
+				lcnt++;
+				turrent.update(lcnt, rcnt, rclient);
+			} break;
+			case VK_SPACE:
+			{
+				//총알 추가
+				bullet = new Bullet(turrent, 20);
+				basket.push_back(bullet);
+				InvalidateRect(hWnd, NULL, true);
+			} break;
 
+			}
+			InvalidateRect(hWnd, NULL, true);
 		}
-		InvalidateRect(hWnd, NULL, true);
+		
 	}break;
 	case WM_TIMER:
 	{
+		
 		switch (wParam)
 		{
 		case 1:
 		{
-			for (std::list<Bullet*>::iterator it = basket.begin(); it != basket.end(); it++)
+			if (stageNum == Game) 
 			{
-				Bullet *bullet = *it;
-				bullet->update(turrent);
-			}
-
-			
-			for (std::list<Object*>::iterator it = objects.begin(); it != objects.end(); it++)
-			{
-				Object *obj = *it;
-				obj->Update();
-
-				for (std::list<Bullet*>::iterator ip = basket.begin(); ip != basket.end(); ip++)
+				for (std::list<Bullet*>::iterator it = basket.begin(); it != basket.end(); it++)
 				{
-					Bullet *bullet = *ip;
-					if (obj->Collision(*bullet) == true)
-					{
-						score+=5;
-						it = objects.erase(it);
-					}
+					Bullet *bullet = *it;
+					bullet->update(turrent);
 				}
-			}
-			
-			for (std::list<defenseWall*>::iterator it = walls.begin(); it != walls.end(); it++)
-			{
-				defenseWall *wall = *it;
-				for (std::list<Object*>::iterator ip = objects.begin(); ip != objects.end(); ip++)
+
+				bool ck2 = false;
+				for (std::list<Object*>::iterator it = objects.begin(); it != objects.end(); it++)
 				{
-					Object *obj = *ip;
-					if (wall->collsion(*obj) == true)
+					Object *obj = *it;
+					obj->Update();
+
+					for (std::list<Bullet*>::iterator ip = basket.begin(); ip != basket.end(); ip++)
 					{
-						//맞은 벽 사라지도록
-						life--;
-						it = walls.erase(it);
+						Bullet *bullet = *ip;
+						if (obj->Collision(*bullet) == true)
+						{
+							score += 5;
+							//it = objects.erase(it);
+							objects.erase(it);
+							basket.erase(ip);
+							ck2 = true;
+							break;
+						}
 					}
+					if (ck2 == true) break;
 				}
-			}
-			/*
-			for (std::list<Object*>::iterator ip = objects.begin(); ip != objects.end(); ip++)
-			{
-				Object *obj = *ip;
+				bool ck = 0;
 				for (std::list<defenseWall*>::iterator it = walls.begin(); it != walls.end(); it++)
 				{
-					 defenseWall *wall = *it;
-					if (wall->collsion(*obj) == true)
+					defenseWall *wall = *it;
+					for (std::list<Object*>::iterator ip = objects.begin(); ip != objects.end(); ip++)
 					{
-						//맞은 벽 사라지도록
-						it = walls.erase(it);
+						Object *obj = *ip;
+						if (wall->collsion(*obj) == true)
+						{
+							//맞은 벽 사라지도록
+							life--;
+							walls.erase(it); //it = walls.erase(it);
+							objects.erase(ip);
+							ck = true;
+							break;
+						}
 					}
-					else { it++; }
+					if (ck == true) break;
 				}
-			}*/
 
-			/*만약 벽의 개수가 0이라면
-			게임 종료*/
-			//if (life <= 0) stageNum == Ending;
-			if (score == 10)
-			{
-				stageNum == Ending;
+				/*만약 벽의 개수가 1개이하면 게임 종료*/
+				if (life < 1)
+				{
+					stageNum = Ending;
+				}
+				InvalidateRect(hWnd, NULL, true);
 			}
-		InvalidateRect(hWnd, NULL, true);
+			
 		}break;
 	case 3:
 		{
 			//오브젝트 생성
-			obj = new Object({ rand() % 1300 + 100,-90 }, 10);
-			objects.push_back(obj);
+			if (stageNum == Game) 
+			{
+				obj = new Object({ rand() % 1300 + 100,-90 }, 10);
+				objects.push_back(obj);
+			}
 		}break;
-	}
-		}break;
+		}
+	}break;
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
 			SIZE size;
-			switch (stageNum) 
+			if (stageNum == Lobby) 
 			{
-			case Lobby: 
-				{
-				fileOpen(0);
 				RECT rect{ 600, 200, 800, 240 };
-				Rectangle(hdc,600,200,800,240);
+				Rectangle(hdc, 600, 200, 800, 240);
 				TextOut(hdc, 610, 210, id, _tcslen(id));
 				GetTextExtentPoint(hdc, id, _tcslen(id), &size);
-				SetCaretPos(rect.left + size.cx + 10, rect.top+10);
-				}break;
-			case Game: 
-				{
+				SetCaretPos(rect.left + size.cx + 10, rect.top + 10);
+			}
+			else if (stageNum == Game) 
+			{
 				HideCaret(hWnd);
 				//아이디
 				TextOut(hdc, 20, 20, _T("ID : "), lstrlen(_T("ID : ")));
@@ -542,37 +389,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 						Bullet *bullet = *it;
 						bullet->draw(hdc);
 					}
-
 				}
-
 				for (std::list<Object*>::iterator it = objects.begin(); it != objects.end(); it++)
 				{
-					Object *obj = *it;
-					obj->Draw(hdc);
+					Object *obj = *it; obj->Draw(hdc);
 				}
 
 				for (std::list<defenseWall*>::iterator it = walls.begin(); it != walls.end(); it++)
 				{
-					defenseWall *wall = *it;
-					wall->Draw(hdc);
-				}
-				}break;
-
-			case Ending: 
-				{
-				//fileOpen(1);
-				//saveRecord(&id, &s);
-			}break;
+					defenseWall *wall = *it; wall->Draw(hdc);
+				}		
 			}
-
-			
-
+			else if (stageNum == Ending) 
+			{
+				cprRecord(hdc);
+			}
 			EndPaint(hWnd, &ps);
         }
         break;
     case WM_DESTROY:
 		KillTimer(hWnd, 1);
-		//KillTimer(hWnd, 2);
 		KillTimer(hWnd, 3);
 		PostQuitMessage(0);
 
@@ -601,4 +437,89 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     return (INT_PTR)FALSE;
+}
+
+void gameStart(HWND hWnd)
+{
+	//defenseWall 생성
+	for (int i = 0; i < 8; i++)
+	{
+		wall = new defenseWall(89, { 178 * i,rclient.bottom });
+		walls.push_back(wall);
+	}
+	//포탄 생성
+	turrent.init({ (rclient.right - rclient.left) / 2,rclient.bottom - 120 }, 120, rclient);
+	InvalidateRect(hWnd, NULL, true);
+}
+
+
+//점수 비교 및 파일에 저장
+void cprRecord(HDC hdc)
+{
+	static data arr[6];
+	int i, j;
+
+	//기록 저장된 텍스트 파일 불러오기
+	std::ifstream fin("record.txt", std::ios_base::out | std::ios_base::in | std::ios_base::binary);
+
+	if (fin.fail()) MessageBox(NULL, _T("파일열기"), _T("오류"), MB_ICONEXCLAMATION | MB_OK);
+
+	char id_list[5][20] = { 0 };
+
+	//문자ID와 점수 읽어옴
+	for (i = 0; i < 5; i++) fin >> id_list[i] >> arr[i].score;
+
+	//문자를 유니코드로 변환
+	for (i = 0; i < 5; i++)
+	{
+		MultiByteToWideChar(CP_ACP, 0, id_list[i], 20, arr[i].name, 20);
+	}
+	fin.close();
+
+	_tcscpy(arr[5].name, id);
+	arr[5].score = score;
+	
+	//순위 매기기
+	int max;
+	for (i = 0; i < 5; i++)
+	{
+		max = i;
+		for (j = i + 1; j < 6; j++)
+		{
+			if (arr[j].score > arr[max].score)
+			{
+				int temp = arr[j].score;
+				arr[j].score = arr[i].score;
+				arr[i].score = temp;
+				TCHAR tempchar[20];
+				_tcscpy(tempchar, arr[j].name);
+				_tcscpy(arr[j].name, arr[i].name);
+				_tcscpy(arr[i].name, tempchar);
+			}
+		}
+	}
+
+	//유니코드를 문자로 변환
+	for (i = 0; i < 5; i++)
+	{
+		WideCharToMultiByte(CP_ACP, 0, arr[i].name, 20, id_list[i], 20, NULL, NULL);
+	}
+
+	std::ofstream fout("record.txt", std::ios_base::out | std::ios_base::in | std::ios_base::binary);
+	for (i = 0; i < 5; i++)
+	{
+		fout << id_list[i] << ' ' << arr[i].score << '\n';
+	}
+	fout.close();
+	int x = 550;
+	int y = 180;
+	for (int i = 0; i < 5; i++)
+	{
+		TextOut(hdc, x, y + 80 * i, _T("ID : "), lstrlen(_T("ID : ")));
+		TextOut(hdc, x+50, y + 80 * i, arr[i].name, lstrlen(arr[i].name));
+
+		TCHAR out[100];
+		wsprintf(out, _T("score : %d"), arr[i].score);
+		TextOut(hdc, x+200, y + 80 * i, out, lstrlen(out));
+	}
 }

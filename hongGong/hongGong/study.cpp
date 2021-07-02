@@ -156,11 +156,103 @@ typedef struct test
 }tt;
 
 
-//파일 읽기
+
 void readFile() 
 {
+	int i, j;
+	tt arr[6];
+	std::ifstream fin("test.txt", std::ios_base::in | std::ios_base::out | std::ios_base::binary);
+	//std::ofstream fout("test3.txt", std::ios_base::in| std::ios_base::out | std::ios_base::binary);
+	
+	fin.clear();
+	if (fin.fail()) { std::cout << "파일 열기 실패" << std::endl; }
+	//if (fout.fail()) { std::cout << "파일 열기 실패" << std::endl; }
+	for (i = 0; i < 5; i++) 
+	{
+		fin>>arr[i].name>>arr[i].score;
+	}
+	arr[5] = { 500,"new" };
+	int max;
+	for (i = 0; i < 5; i++)
+	{
+		max = i;
+		for (j = i + 1; j < 6; j++)
+		{
+			if (arr[j].score > arr[max].score)
+			{
+				int temp = arr[j].score;
+				arr[j].score = arr[i].score;
+				arr[i].score = temp;
+				char tempchar[20];
+				strcpy(tempchar, arr[j].name);
+				strcpy(arr[j].name, arr[i].name);
+				strcpy(arr[i].name, tempchar);
+			}
+		}
+	}
+	fin.close();
+	
+	std::ofstream fout("test.txt", std::ios_base::in | std::ios_base::out | std::ios_base::binary);
+	fout.clear();
+	for (i = 0; i < 5; i++) 
+	{
+		fout << arr[i].name<<' ' << arr[i].score << '\n';
+	}
+	fout.close();
+	/*
 	tt* t = new tt[5];
-	FILE* fp = fopen("test.txt", "rb");// 파일 읽기모드로 열기
+	std::string sourcename="test.txt";
+	std::ifstream fin(sourcename, std::ios_base::in | std::ios_base::binary);
+	//ofstream fout(desname, ios_base::out | ios_base::binary);
+		
+		//buffer -= 5;
+		//fout.write(&buffer, sizeof(char));
+
+	int size;
+	if (fin.is_open())
+	{
+		std::cout << "open success!" << std::endl;
+		fin.seekg(0, std::ios::end);
+		size = fin.tellg();
+	}
+	std::cout<<"size : " << size<<std::endl;
+	char buffer[1000];// = new char[size];
+	char *token;
+	//int buf;// = new int[size];
+	int i = 0; int idx = 0;
+	for (int i = 0; i < size; i++)
+	{
+		fin.seekg(i, std::ios::beg);
+		fin.read(buffer, sizeof(char));
+	
+		i = 0;
+		token = strtok(buffer, " "); 
+		while (token != NULL) {
+			if (i == 0) {
+				strcpy(t[idx].name, token);
+			}
+			else if (i == 1) 
+			{
+				t[idx].score = atoi(token);
+			}
+			i++;
+			token = strtok(NULL, " ");
+		}
+		idx++;
+
+		fin.read(buffer, sizeof(char));
+	}
+
+	//std::fout.close();
+	
+	//cout << "decoding done!" << endl;
+
+
+
+	//파일 읽기
+	/*
+	tt* t = new tt[5];
+	FILE* fp = fopen("test.txt", "rb+");// 파일 읽기모드로 열기
 	if (fp == NULL) {
 		printf("fail to read file");
 		return;
@@ -170,7 +262,8 @@ void readFile()
 
 	int i = 0;
 	int idx = 0;
-	while (!feof(fp)) {
+	while (!feof(fp)) 
+	{
 		i = 0;//i초기화
 		fgets(buffer, 1001, fp);
 		token = strtok(buffer, " "); // 
@@ -187,22 +280,51 @@ void readFile()
 		}
 		idx++;
 	}
+	*/
+	/*
+	int i,j;
+	
+	
 	//읽은 내용이 잘 저장됐는지 출력
-	for (int i = 0; i < idx; i++) {
+	for (int i = 0; i < idx; i++) 
+	{
 		printf("%s %d\n", t[i].name, t[i].score);
 	}
-	fclose(fp); // 파일 닫기
+	fin.close();
+	//fclose(fp); // 파일 닫기*/
 }
 
 
 int main() 
 {
 	using namespace std;
+	readFile();
+	return 0;
 	//파일 읽기
-	
-	
-	
-
+	int i,j;
+	test arr[6] = { {5,"f"} ,{1,"c"}, {2,"e"}, {3,"b"}, {4,"a"} };
+	arr[5] = { 10,"g" };
+	//readFile();
+//순위 매기기
+	int max;
+	for (i = 0; i < 5; i++)
+	{
+		max = i;
+		for (j = i + 1; j < 6; j++)
+		{
+			if (arr[j].score > arr[max].score)
+			{
+				int temp = arr[j].score;
+				arr[j].score = arr[i].score;
+				arr[i].score = temp;
+				
+			}
+		}
+	}
+	for (i = 0; i < 5; i++)
+	{
+		cout << i << " : " << arr[i].name << " : " << arr[i].score << endl;
+	}
 	//tt(t, idx);
 	//accept();
 	return 0;

@@ -152,16 +152,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="0623_algorithm.cpp" />
+    <ClCompile Include="AVLtrees.cpp" />
     <ClCompile Include="Bintree.cpp" />
     <ClCompile Include="doubleLinkedList.cpp" />
     <ClCompile Include="Hash.cpp" />
     <ClCompile Include="singleLinkedList.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AVLtrees.h" />
     <ClInclude Include="Bintree.h" />
     <ClInclude Include="doubleLinkedList.h" />
     <ClInclude Include="Hash.h" />
     <ClInclude Include="singleLinkedList.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Text.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

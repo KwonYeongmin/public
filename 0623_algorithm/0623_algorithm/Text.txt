@@ -1,0 +1,61 @@
+void AVLtrees::AddData(s t)
+{
+	s *p = head;
+
+	s *n = new s;
+	n->name = t.name;
+	n->idx = t.idx;
+
+	if (head == nullptr)
+	{
+		head = n;
+		head->up = nullptr;
+		head->left = nullptr;
+		head->right = nullptr;
+	}
+	else
+	{
+		/*cout << "--p 이동 전----------------" << endl;
+		cout << "head: " << head->idx << endl;
+		cout << "p: " << p->idx << endl;*/
+
+		while(p->left != nullptr || p->right != nullptr)
+		{
+			if (p->idx > n->idx && p != nullptr) 
+			{
+				if (p->left == NULL) break;
+				p = p->left;
+			} 
+			else if (p->idx < n->idx && p != nullptr) 
+			{
+				if (p->right == NULL) break;
+				p = p->right;
+			}  
+			
+		}
+		/*cout << "--p 이동 후---------------- " << endl;
+		cout << "head: " << head->idx << endl;
+		cout << "p: " << p->idx<<endl;*/	
+		if (p->idx > n->idx)
+		{
+			//왼쪽
+			p->left = n;
+			n->up = p;
+		}
+		else if (p->idx < n->idx)
+		{
+			//오른쪽
+			p->right = n;
+			n->up = p;
+		}
+		/*cout << "--n 연결 후---------------- ()" << endl;
+		cout << "head: " << head->idx << endl;
+		cout << "p: " << p->idx;
+		cout << ", n: " << n->idx ;
+		if (p->left != nullptr) { cout << " , p -> left: " << p->left->idx ; }
+		if (p->right != nullptr) { cout << " ,p -> right: " << p->right->idx; }
+		cout << endl;*/
+	}
+	n->left = nullptr;
+	n->right = nullptr;
+}

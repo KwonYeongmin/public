@@ -11,7 +11,6 @@
 2. list에 저장된 값으로 그림을 그리기
 3.
 
-
 	static std::list<Bullet*> basket;
 	static Bullet *bullet;
 	bullet = new Bullet(turrent, 20);

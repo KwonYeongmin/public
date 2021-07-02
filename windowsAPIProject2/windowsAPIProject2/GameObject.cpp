@@ -142,9 +142,6 @@ void Cursor::OnGdi_line(HDC hdc)
 	if (points.begin() == points.end()) {}
 	//
 	SolidBrush brush(Color(255, 255, 0, 0));
-
-
-
 }
 
 //적과 부딪히면

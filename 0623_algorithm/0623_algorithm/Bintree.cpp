@@ -45,59 +45,64 @@ void Print(const level *t)
 //삽입
 void BinTree::addData(level t)
 {
-	//level *pl = NULL;
-	//level *pr = NULL;
-	level *p =head;
+	level *p = head;
 
 	level *n = new level;
 	n->name = t.name;
 	n->no = t.no;
 
-	//맨처음에 들어오는 데이터 
-	if (head == NULL) 
+	if (head == nullptr)
 	{
-		n->right = NULL; n->left = NULL;
 		head = n;
-		tail = n;
+		head->up = nullptr;
+		head->left = nullptr;
+		head->right = nullptr;
 	}
-	else 
-	{		
-		while (p->left != NULL ||  p->right != NULL)
+	else
+	{
+		/*cout << "--p 이동 전----------------" << endl;
+		cout << "head: " << head->idx << endl;
+		cout << "p: " << p->idx << endl;*/
+
+		while (p->left != nullptr || p->right != nullptr)
 		{
-			cout<<"p->no: " << p->no << endl;
-			if (p->no > n->no && p != NULL) 
+			if (p->no > n->no && p != nullptr)
 			{
+				if (p->left == NULL) break;
 				p = p->left;
 			}
-			else if (p->no < n->no && p != NULL) 
+			else if (p->no < n->no && p != nullptr)
 			{
+				if (p->right == NULL) break;
 				p = p->right;
 			}
+
 		}
-		cout << "ck !! p: " ;
-		cout << p->no << endl;
+		/*cout << "--p 이동 후---------------- " << endl;
+		cout << "head: " << head->idx << endl;
+		cout << "p: " << p->idx<<endl;*/
 		if (p->no > n->no)
 		{
 			//왼쪽
 			p->left = n;
 			n->up = p;
 		}
-		else if (p->no < n->no) 
+		else if (p->no < n->no)
 		{
-		//오른쪽
+			//오른쪽
 			p->right = n;
 			n->up = p;
 		}
-		cout << "p: " << p->no;
-		cout << ", n: " << n->no;
-		if (p->left != NULL) { cout << " , p-<left: " << p->left->no; }
-		if (p->right != NULL) { cout << " ,p->right: " << p->right->no; }
-		 cout << endl;
+		/*cout << "--n 연결 후---------------- ()" << endl;
+		cout << "head: " << head->idx << endl;
+		cout << "p: " << p->idx;
+		cout << ", n: " << n->idx ;
+		if (p->left != nullptr) { cout << " , p -> left: " << p->left->idx ; }
+		if (p->right != nullptr) { cout << " ,p -> right: " << p->right->idx; }
+		cout << endl;*/
 	}
-	//cout << n->no << endl;
-	n->left = NULL;
-	n->right = NULL;
-	setEdge(t);
+	n->left = nullptr;
+	n->right = nullptr;
 }
 
 
